@@ -1,0 +1,377 @@
+<!doctype html>
+<html class="no-js" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/common/head :: head"></head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<div id="preloader">
+    <div class="loader"></div>
+</div>
+<div class="page-container">
+    <aside th:replace="admin/common/sidebar :: sidebar"></aside>
+    <div class="main-content">
+        <nav th:replace="admin/common/navbar :: navbar"></nav>
+        <div class="col-12 mt-4">
+            <div class="alert_message">
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="data-tables datatable-dark">
+                        <div id="dataTable3_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6">
+                                    <input style="width: 100px" id="addAccount" class="btn btn-rounded btn-secondary mb-3" data-toggle="modal" data-target="#exampleModalLong" type="reset" value="Thêm">
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <div id="dataTable3_filter" class="dataTables_filter"><label>Tìm kiếm:<input
+                                            type="search" style="width: 250px" class="form-control form-control-sm" placeholder=""
+                                            aria-controls="dataTable3"></label></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table  style="width: 100%;">
+                                        <thead class="text-capitalize">
+                                        <tr role="row">
+                                            <th>STT</th>
+                                            <th>Tên đăng nhập</th>
+                                            <th>Họ và tên</th>
+                                            <th>Số điện thoại</th>
+                                            <th>Địa chỉ</th>
+                                            <th>Quyền</th>
+                                            <th>Thao tác</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="user-list">
+                                          <!--     content        -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <style>
+                                th, td {
+                                    border: 1px solid #dddddd;
+                                    padding: 8px;
+                                    text-align: center;
+
+                                }
+                            </style>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12" style="margin-top: 20px;">
+                                    <div class="dataTables_paginate paging_simple_numbers" id="dataTable3_paginate">
+                                        <ul class="pagination" id="pageId">
+                                            <li class="page-item disabled">
+                                                <a class="page-link" href="#" tabindex="-1">Previous</a>
+                                            </li>
+                                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                            <li class="page-item active">
+                                                <a class="page-link" href="#">2 <span
+                                                        class="sr-only">(current)</span></a>
+                                            </li>
+                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                            <li class="page-item">
+                                                <a class="page-link" href="#">Next</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--modal-->
+<div class="col-lg-6 mt-5">
+    <div class="card">
+        <div class="card-body">
+            <div class="modal fade" id="exampleModalLong">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 id="title_modal" class="modal-title">User Information</h5>
+                            <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input id="userId" hidden="hidden" type="text">
+<!--                                        <input type="text" hidden="hidden" id="roleId" name="roleId">-->
+                                        <div class="form-group">
+                                            <label for="username">Tên đăng nhập</label>
+                                            <input type="text" class="form-control" id="username" placeholder="Nhập tên đăng nhập">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="fullname">Họ và tên</label>
+                                            <input type="text" class="form-control" id="fullname" placeholder="Nhập họ và tên">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="dob">Ngày sinh</label>
+                                            <input type="text" class="form-control" id="dob" placeholder="Nhập ngày sinh">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="address">Địa chỉ</label>
+                                            <input type="text" class="form-control" id="address" placeholder="Nhập địa chỉ">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="phone">Số điện thoại</label>
+                                            <input type="text" class="form-control" id="phone" placeholder="Nhập số điện thoại">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="email">Email</label>
+                                            <input type="email" class="form-control" id="email" placeholder="Nhập email">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Quyền</label>
+                                    <select class="form-control" id="role">
+                                        <option value="admin">Admin</option>
+                                        <option value="user">User</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" id="update-user-btn" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="admin/common/script :: script"></div>
+<script>
+    $(document).ready(function () {
+        initData();
+    });
+
+    function initData() {
+        let page = 0;
+        let size = 7;
+        getUser(page, size);
+        getRole();
+    }
+
+    function getUser(page, size) {
+        let bodyTable = $('#user-list');
+        bodyTable.empty();
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/api/user/list?page=" + page + "&size=" + size,
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                let users = response?.data?.content;
+                for (let i = 0; i < users.length; i++) {
+                    let roleNames = '';
+                    for (let j = 0; j < users[i].roleDtos.length; j++) {
+                        roleNames += users[i].roleDtos[j].name;
+                        if (j < users[i].roleDtos.length - 1) {
+                            roleNames += ', ';
+                        }
+                    }
+                    let data = users[i];
+                    let row = '<tr class="odd">' +
+                        '<td style="max-width: 50px;" >' + (i+1) + '</td>' +
+                        '<td>' + data.username + '</td>' +
+                        '<td>' + data.fullname + '</td>' +
+                        '<td>' + data.phone + '</td>' +
+                        '<td>' + data.address + '</td>' +
+                        '<td>' + roleNames + '</td>' +
+                        '<td style="width: 125px">' +
+                        '<a data-toggle="modal" data-target="#exampleModalLong" type="button" class="btn btn-default edit-user-btn" data-id="' + data.id + '" ><i style="color: black;font-size: 18px" class="fa-regular fa-pen-to-square"></i></a>' +
+                        '<a type="button" class="btn btn-default delete-user-btn" data-id="' + data.id + '" ><i style="color: black;font-size: 18px" class="fa-regular fa-trash-can"></i></a>'+
+                        '</td>' +
+                        '</tr>';
+                    bodyTable.append(row);
+                }
+
+                // Phân trang
+                let totalPage = response.data.totalPages;
+                let currentPage = response.data.pageable.pageNumber;
+                if (totalPage > 0) {
+                    $("#pageId").empty();
+                    let pages = '<li class="page-item"><a class="page-link" onclick="changePage(' + (currentPage - 1) + ',7,event)" href="#"><i class="fa-solid fa-chevron-up fa-rotate-270"></i></a></li>';
+                    for (let i = 0; i < totalPage; i++) {
+                        if (currentPage === i) {
+                            pages += '            <li class="page-item active">\n' +
+                                '                <a class="page-link " onclick="changePage(' + i + ',7,event)" href="#">' + (i + 1) + '</a></li>\n' +
+                                '            <li class="page-item">';
+                        } else {
+                            pages += '            <li class="page-item">\n' +
+                                '                <a class="page-link" onclick="changePage(' + i + ',7,event)" href="#">' + (i + 1) + '</a></li>\n' +
+                                '            <li class="page-item">';
+                        }
+                    }
+                    pages += '<li class="page-item"><a class="page-link" onclick="changePage(' + (currentPage + 1) + ',7,event)" href="#"><i class="fa-solid fa-chevron-up fa-rotate-90"></i></a></li>';
+                    $("#pageId").append(pages);
+                }
+
+
+
+                $('.edit-user-btn').click(function (event) {
+                    event.preventDefault();
+                    var userId = $(this).data('id');
+                    $.ajax({
+                        type: "GET",
+                        url: "http://localhost:8080/api/user/search/" + userId,
+                        success: function (response) {
+                            $('#title_modal').text('Cập nhập tài khoản');
+                            var user = response.data;
+                            getInforUser(user);
+
+                            console.log(user)
+                            $('#update-user-btn').off('click').on('click', function () {
+                                var updateUser = {
+                                    id: $('#userId').val(),
+                                    username:$('#username').val(),
+                                    fullname:$('#fullname').val(),
+                                    birthday:$('#dob').val(),
+                                    address:$('#address').val(),
+                                    phone:$('#phone').val(),
+                                    email:$('#email').val(),
+                                    roleId: $('#role').val()
+                                };
+                                $.ajax({
+                                    type: "PUT",
+                                    url: "http://localhost:8080/api/user/update/" + updateUser.id,
+                                    contentType: "application/json",
+                                    data: JSON.stringify(updateUser),
+                                    success: function (updateResponse) {
+                                        console.log(updateResponse);
+                                        $('#exampleModalLong').modal('hide');
+                                        window.location.reload();
+                                    },
+                                    error: function (updateError) {
+                                        console.log(updateError);
+                                    }
+                                });
+                            });
+                            $('#exampleModalLong').modal('show');
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
+                });
+                $('#addAccount').click(function (event){
+                    event.preventDefault();
+                    resetInfor();
+                    $.ajax({
+                        type: "POST",
+                        url: "http://localhost:8080/api/user/create/",
+                        success: function(response) {
+                            var user = response.data;
+
+                        },
+                        error: function(error) {
+                            console.log(error);
+                        }
+                    });
+                })
+
+                $('.delete-user-btn').click(function(event) {
+                    event.preventDefault();
+                    var userId = $(this).data('id');
+                    if (confirm('Bạn chắc chắn muốn xóa tài khoản này?')) {
+                        $.ajax({
+                            type: "DELETE",
+                            url: "http://localhost:8080/api/user/delete/" + userId,
+                            success: function(response){
+                                console.log(response);
+                                $('#deleteBtn' + userId).closest('tr').remove();
+                                showAlert('Thành công!', 'Bạn đã xóa thành công 01 tài khoản.', 'success');
+                                getUser(0,7)
+                            },
+                            error: function (error){
+                                console.log(error);
+                            }
+                        });
+                    }
+                });
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+
+    }
+    function getInforUser(user){
+        $('#userId').val(user.id);
+        $('#username').val(user.username);
+        $('#fullname').val(user.fullname);
+        $('#dob').val(user.birthday);
+        $('#address').val(user.address);
+        $('#phone').val(user.phone);
+        $('#email').val(user.email);
+        $('#role').val(user.roleId);
+    }
+    function resetInfor(){
+        $('#title_modal').text('Thêm tài khoản');
+        $('#userId').val('');
+        $('#username').val('');
+        $('#fullname').val('');
+        $('#dob').val('');
+        $('#address').val('');
+        $('#phone').val('');
+        $('#email').val('');
+    }
+    function showAlert(title, message, type) {
+        var alertHtml = '<div class="alert alert-' + type + ' alert-dismissible fade show" role="alert" style="margin-left: 70%">' +
+            '<strong>' + title + '</strong> ' + message +
+            '</div>';
+        var alertElement = $(alertHtml);
+        $('.alert_message').prepend(alertElement);
+        setTimeout(function() {
+            alertElement.alert('close');
+        }, 2000);
+    }
+    function changePage(page, size, event) {
+        event.preventDefault();
+        getUser(page, size);
+    }
+    function getRole(){
+        let list = $('#role');
+        list.empty();
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/api/role/list",
+            success: function(response) {
+                let role = response?.data?.content;
+
+                for (let i = 0; i < role.length; i++) {
+                    let data = role[i];
+                    let row = '<option style="margin-top: 30px" value="' + data.id + '">' + data.name + '</option>';
+                    list.append(row);
+                }
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    }
+</script>
+</body>
+</html>

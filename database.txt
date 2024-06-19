@@ -1,0 +1,41 @@
+create database qlkh;
+use qlkh;
+create table user
+(
+    id            bigint primary key auto_increment,
+    fullname      nvarchar(255) null,
+    username      nvarchar(255) null,
+    phone         nvarchar(255) null,
+    address       nvarchar(255) null,
+    password      nvarchar(255) null,
+    birthday      date null,
+email      varchar(255) null,
+    created_by    varchar(255)  null,
+    created_date  datetime(6)   null,
+    modified_by   varchar(255)  null,
+    modified_date datetime(6)   null,
+    deleted       boolean default 0
+);
+create table role
+(
+    id            bigint primary key auto_increment,
+    name          nvarchar(255) null,
+    created_by    varchar(255)  null,
+    created_date  datetime(6)   null,
+    modified_by   varchar(255)  null,
+    modified_date datetime(6)   null,
+    deleted       boolean default 0
+);
+create table user_role
+(
+    user_id bigint not null,
+    role_id bigint not null,
+    primary key (user_id, role_id),
+    foreign key (user_id) references user (id),
+    foreign key (role_id) references role (id),
+    created_by    varchar(255) null,
+    created_date  datetime(6)  null,
+    modified_by   varchar(255) null,
+    modified_date datetime(6)  null,
+    deleted		boolean default 0
+);

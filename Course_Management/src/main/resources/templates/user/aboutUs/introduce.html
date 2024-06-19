@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="user/common/head :: head"></head>
+<body>
+<div id="spinner"
+     class="show position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+    <div class="spinner-grow text-primary" role="status"></div>
+</div>
+<div th:replace="user/common/header :: header"></div>
+
+<div style="background: #3498db">
+    <div class="container py-5">
+        <div class="row g-5">
+            <div class="col-lg-5 col-md-6 col-sm-12 wow fadeIn" data-wow-delay=".3s">
+                <div class="h-100 position-relative">
+                    <img th:src="@{/user/img/about-1.jpg}" class="img-fluid w-75 rounded" alt=""
+                         style="margin-bottom: 25%;">
+                    <div class="position-absolute w-75" style="top: 25%; left: 25%;">
+                        <img th:src="@{/user/img/about-2.jpg}" class="img-fluid w-100 rounded" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7 col-md-6 col-sm-12 wow fadeIn" data-wow-delay=".5s">
+                <h1 style="color:#fff;">Bạn có biết ?</h1>
+                <p style="line-height: 35px;color:#fff;text-shadow: 0 .2rem .2rem #0c71c3;">Ngoài kia có rất nhiều
+                    bạn làm sai nghề, tư duy an phận và bị chôn chân với một công việc không đủ vui, không đủ
+                    sống, các bạn ấy gặp hết khủng hoảng tuổi này tới tuổi kia.</p>
+
+                <p style="line-height: 35px;color:#fff;text-shadow: 0 .2rem .2rem #0c71c3;">Tuổi 22 đang ngỡ ngàng không
+                    biết mình nên làm nghề gì. Tuổi 28 thì bàng hoàng không biết lương như mình thì lập gia đình
+                    và nuôi dạy con cái làm sao. Tuổi 40 nuối tiếc thanh xuân của mình liệu có phải đã phí hoài không
+                    nhỉ...</p>
+                <p style="line-height: 35px;color:#fff;text-shadow: 0 .2rem .2rem #0c71c3;">Mọi chuyện sẽ rất khác
+                    nếu họ được định hướng công việc phù hợp, biết cách đặt cho mình một mục tiêu rõ ràng và có
+                    đầy đủ kĩ năng cần thiết để phát triển sự nghiệp.</p>
+                <p style="line-height: 35px;color:#fff;text-shadow: 0 .2rem .2rem #0c71c3;">HT tin rằng con người
+                    Việt Nam không hề thua kém gì so với con người ở bất cứ nơi đâu. Con rồng cháu tiên hoàn toàn có
+                    thể trở thành công dân toàn cầu để sánh vai cùng các cường quốc năm châu.</p>
+                <p style="line-height: 35px;color:#fff;text-shadow: 0 .2rem .2rem #0c71c3;">HT mong muốn trở thành
+                    một tổ chức góp phần tạo nên sự thay đổi đó, và việc tạo ra cộng đồng học lập trình mới chỉ
+                    là điểm bắt đầu. Chúng tôi đang nỗ lực tạo ra các khóa học có nội dung chất lượng vượt trội, giúp
+                    học viên sau khi hoàn thành khóa học có thể trở thành những lập trình viên luôn được nhiều công ty
+                    săn đón.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div>
+    <div class="container py-4">
+        <div>
+            <h2>Tầm nhìn</h2>
+            <div>
+                <p style="line-height:35px;color:black;">Trở thành công ty công nghệ giáo dục có vị thế vững vàng trên
+                    thị trường, với các sản phẩm hỗ trợ học lập trình chất lượng, thông minh và hiệu quả. HT sẽ nổi
+                    tiếng bởi chất lượng sản phẩm vượt trội và được cộng đồng tin tưởng chứ không phải vì tiếp thị
+                    tốt.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <div class="container">
+        <div>
+            <h2>Giá trị cốt lõi</h2>
+            <div>
+                <p style="line-height:35px;color:black;"><strong>Sự tử tế:</strong> Tử tế trong chính người HT với nhau
+                    và tử tế với học viên là kim chỉ nam phấn đấu. Đã làm sản phẩm là phải chất lượng và chứng minh được
+                    hiệu quả, bất kể là sản phẩm miễn phí hay giá rẻ. Làm ra phải thấy muốn để người thân mình dùng.</p>
+                <p style="line-height:35px;color:black;"><strong>Tư duy số:</strong> Sản phẩm làm ra không phải là để
+                    vừa lòng đội ngũ trong công ty. Sản phẩm làm ra với mục tiêu cao nhất là người học thấy dễ học, được
+                    truyền cảm hứng tự học, học tới bài học cuối cùng và người học có thể tự tay làm ra những dự án bằng
+                    kiến thức đã học.</p>
+                <p style="line-height:35px;color:black;"><strong>Luôn đổi mới và không ngừng học:</strong> Học từ chính
+                    đối thủ, học từ những công ty công nghệ giáo dục tốt trên thế giới và luôn luôn lắng nghe mọi góp ý
+                    từ phía học viên.</p>
+                <p style="line-height:35px;color:black;"><strong>Tư duy bền vững:</strong> Có hai thứ đáng để đầu tư
+                    giúp mang lại thành quả tài chính tốt nhất trong dài hạn của một công ty đó là nhân viên và khách
+                    hàng.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="About_whatToSale__IhluX" style="height: 280px;margin-bottom: 360px;margin-top: 80px;background:#3498db">
+    <div class="About_whatToSale__IhluX">
+        <section class="index-module_grid__1q71E index-module_wide__3c1pI" style="max-width: 1100px;">
+            <section class="index-module_row__-AHgh">
+                <section
+                        class="index-module_col__2EQm9 index-module_c-12__u7UXF index-module_m-12__2CxUL index-module_l-12__340Ve">
+                    <div class="About_content__0BcXE"><h3 class="About_heading__AoPVO">Bạn nhận được gì từ HT?</h3>
+                        <div class="About_grid__Tc0gb About_textContent__lVApI">
+                            <div class="About_gridItem__MiSIB"><h4 class="About_heading__AoPVO">1. Sự thành thạo</h4>
+                                Các bài học đi đôi với thực hành, làm bài kiểm tra ngay trên trang web và bạn luôn có
+                                sản phẩm thực tế sau mỗi khóa học.
+                            </div>
+                            <div class="About_gridItem__MiSIB"><h4 class="About_heading__AoPVO">2. Tính tự học</h4>
+                                Một con người chỉ thực sự trưởng thành trong sự nghiệp nếu họ biết cách tự
+                                thu nạp kiến thức mới cho chính mình.
+                            </div>
+                            <div class="About_gridItem__MiSIB"><h4 class="About_heading__AoPVO">3. Tiết kiệm thời
+                                gian</h4> Thay vì chật vật vài năm thì chỉ cần 4-6 tháng để có thể bắt đầu công việc đầu
+                                tiên với vị trí Intern tại công ty IT.
+                            </div>
+                            <div class="About_gridItem__MiSIB"><h4 class="About_heading__AoPVO">4. Làm điều quan
+                                trọng</h4> Chỉ học và làm những điều quan trọng để đạt được mục tiêu đi làm được
+                                trong thời gian ngắn nhất.
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </section>
+        </section>
+    </div>
+</div>
+
+
+<div style="margin-bottom:35px ">
+    <div class="container">
+        <div style="margin-top: 500px">
+            <center><h2>Chiến lược phát triển</h2></center>
+            <div>
+                <h4 class="About_heading__AoPVO">1. Coi trọng đào tạo và phát triển nhân tài</h4>
+                <p>HT tin rằng sản phẩm tuyệt vời chỉ có thể tạo ra bởi những con người tài năng. Công ty muốn tăng
+                    trưởng nhanh bền vững phải có những nhân sự xuất sắc có tâm, có tài. Vì vậy, HT không ngừng tìm kiếm
+                    và phát triển những cá nhân tài năng cùng xây dựng bộ máy. Nếu bạn muốn được làm cùng với những
+                    người giỏi giang khác? Bạn muốn được chủ động quyết định trong công việc của mình? Và bạn muốn được
+                    tương thưởng xứng đáng? Hãy về với HT 😍</p>
+                <div class="About_textHorizontalWithImg__+ZbNp">
+                    <div class="About_textBlock__iGZl5"><h4 class="About_heading__AoPVO">2. Sản phẩm làm ra là phải chất
+                        lượng, là phải bán được</h4>
+                        <p>HT làm ra những sản phẩm phục vụ thị trường lớn, chất lượng và hiệu quả thực sự, đáp ứng nhu
+                            cầu cấp thiết của học viên. Mỗi khóa học, mỗi bài giảng của HT không phải được làm ra
+                            bởi chỉ một người. Mà đó là tổng hoà chuyên môn của người dạy, sales, marketing,
+                            lập trình viên, đạo diễn hình ảnh và âm thanh… Khúc nào cũng phải cố benchmarking, tự
+                            tin đứng cạnh các sản phẩm của thế giới. Tức là làm một cách thông minh và xâu chuỗi
+                            nhiều loại hiểu biết khác nhau.</p></div>
+                    <img class="About_img__Z35Xj" th:src="@{/user/img/about-1.c8179beb513c0a025314.png}"
+                         alt="Sản phẩm đã làm ra là phải chất lượng, làm ra là bán được"></div>
+                <div class="About_textHorizontalWithImg__+ZbNp About_reverse__AuatF">
+                    <div class="About_textBlock__iGZl5"><h4 id="customh4" class="About_heading__AoPVO">3. Tập trung vào
+                        khách
+                        hàng</h4>
+                        <p id="customh4">Khi học lập trình phần đông học viên dễ bị mất định hướng, dễ nản khi gặp khó
+                            khăn mà không
+                            ai giúp đỡ, nhiều khi thấy làm giống hệt video rồi mà không chạy... Tại HT, chúng tôi thấu
+                            hiểu những khó khăn của các bạn, chúng tôi nỗ lực tạo ra giáo trình và hệ thống bài tập, hệ
+                            thống hỗ trợ các bạn tối đa trong quá trình học tập.</p></div>
+                    <img class="About_img__Z35Xj" th:src="@{/user/img/about-2.9172a49089c8c29156f7.png}"
+                         alt="Tập trung vào khách hàng"></div>
+                <p id="pCusMg">HT tin rằng trong mỗi chúng ta luôn tồn tại một "đứa trẻ", để đứa trẻ đó học tốt một kiến
+                    thức mới
+                    thì sản phẩm không thể chỉ thành công về mặt học thuật, mà phải tạo được thật nhiều cảm xúc. HT
+                    thiết kế hành trình cảm xúc đó bằng hình ảnh, âm thanh, bằng các nội dung xu hướng, bằng cách ghi
+                    nhận sự nỗ lực của học viên và luôn tạo cảm hứng học tập.</p>
+                <div class="About_textHorizontalWithImg__+ZbNp">
+                    <div class="About_textBlock__iGZl5"><h4 class="About_heading__AoPVO">4. Bán hàng và chăm sóc khách
+                        hàng bền vững</h4>
+                        <p>Việc bán hàng sẽ trở nên rất dễ dàng khi khách hàng sử dụng hiệu quả và truyền tai nhau về
+                            sản phẩm. Thành công về mặt doanh số không quan trọng bằng việc người học đánh giá cao sản
+                            phẩm sau đó tiếp tục sử dụng, thậm chí còn giới thiệu cho người thân và bạn bè. HT là một
+                            trong những công ty giáo dục, có lẽ là duy nhất đầu tư rất nhiều ngân sách vào việc chăm sóc
+                            khách hàng, thay vì bỏ tiền đi đánh bóng tên tuổi. HT sẽ tìm mọi cách để dần đạt được con số
+                            99% khách hàng hài lòng.</p>
+                        <p><em>1% còn lại là những con người của HT, chúng tôi không cho phép bản thân mình cảm thấy hài
+                            lòng hoàn toàn về sản phẩm. Đó chính là động lực để chúng tôi liên tục cải thiện, liên tục
+                            phát triển và tạo ra các sản phẩm hỗ trợ học tập chất lượng cho cộng đồng.</em></p></div>
+                    <img class="About_img__Z35Xj" th:src="@{/user/img/about-3.61ca6adf22cc550c0c03.png}"
+                         alt="Bán hàng và chăm sóc khách hàng bền vững"></div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="About_environment__dor58 About_textContent__lVApI">
+    <section class="index-module_grid__1q71E index-module_wide__3c1pI" style="max-width: 1100px;">
+        <section class="index-module_row__-AHgh">
+            <section
+                    class="index-module_col__2EQm9 index-module_c-12__u7UXF index-module_m-12__2CxUL index-module_l-12__340Ve">
+                <h3 class="About_heading__AoPVO">Môi trường làm việc</h3>
+                <p>Môi trường làm việc lành mạnh. Không toxic, không gossip, trong công việc thử thách hết mình nhưng
+                    ngoài công việc không bè phái ganh đua hay tấn công gì nhau.</p>
+                <p>Quan điểm làm việc của HT là dân chủ, sếp có thể sai nhưng tổ chức phải đúng. Sai thì nhận và sửa.
+                    Nhân viên thoải mái nói lên chính kiến của mình. Trên dưới lắng nghe và cởi mở với góc nhìn của
+                    nhau, quyết tâm vì mục tiêu chung.</p>
+                <p>Tỷ lệ nghỉ việc tại các bộ phận chuyên môn cao dưới 5%, nhưng đối với HT đúng người đúng việc sẽ quan
+                    trọng hơn. Các bạn được thử thách với công việc mới khi đã làm tốt chuyên môn cũ và công ty luôn sẵn
+                    sàng đầu tư cho nhân viên đi học thêm các kỹ năng cần thiết cho công việc. Quan điểm của HT, nhân
+                    viên là người bạn đồng hành cùng sự phát triển của công ty, luôn sẵn sàng giúp nhân viên có cuộc
+                    sống cân bằng và phát triển chuyên môn tối đa.</p>
+                <div class="About_quote__iQu+X">
+                    Quan điểm của HT chúng mình là không phải bạn đi xin việc và công ty cũng không đi xin ứng viên tài
+                    năng. HT tôn trọng thời gian và sự quan tâm của các bạn tới chúng mình. Nếu có điều gì không hài
+                    lòng về quy trình tuyển dụng của công ty, hãy góp ý nhẹ vào <a
+                        href="mailto:contact@fullstack.edu.vn">contact@fullstack.edu.vn</a> nhé. HT cảm ơn bạn đã quan
+                    tâm và rất mong chờ gặp bạn tại HT 😍
+                </div>
+            </section>
+        </section>
+    </section>
+</div>
+<div th:replace="user/common/footer :: footer"></div>
+
+<div th:replace="user/common/script :: script"></div>
+</body>
+</html>
