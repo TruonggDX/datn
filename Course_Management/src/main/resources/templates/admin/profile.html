@@ -1,0 +1,115 @@
+<!doctype html>
+<html class="no-js" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/common/head :: head"></head>
+<div id="preloader">
+    <div class="loader"></div>
+</div>
+<div class="page-container">
+    <aside th:replace="admin/common/sidebar :: sidebar"></aside>
+    <div class="main-content">
+        <nav th:replace="admin/common/navbar :: navbar"></nav>
+        <div class="container rounded bg-white mt-5">
+            <div class="row">
+                <div class="col-md-4 border-right">
+                    <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img
+                            class="rounded-circle mt-5" src="https://i.imgur.com/0eg0aG0.jpg" width="90"><span
+                            class="font-weight-bold">John Doe</span><span
+                            class="text-black-50">john_doe12@bbb.com</span><span>United States</span></div>
+                </div>
+                <div class="col-md-8">
+                    <div class="p-3 py-5">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div class="d-flex flex-row align-items-center back">
+                                <h6>Thông tin cá nhân</h6>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" placeholder="first name" value="John"></div>
+                            <div class="col-md-6"><input type="text" class="form-control" value="Doe" placeholder="Doe">
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-6"><input type="text" class="form-control" placeholder="Email"
+                                                         value="john_doe12@bbb.com"></div>
+                            <div class="col-md-6"><input type="text" class="form-control" value="+19685969668"
+                                                         placeholder="Phone number"></div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-6"><input type="text" class="form-control" placeholder="address"
+                                                         value="D-113, right avenue block, CA,USA"></div>
+                            <div class="col-md-6"><input type="text" class="form-control" value="USA"
+                                                         placeholder="Country"></div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-6"><input type="text" class="form-control" placeholder="Bank Name"
+                                                         value="Bank of America"></div>
+                            <div class="col-md-6"><input type="text" class="form-control" value="043958409584095"
+                                                         placeholder="Account Number"></div>
+                        </div>
+                        <div style="margin-top: 20px">
+                            <div class="col-md-12"><a style="float: right" data-toggle="modal"
+                                                      data-target="#exampleModalLong" href="">Đổi mật khẩu </a></div>
+                        </div>
+                        <div class="mt-5 text-right">
+                            <button class="btn btn-primary profile-button" type="button">Lưu thông tin</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="footer-area">
+            <p>© Copyright 2018. All right reserved. Template by <a href="https://colorlib.com/wp/">Colorlib</a>.</p>
+        </div>
+    </footer>
+</div>
+
+<div class="col-lg-6 mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="header-title">Basic Modal</h4>
+            <p>Toggle a working modal demo by clicking the button below. It will slide down and fade in from the top of
+                the page.</p>
+
+            <div class="modal fade" id="exampleModalLong" aria-hidden="true" style="display: none;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Modal title</h5>
+                            <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="card-body">
+                                <form>
+                                    <div class="form-group">
+                                        <label>Mật khẩu cũ</label>
+                                        <input type="password" class="form-control" aria-describedby="emailHelp"
+                                               placeholder="Nhập mật khẩu cũ">
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Mật khẩu mới</label>
+                                        <input type="password" class="form-control" placeholder="Nhập mật khẩu mới">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Nhập lại mật khẩu mới</label>
+                                        <input type="password" class="form-control" placeholder="Nhập lại mật khẩu mới">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                            <button type="button" class="btn btn-primary">Đổi mật khẩu</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="admin/common/script :: script"></div>
+</body>
+</html>

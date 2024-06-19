@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="user/common/head :: head"></head>
+<body>
+<div id="spinner"
+     class="show position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+    <div class="spinner-grow text-primary" role="status"></div>
+</div>
+<div th:replace="user/common/header :: header"></div>
+
+<div>
+    <div class="container py-5">
+        <div class="row g-5">
+            <div class="col-lg-6 col-md-6 col-sm-12 wow fadeIn" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeIn;">
+                <h1 style="color: black;font-weight: bold;font-size: 28px">Liên hệ</h1>
+                <p style="font-size: 15px">Chúng tôi luôn sẵn sàng tiếp nhận mọi ý kiến ​đóng góp và giải đáp những yêu cầu của bạn.
+                    Hãy liên hệ ngay với chúng tôi</p>
+
+                <form>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1">
+                    </div>
+                    <button type="submit" class="btn btn-warning">Gửi đi</button>
+                </form>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-12 wow fadeIn" data-wow-delay=".3s" style="visibility: visible; animation-delay: 0.3s; animation-name: fadeIn;">
+                <div class="h-100 position-relative">
+                    <img th:src="@{/user/img/about-1.jpg}" class="img-fluid w-75 rounded" alt="" style="margin-bottom: 25%;">
+                    <div class="position-absolute w-75" style="top: 25%; left: 25%;">
+                        <img th:src="@{/user/img/about-2.jpg}" class="img-fluid w-100 rounded" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="user/common/footer :: footer"></div>
+
+<div th:replace="user/common/script :: script"></div>
+</body>
+</html>
