@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/api/user")
 public class UserResource {
@@ -57,6 +59,15 @@ public class UserResource {
             return ResponseEntity.status(response.getCode()).body(response);
         }
         return ResponseEntity.notFound().build();
+    }
+    @GetMapping("/searchByKey/{keyword}")
+    public ResponseEntity<BaseResponse<List<UserDTO>>> findAccByUserNameAndFullName(@PathVariable String keyword) {
+        BaseResponse<List<UserDTO>> response = iUserService.findUserByUsAndFn(keyword);
+        if (response.getCode()==HttpStatus.OK.value()) {
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
     }
 
 }
