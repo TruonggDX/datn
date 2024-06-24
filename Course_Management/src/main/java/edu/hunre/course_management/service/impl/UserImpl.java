@@ -20,10 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -198,6 +195,35 @@ public class UserImpl implements IUserService {
         response.setData(userDTO);
         response.setCode(HttpStatus.OK.value());
         response.setMessage(Constant.HTTP_MESSAGE.SUCCESS);
+        return response;
+    }
+
+    @Override
+    public BaseResponse<List<UserDTO>> findUserByUsAndFn(String condition) {
+        BaseResponse<List<UserDTO>> response = new BaseResponse<>();
+        List<UserEntity> userEntities = userRepository.findUserByUsernameAndFullname(condition);
+        if (userEntities != null && !userEntities.isEmpty()){
+            List<UserDTO> userDTOS = new ArrayList<>();
+            for (UserEntity user : userEntities){
+                UserDTO userDTO = modelMapper.map(user,UserDTO.class);
+                List<Long> roleIds = user.getRoles().stream().map(RoleEntity::getId).collect(Collectors.toList());
+                userDTO.setRoleId(roleIds);
+                List<RoleDTO> roleDTOS = user.getRoles().stream().map(roleEntity -> {
+                    RoleDTO roleDTO = modelMapper.map(roleEntity, RoleDTO.class);
+                    roleDTO.setId(roleEntity.getId());
+                    roleDTO.setName(roleEntity.getName());
+                    return roleDTO;
+                }).collect(Collectors.toList());
+                userDTO.setRoleDtos(roleDTOS);
+                userDTOS.add(userDTO);
+            }
+            response.setCode(HttpStatus.OK.value());
+            response.setMessage(Constant.HTTP_MESSAGE.SUCCESS);
+            response.setData(userDTOS);
+        }else {
+            response.setCode(HttpStatus.NOT_FOUND.value());
+            response.setMessage(Constant.HTTP_MESSAGE.FAILED);
+        }
         return response;
     }
 }
