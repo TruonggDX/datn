@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 @Data
-public class UserDTO {
+public class AccountDTO {
 
     private Long id;
 
