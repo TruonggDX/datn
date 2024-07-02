@@ -1,12 +1,9 @@
 package edu.hunre.course_management.controller.resource;
 
-import edu.hunre.course_management.exception.ResourceNotFoundException;
 import edu.hunre.course_management.model.dto.RoleDTO;
-import edu.hunre.course_management.model.dto.UserDTO;
 import edu.hunre.course_management.model.response.BaseResponse;
 import edu.hunre.course_management.service.IRoleService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;

@@ -1,8 +1,6 @@
 package edu.hunre.course_management.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,8 +11,8 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name = "user")
-public class UserEntity extends AbstractEntity{
+@Table(name = "account")
+public class AccountEntity extends AbstractEntity{
     private String fullname;
     private String username;
     private String phone;
@@ -23,10 +21,10 @@ public class UserEntity extends AbstractEntity{
     private Date birthday;
     private String email;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinTable(
-            name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id"),
+            name = "account_role",
+            joinColumns = @JoinColumn(name = "account_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<RoleEntity> roles = new HashSet<>();

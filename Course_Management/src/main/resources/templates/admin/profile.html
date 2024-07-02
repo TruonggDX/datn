@@ -24,22 +24,20 @@
                             </div>
                         </div>
                         <div class="row mt-2">
+                            <input type="text" id="accountId" hidden="hidden">
                             <div class="col-md-6">
-                                <input type="text" class="form-control" placeholder="first name" value="John"></div>
-                            <div class="col-md-6"><input type="text" class="form-control" value="Doe" placeholder="Doe">
+                                <input type="text" id="fullname" class="form-control"></div>
+                            <div class="col-md-6">
+                                <input type="text" id="username" class="form-control">
                             </div>
                         </div>
                         <div class="row mt-3">
-                            <div class="col-md-6"><input type="text" class="form-control" placeholder="Email"
-                                                         value="john_doe12@bbb.com"></div>
-                            <div class="col-md-6"><input type="text" class="form-control" value="+19685969668"
-                                                         placeholder="Phone number"></div>
+                            <div class="col-md-6"><input type="text" class="form-control" id="phone"></div>
+                            <div class="col-md-6"><input type="text" class="form-control" id="email"></div>
                         </div>
                         <div class="row mt-3">
-                            <div class="col-md-6"><input type="text" class="form-control" placeholder="address"
-                                                         value="D-113, right avenue block, CA,USA"></div>
-                            <div class="col-md-6"><input type="text" class="form-control" value="USA"
-                                                         placeholder="Country"></div>
+                            <div class="col-md-6"><input type="text" class="form-control" id="address"></div>
+                                <div class="col-md-6"><input type="date" class="form-control" id="dob"></div>
                         </div>
                         <div class="row mt-3">
                             <div class="col-md-6"><input type="text" class="form-control" placeholder="Bank Name"
@@ -111,5 +109,42 @@
     </div>
 </div>
 <div th:replace="admin/common/script :: script"></div>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: 'http://localhost:8080/api/account/common/getUser',
+            type: 'GET',
+            success: function (data) {
+                $('#accountId').val(data.data.id);
+                $('#fullname').val(data.data.fullname);
+                $('#username').val(data.data.username);
+                $('#phone').val(data.data.phone);
+                $('#email').val(data.data.email);
+                $('#address').val(data.data.address);
+                let birthday = formatDateForInput(data.data.birthday);
+                $('#dob').val(birthday);
+                console.log(data)
+            },
+            error: function (error) {
+                console.error(error);
+            }
+        });
+    });
+
+    function formatDateForInput(dateStr) {
+        // Assuming the input dateStr is in MM/dd/yyyy format
+        const parts = dateStr.split('/');
+        if (parts.length === 3) {
+            const month = parts[0];
+            const day = parts[1];
+            const year = parts[2];
+            return `${year}-${month}-${day}`;
+            // return `${day}-${month}-${year}`;
+        }
+        return '';
+    }
+
+
+</script>
 </body>
 </html>
