@@ -11,4 +11,5 @@ public class Constant {
         public static final String FAILED="request failed";
 
     }
+
 }

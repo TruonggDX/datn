@@ -1,14 +1,18 @@
 package edu.hunre.course_management.service.impl;
 
 import edu.hunre.course_management.entity.CustomerEntity;
+import edu.hunre.course_management.entity.ImageEntity;
 import edu.hunre.course_management.entity.RoleEntity;
 import edu.hunre.course_management.model.dto.CustomerDTO;
+import edu.hunre.course_management.model.dto.ImageDTO;
 import edu.hunre.course_management.model.dto.RoleDTO;
 import edu.hunre.course_management.model.request.RegisterDTO;
 import edu.hunre.course_management.model.response.BaseResponse;
 import edu.hunre.course_management.repository.CustomerRepository;
+import edu.hunre.course_management.repository.ImageRepository;
 import edu.hunre.course_management.repository.RoleRepository;
 import edu.hunre.course_management.service.ICustomerService;
+import edu.hunre.course_management.service.IImageService;
 import edu.hunre.course_management.utils.Constant;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +21,11 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.password.PasswordEncoder;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,10 +37,14 @@ public class ICustomerImpl implements ICustomerService {
     private CustomerRepository customerRepository;
     @Autowired
     private RoleRepository roleRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+//    @Autowired
+//    private PasswordEncoder passwordEncoder;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private IImageService imageService;
+    @Autowired
+    private ImageRepository imageRepository;
     @Override
     public CustomerDTO findUserByUsername(String username) {
         CustomerEntity customerEntity = customerRepository.findByUsername(username);
@@ -106,42 +116,102 @@ public class ICustomerImpl implements ICustomerService {
         return response;
     }
 
+//    @Override
+//    public BaseResponse<CustomerDTO> updateCustomer(Long id, CustomerDTO customerDTO) {
+//        BaseResponse<CustomerDTO> response = new BaseResponse<>();
+//        Optional<CustomerEntity> customerEntity = customerRepository.findById(id);
+//        if(customerEntity.isEmpty()){
+//            response.setMessage(Constant.HTTP_MESSAGE.FAILED);
+//            response.setCode(HttpStatus.NOT_FOUND.value());
+//            return response;
+//        }
+//        CustomerEntity customer = customerEntity.get();
+//        customer.setFullname(customerDTO.getFullname());
+//        customer.setPhone(customerDTO.getPhone());
+//        customer.setAddress(customerDTO.getAddress());
+//        customer.setCertificate(customer.getCertificate());
+//
+//        Optional<RoleEntity> roleEntity = roleRepository.findById(customerDTO.getRoleId());
+//        if (roleEntity.isPresent()) {
+//            customer.setRoleEntity(roleEntity.get());
+//        } else {
+//            response.setCode(HttpStatus.BAD_REQUEST.value());
+//            response.setMessage(Constant.HTTP_MESSAGE.FAILED);
+//            return response;
+//        }
+//
+//        customerRepository.save(customer);
+//        CustomerDTO customerDtos = modelMapper.map(customer, CustomerDTO.class);
+//        RoleEntity roleEntities = customer.getRoleEntity();
+//        RoleDTO roleDTO = modelMapper.map(roleEntities, RoleDTO.class);
+//        roleDTO.setId(roleEntities.getId());
+//        roleDTO.setName(roleEntities.getName());
+//        customerDtos.setRoleDtos(roleDTO);
+//        response.setMessage(Constant.HTTP_MESSAGE.SUCCESS);
+//        response.setCode(HttpStatus.OK.value());
+//        response.setData(customerDtos);
+//        return response;
+//    }
+
     @Override
-    public BaseResponse<CustomerDTO> updateCustomer(Long id, CustomerDTO customerDTO) {
+    public BaseResponse<CustomerDTO> updateCustomer(Long id, CustomerDTO customerDTO, MultipartFile imageFile) {
         BaseResponse<CustomerDTO> response = new BaseResponse<>();
-        Optional<CustomerEntity> customerEntity = customerRepository.findById(id);
-        if(customerEntity.isEmpty()){
+        Optional<CustomerEntity> customerEntityOptional = customerRepository.findById(id);
+
+        if (customerEntityOptional.isEmpty()) {
             response.setMessage(Constant.HTTP_MESSAGE.FAILED);
             response.setCode(HttpStatus.NOT_FOUND.value());
             return response;
         }
-        CustomerEntity customer = customerEntity.get();
+
+        CustomerEntity customer = customerEntityOptional.get();
         customer.setFullname(customerDTO.getFullname());
         customer.setPhone(customerDTO.getPhone());
         customer.setAddress(customerDTO.getAddress());
-        customer.setCertificate(customer.getCertificate());
+        customer.setCertificate(customerDTO.getCertificate());
 
-        Optional<RoleEntity> roleEntity = roleRepository.findById(customerDTO.getRoleId());
-        if (roleEntity.isPresent()) {
-            customer.setRoleEntity(roleEntity.get());
-        } else {
+        Optional<RoleEntity> roleEntityOptional = roleRepository.findById(customerDTO.getRoleId());
+        if (roleEntityOptional.isEmpty()) {
             response.setCode(HttpStatus.BAD_REQUEST.value());
             response.setMessage(Constant.HTTP_MESSAGE.FAILED);
             return response;
         }
+        customer.setRoleEntity(roleEntityOptional.get());
 
+        Optional<ImageEntity> imageEntityOptionaly = imageRepository.findById(customerDTO.getImage_id());
+        if (imageEntityOptionaly.isEmpty()) {
+            response.setCode(HttpStatus.BAD_REQUEST.value());
+            response.setMessage(Constant.HTTP_MESSAGE.FAILED);
+            return response;
+        }
+        if (imageFile != null && !imageFile.isEmpty()) {
+            try {
+                ImageDTO uploadedImage = imageService.uploadFile(imageFile);
+                ImageEntity imageEntity = modelMapper.map(uploadedImage, ImageEntity.class);
+                imageEntity.setCustomer(customer);
+
+                imageRepository.save(imageEntity);
+                customer.setImageEntity(imageEntity);
+            } catch (IOException e) {
+                response.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+                response.setMessage(Constant.HTTP_MESSAGE.FAILED);
+                return response;
+            }
+        }
         customerRepository.save(customer);
-        CustomerDTO customerDtos = modelMapper.map(customer, CustomerDTO.class);
-        RoleEntity roleEntities = customer.getRoleEntity();
-        RoleDTO roleDTO = modelMapper.map(roleEntities, RoleDTO.class);
-        roleDTO.setId(roleEntities.getId());
-        roleDTO.setName(roleEntities.getName());
-        customerDtos.setRoleDtos(roleDTO);
+        CustomerDTO updatedCustomerDTO = modelMapper.map(customer, CustomerDTO.class);
+        RoleEntity roleEntity = customer.getRoleEntity();
+        RoleDTO roleDTO = modelMapper.map(roleEntity, RoleDTO.class);
+        roleDTO.setId(roleEntity.getId());
+        roleDTO.setName(roleEntity.getName());
+        updatedCustomerDTO.setRoleDtos(roleDTO);
+
         response.setMessage(Constant.HTTP_MESSAGE.SUCCESS);
         response.setCode(HttpStatus.OK.value());
-        response.setData(customerDtos);
+        response.setData(updatedCustomerDTO);
         return response;
     }
+
 
     @Override
     public BaseResponse<CustomerDTO> deleteCustomerByID(Long customerID) {
@@ -203,7 +273,7 @@ public class ICustomerImpl implements ICustomerService {
             }
             CustomerEntity customer = new CustomerEntity();
             customer.setUsername(registerDTO.getUsername());
-            customer.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
+//            customer.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
             customer.setDeleted(false);
             RoleEntity roleEntity = roleRepository.findById(2L).orElseGet(() -> {
                 RoleEntity newRole = new RoleEntity();

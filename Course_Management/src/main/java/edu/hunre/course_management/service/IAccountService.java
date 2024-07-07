@@ -14,7 +14,7 @@ public interface IAccountService {
     BaseResponse<AccountDTO> updateUser(Long userId, AccountDTO userDTO);
     BaseResponse<?> deletedUser(Long id);
     BaseResponse<AccountDTO> findAccountById(Long id);
-    BaseResponse<AccountDTO> getUser();
+//    BaseResponse<AccountDTO> getUser();
     BaseResponse<List<AccountDTO>> findUserByUsAndFn(String condition);
 
 }
