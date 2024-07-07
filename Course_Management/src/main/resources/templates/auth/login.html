@@ -124,18 +124,21 @@
             $('.error').hide().text('');
 
             var usernameRegex = /^[a-zA-Z0-9]+$/;
-            if (username === '') {
+            if (username === '' && password ==='') {
                 $('#username-error').text('Tên đăng nhập không được để trống').show();
+                $('#password-error').text('Mật khẩu không được để trống').show();
                 valid = false;
             } else if (!usernameRegex.test(username)) {
                 $('#username-error').text('Tên đăng nhập không được chứa ký tự đặc biệt').show();
                 valid = false;
+            }else if (username === ''){
+                $('#password-error').text('Mật khẩu không được để trống').show();
             }
-            if (password.length < 8) {
+            else if(password.length < 8)
+            {
                 $('#password-error').text('Mật khẩu phải có độ dài ít nhất 8 ký tự').show();
                 valid = false;
             }
-
             if (!valid) return;
 
             var data = {
@@ -154,20 +157,27 @@
                 data: JSON.stringify(data),
                 success: function (response) {
                     console.log(response);
-                    $('#sign-up-form').prepend('<span class="success">Đăng ký thành công</span>');
-                    setTimeout(function () {
-                        $('.success').fadeOut('slow', function () {
-                            $(this).remove();
-                        });
-                    }, 3000);
+                    if (response.code===200){
+                        // $('#sign-up-form').prepend('<span class="success">Đăng ký thành công</span>');
+                        // setTimeout(function () {
+                        //     $('.success').fadeOut('slow', function () {
+                        //         $(this).remove();
+                        //     });
+                        // }, 3000);
+                        alert('Đăng ký tài khoản thành công')
+                    }else if (response.code===400){
+                        $('#username-error').text("Tên người dùng đã tồn tại trong hệ thống.");
+                        $('#username-error').show();
+                    }
                 },
                 error: function (error) {
-                    alert('Đăng ký thất bại ');
+                    alert('Đăng ký không thành công')
                     console.log(error);
                 }
             });
         });
     });
+
 </script>
 </body>
 </html>

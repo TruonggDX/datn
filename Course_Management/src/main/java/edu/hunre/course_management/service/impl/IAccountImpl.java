@@ -17,9 +17,9 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+//import org.springframework.security.core.Authentication;
+//import org.springframework.security.core.context.SecurityContextHolder;
+//import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -234,26 +234,26 @@ public class IAccountImpl implements IAccountService {
         }
         return response;
     }
-    @Override
-    public BaseResponse<AccountDTO> getUser() {
-        BaseResponse<AccountDTO> response = new BaseResponse<>();
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication.getPrincipal() instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            String username = userDetails.getUsername();
-            AccountEntity accountEntity = accountRepository.findByUsername(username);
-            if (accountEntity != null) {
-                AccountDTO accountDto = modelMapper.map(accountEntity, AccountDTO.class);
-                response.setData(accountDto);
-                response.setCode(HttpStatus.OK.value());
-                response.setMessage(Constant.HTTP_MESSAGE.SUCCESS);
-                return response;
-            } else {
-                response.setCode(HttpStatus.BAD_REQUEST.value());
-                response.setMessage(Constant.HTTP_MESSAGE.FAILED);
-                return response;
-            }
-        }
-        return response;
-    }
+//    @Override
+//    public BaseResponse<AccountDTO> getUser() {
+//        BaseResponse<AccountDTO> response = new BaseResponse<>();
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        if (authentication.getPrincipal() instanceof UserDetails) {
+//            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+//            String username = userDetails.getUsername();
+//            AccountEntity accountEntity = accountRepository.findByUsername(username);
+//            if (accountEntity != null) {
+//                AccountDTO accountDto = modelMapper.map(accountEntity, AccountDTO.class);
+//                response.setData(accountDto);
+//                response.setCode(HttpStatus.OK.value());
+//                response.setMessage(Constant.HTTP_MESSAGE.SUCCESS);
+//                return response;
+//            } else {
+//                response.setCode(HttpStatus.BAD_REQUEST.value());
+//                response.setMessage(Constant.HTTP_MESSAGE.FAILED);
+//                return response;
+//            }
+//        }
+//        return response;
+//    }
 }

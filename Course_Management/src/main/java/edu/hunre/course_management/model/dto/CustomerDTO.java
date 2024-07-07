@@ -17,4 +17,6 @@ public class CustomerDTO {
     private String certificate;
     private Long roleId;
     RoleDTO roleDtos;
+    private String imageBase64;
+    private Long image_id;
 }

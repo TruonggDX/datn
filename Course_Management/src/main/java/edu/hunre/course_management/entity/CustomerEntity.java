@@ -1,9 +1,6 @@
 package edu.hunre.course_management.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,4 +21,8 @@ public class CustomerEntity extends AbstractEntity {
     @JoinColumn(name = "role_id")
     @EqualsAndHashCode.Exclude
     private RoleEntity roleEntity;
+
+    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
+    private ImageEntity imageEntity;
+
 }
