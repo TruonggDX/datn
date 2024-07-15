@@ -49,4 +49,6 @@ public class AccountDTO {
     private String modifiedBy;
     private LocalDateTime modifiedDate;
     List<RoleDTO> roleDtos;
+    private String certificate;
+    private String description;
 }

@@ -1,11 +1,14 @@
 package edu.hunre.course_management.service.impl;
 
+import edu.hunre.course_management.entity.AccountEntity;
 import edu.hunre.course_management.entity.CustomerEntity;
 import edu.hunre.course_management.entity.ImageEntity;
 import edu.hunre.course_management.entity.RoleEntity;
 import edu.hunre.course_management.model.dto.CustomerDTO;
+import edu.hunre.course_management.model.dto.CustomerDTO;
 import edu.hunre.course_management.model.dto.ImageDTO;
 import edu.hunre.course_management.model.dto.RoleDTO;
+import edu.hunre.course_management.model.request.ChagePasswordDTO;
 import edu.hunre.course_management.model.request.RegisterDTO;
 import edu.hunre.course_management.model.response.BaseResponse;
 import edu.hunre.course_management.repository.CustomerRepository;
@@ -21,12 +24,17 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-//import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -37,8 +45,8 @@ public class ICustomerImpl implements ICustomerService {
     private CustomerRepository customerRepository;
     @Autowired
     private RoleRepository roleRepository;
-//    @Autowired
-//    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     @Autowired
     private ModelMapper modelMapper;
     @Autowired
@@ -71,6 +79,17 @@ public class ICustomerImpl implements ICustomerService {
             roleDTO.setId(roleEntities.getId());
             roleDTO.setName(roleEntities.getName());
             customerDTO.setRoleDtos(roleDTO);
+
+            ImageEntity imageEntity = customerEntity.getImageEntity();
+            if (imageEntity != null) {
+                try {
+                    byte[] fileBytes = imageEntity.getFile();
+                    String base64Image = Base64.getEncoder().encodeToString(fileBytes);
+                    customerDTO.setImage(base64Image);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
             return customerDTO;
         }).collect(Collectors.toList());
         BaseResponse<Page<CustomerDTO>> response = new BaseResponse<>();
@@ -89,21 +108,22 @@ public class ICustomerImpl implements ICustomerService {
         customerEntity.setUsername(customerDTO.getUsername());
         customerEntity.setPhone(customerDTO.getPhone());
         customerEntity.setPassword(customerDTO.getPassword());
-        customerEntity.setCertificate(customerDTO.getCertificate());
         customerEntity.setAddress(customerDTO.getAddress());
+        customerEntity.setEmail(customerDTO.getEmail());
+        customerEntity.setPassword(passwordEncoder.encode(customerDTO.getPassword()));
         customerEntity.setDeleted(false);
 
-        Optional<RoleEntity> roleEntity = roleRepository.findById(customerDTO.getRoleId());
+        RoleEntity roleEntity = roleRepository.findById(2L).orElseGet(() -> {
+            RoleEntity newRole = new RoleEntity();
+            newRole.setId(2L);
+            newRole.setName(Constant.ROLE_USER);
+            return roleRepository.save(newRole);
+        });
+        customerEntity.setRoleEntity(roleEntity);
 
-        if (roleEntity.isEmpty()) {
-            response.setCode(HttpStatus.BAD_REQUEST.value());
-            response.setMessage(Constant.HTTP_MESSAGE.FAILED);
-            return response;
-        }
-
-        customerEntity.setRoleEntity(roleEntity.get());
         customerRepository.save(customerEntity);
         CustomerDTO customerDTOs = modelMapper.map(customerEntity, CustomerDTO.class);
+        customerDTOs.setId(customerEntity.getId());
         RoleEntity roleEntities = customerEntity.getRoleEntity();
         RoleDTO roleDTO = modelMapper.map(roleEntities, RoleDTO.class);
         roleDTO.setId(roleEntities.getId());
@@ -115,43 +135,6 @@ public class ICustomerImpl implements ICustomerService {
 
         return response;
     }
-
-//    @Override
-//    public BaseResponse<CustomerDTO> updateCustomer(Long id, CustomerDTO customerDTO) {
-//        BaseResponse<CustomerDTO> response = new BaseResponse<>();
-//        Optional<CustomerEntity> customerEntity = customerRepository.findById(id);
-//        if(customerEntity.isEmpty()){
-//            response.setMessage(Constant.HTTP_MESSAGE.FAILED);
-//            response.setCode(HttpStatus.NOT_FOUND.value());
-//            return response;
-//        }
-//        CustomerEntity customer = customerEntity.get();
-//        customer.setFullname(customerDTO.getFullname());
-//        customer.setPhone(customerDTO.getPhone());
-//        customer.setAddress(customerDTO.getAddress());
-//        customer.setCertificate(customer.getCertificate());
-//
-//        Optional<RoleEntity> roleEntity = roleRepository.findById(customerDTO.getRoleId());
-//        if (roleEntity.isPresent()) {
-//            customer.setRoleEntity(roleEntity.get());
-//        } else {
-//            response.setCode(HttpStatus.BAD_REQUEST.value());
-//            response.setMessage(Constant.HTTP_MESSAGE.FAILED);
-//            return response;
-//        }
-//
-//        customerRepository.save(customer);
-//        CustomerDTO customerDtos = modelMapper.map(customer, CustomerDTO.class);
-//        RoleEntity roleEntities = customer.getRoleEntity();
-//        RoleDTO roleDTO = modelMapper.map(roleEntities, RoleDTO.class);
-//        roleDTO.setId(roleEntities.getId());
-//        roleDTO.setName(roleEntities.getName());
-//        customerDtos.setRoleDtos(roleDTO);
-//        response.setMessage(Constant.HTTP_MESSAGE.SUCCESS);
-//        response.setCode(HttpStatus.OK.value());
-//        response.setData(customerDtos);
-//        return response;
-//    }
 
     @Override
     public BaseResponse<CustomerDTO> updateCustomer(Long id, CustomerDTO customerDTO, MultipartFile imageFile) {
@@ -165,72 +148,98 @@ public class ICustomerImpl implements ICustomerService {
         }
 
         CustomerEntity customer = customerEntityOptional.get();
+//        if (customerRepository.existsByUsername(customerDTO.getUsername())) {
+//            response.setCode(HttpStatus.BAD_REQUEST.value());
+//            response.setMessage(Constant.HTTP_MESSAGE.FAILED);
+//            return response;
+//        }
+        customer.setUsername(customerDTO.getUsername());
         customer.setFullname(customerDTO.getFullname());
         customer.setPhone(customerDTO.getPhone());
+        customer.setEmail(customerDTO.getEmail());
         customer.setAddress(customerDTO.getAddress());
-        customer.setCertificate(customerDTO.getCertificate());
 
-        Optional<RoleEntity> roleEntityOptional = roleRepository.findById(customerDTO.getRoleId());
-        if (roleEntityOptional.isEmpty()) {
-            response.setCode(HttpStatus.BAD_REQUEST.value());
-            response.setMessage(Constant.HTTP_MESSAGE.FAILED);
-            return response;
-        }
-        customer.setRoleEntity(roleEntityOptional.get());
-
-        Optional<ImageEntity> imageEntityOptionaly = imageRepository.findById(customerDTO.getImage_id());
-        if (imageEntityOptionaly.isEmpty()) {
-            response.setCode(HttpStatus.BAD_REQUEST.value());
-            response.setMessage(Constant.HTTP_MESSAGE.FAILED);
-            return response;
-        }
-        if (imageFile != null && !imageFile.isEmpty()) {
-            try {
-                ImageDTO uploadedImage = imageService.uploadFile(imageFile);
-                ImageEntity imageEntity = modelMapper.map(uploadedImage, ImageEntity.class);
-                imageEntity.setCustomer(customer);
-
-                imageRepository.save(imageEntity);
-                customer.setImageEntity(imageEntity);
-            } catch (IOException e) {
-                response.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
-                response.setMessage(Constant.HTTP_MESSAGE.FAILED);
-                return response;
+        try {
+            if (imageFile != null && !imageFile.isEmpty()) {
+                // Kiểm tra xem đã có ảnh liên kết với khách hàng hay chưa
+                if (customer.getImageEntity() != null) {
+                    // Đã có ảnh, cập nhật lại
+                    ImageEntity oldImageEntity = customer.getImageEntity();
+                    imageService.updateImage(oldImageEntity.getId(), imageFile);
+                } else {
+                    // Chưa có ảnh, thêm mới
+                    ImageDTO uploadedImage = imageService.uploadFile(imageFile);
+                    ImageEntity imageEntity = modelMapper.map(uploadedImage, ImageEntity.class);
+                    imageEntity.setCustomer(customer);
+                    imageEntity.setDeleted(false);
+                    imageEntity.setCreatedDate(LocalDateTime.now());
+                    imageRepository.save(imageEntity);
+                    customer.setImageEntity(imageEntity);
+                }
             }
-        }
-        customerRepository.save(customer);
-        CustomerDTO updatedCustomerDTO = modelMapper.map(customer, CustomerDTO.class);
-        RoleEntity roleEntity = customer.getRoleEntity();
-        RoleDTO roleDTO = modelMapper.map(roleEntity, RoleDTO.class);
-        roleDTO.setId(roleEntity.getId());
-        roleDTO.setName(roleEntity.getName());
-        updatedCustomerDTO.setRoleDtos(roleDTO);
 
-        response.setMessage(Constant.HTTP_MESSAGE.SUCCESS);
-        response.setCode(HttpStatus.OK.value());
-        response.setData(updatedCustomerDTO);
-        return response;
+            customerRepository.save(customer);
+
+            // Map customer entity back to DTO
+            CustomerDTO updatedCustomerDTO = modelMapper.map(customer, CustomerDTO.class);
+            RoleEntity roleEntity = customer.getRoleEntity();
+            RoleDTO roleDTO = modelMapper.map(roleEntity, RoleDTO.class);
+            roleDTO.setId(roleEntity.getId());
+            roleDTO.setName(roleEntity.getName());
+            updatedCustomerDTO.setRoleDtos(roleDTO);
+            response.setMessage(Constant.HTTP_MESSAGE.SUCCESS);
+            response.setCode(HttpStatus.OK.value());
+            response.setData(updatedCustomerDTO);
+            return response;
+
+        } catch (IOException e) {
+            response.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+            response.setMessage(Constant.HTTP_MESSAGE.FAILED);
+            return response;
+        }
     }
+
 
 
     @Override
     public BaseResponse<CustomerDTO> deleteCustomerByID(Long customerID) {
         BaseResponse<CustomerDTO> response = new BaseResponse<>();
-        Optional<CustomerEntity> customerEntity = customerRepository.findById(customerID);
-        if (customerEntity.isEmpty()) {
+        Optional<CustomerEntity> customerEntityOptional = customerRepository.findById(customerID);
+
+        if (customerEntityOptional.isEmpty()) {
             response.setMessage(Constant.HTTP_MESSAGE.FAILED);
             response.setCode(HttpStatus.NOT_FOUND.value());
             return response;
         }
-        CustomerEntity customer = customerEntity.get();
+
+        CustomerEntity customer = customerEntityOptional.get();
+        if (customer.getImageEntity() != null) {
+            Optional<ImageEntity> imageEntityOptional = imageRepository.findById(customer.getImageEntity().getId());
+            if (imageEntityOptional.isEmpty()) {
+                response.setMessage(Constant.HTTP_MESSAGE.FAILED);
+                response.setCode(HttpStatus.NOT_FOUND.value());
+                return response;
+            }
+
+            // Set image entity as deleted
+            ImageEntity imageEntity = imageEntityOptional.get();
+            imageEntity.setDeleted(true);
+            imageRepository.save(imageEntity); // Save the updated image entity
+        }
+
+        // Set customer as deleted
         customer.setDeleted(true);
-        customerRepository.save(customer);
-        CustomerDTO customerDtos = modelMapper.map(customer, CustomerDTO.class);
+        customerRepository.save(customer); // Save the updated customer entity
+
+        // Prepare response
+        CustomerDTO customerDto = modelMapper.map(customer, CustomerDTO.class);
         response.setCode(HttpStatus.OK.value());
         response.setMessage(Constant.HTTP_MESSAGE.SUCCESS);
-        response.setData(customerDtos);
+        response.setData(customerDto);
+
         return response;
     }
+
 
     @Override
     public BaseResponse<?> findCustomerByID(Long customerID) {
@@ -252,8 +261,21 @@ public class ICustomerImpl implements ICustomerService {
         roleDTO.setId(roleEntities.getId());
         roleDTO.setName(roleEntities.getName());
 
+        ImageEntity imageEntitys = customer.getImageEntity();
+//        CustomerDTO customerDTO = modelMapper.map(imageEntitys, CustomerDTO.class);
+
+
 
         CustomerDTO customerDTO = modelMapper.map(customer, CustomerDTO.class);
+        if (imageEntitys != null) {
+            try {
+                byte[] fileBytes = imageEntitys.getFile();
+                String base64Image = Base64.getEncoder().encodeToString(fileBytes);
+                customerDTO.setImage(base64Image);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         customerDTO.setRoleId(customer.getRoleEntity().getId());
         customerDTO.setRoleDtos(roleDTO);
         response.setCode(HttpStatus.OK.value());
@@ -273,7 +295,7 @@ public class ICustomerImpl implements ICustomerService {
             }
             CustomerEntity customer = new CustomerEntity();
             customer.setUsername(registerDTO.getUsername());
-//            customer.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
+            customer.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
             customer.setDeleted(false);
             RoleEntity roleEntity = roleRepository.findById(2L).orElseGet(() -> {
                 RoleEntity newRole = new RoleEntity();
@@ -313,6 +335,18 @@ public class ICustomerImpl implements ICustomerService {
             roleDTO.setName(roleEntities.getName());
             customerDTO.setRoleId(customerEntity.getRoleEntity().getId());
             customerDTO.setRoleDtos(roleDTO);
+
+            ImageEntity imageEntity = customerEntity.getImageEntity();
+            if (imageEntity != null) {
+                try {
+                    byte[] fileBytes = imageEntity.getFile();
+                    String base64Image = Base64.getEncoder().encodeToString(fileBytes);
+                    customerDTO.setImage(base64Image);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
             customerDTOList.add(customerDTO);
         }
         response.setCode(HttpStatus.OK.value());
@@ -321,4 +355,77 @@ public class ICustomerImpl implements ICustomerService {
 
         return response;
     }
+
+    @Override
+    public BaseResponse<CustomerDTO> getUser() {
+        BaseResponse<CustomerDTO> response = new BaseResponse<>();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            String username = userDetails.getUsername();
+            CustomerEntity customerEntity = customerRepository.findByUsername(username);
+            if (customerEntity != null) {
+                CustomerDTO accountDto = modelMapper.map(customerEntity, CustomerDTO.class);
+                ImageEntity imageEntity = customerEntity.getImageEntity();
+                if (imageEntity != null) {
+                    try {
+                        byte[] fileBytes = imageEntity.getFile();
+                        String base64Image = Base64.getEncoder().encodeToString(fileBytes);
+                        accountDto.setImage(base64Image);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                response.setData(accountDto);
+                response.setCode(HttpStatus.OK.value());
+                response.setMessage(Constant.HTTP_MESSAGE.SUCCESS);
+                return response;
+            } else {
+                response.setCode(HttpStatus.BAD_REQUEST.value());
+                response.setMessage(Constant.HTTP_MESSAGE.FAILED);
+                return response;
+            }
+        }
+        return response;
+    }
+
+    @Override
+    public BaseResponse<?> updatePassWord(Long id, ChagePasswordDTO chagePasswordDTO) {
+        BaseResponse<?> response = new BaseResponse<>();
+        Optional<CustomerEntity> customerEntityOptional = customerRepository.findById(id);
+        if (customerEntityOptional.isEmpty()) {
+            response.setCode(HttpStatus.NOT_FOUND.value());
+            response.setMessage(Constant.HTTP_MESSAGE.FAILED);
+            return response;
+        }
+
+        CustomerEntity customerEntity = customerEntityOptional.get();
+        String oldPassword = customerEntity.getPassword();
+        String newPassword = chagePasswordDTO.getNewPassword();
+        String confirmPassword = chagePasswordDTO.getConfirmPassword();
+
+        if (!passwordEncoder.matches(chagePasswordDTO.getOldPassword(), oldPassword)) {
+            response.setCode(HttpStatus.BAD_REQUEST.value());
+            response.setMessage(Constant.HTTP_MESSAGE.FAILEDPW);
+            return response;
+        }
+
+        if (newPassword.equals(confirmPassword)) {
+            if (newPassword.equals(chagePasswordDTO.getOldPassword())) {
+                response.setCode(HttpStatus.BAD_REQUEST.value());
+                response.setMessage(Constant.HTTP_MESSAGE.CHECKPASSWORD);
+            } else {
+                customerEntity.setPassword(passwordEncoder.encode(newPassword));
+                customerRepository.save(customerEntity);
+                response.setCode(HttpStatus.OK.value());
+                response.setMessage(Constant.HTTP_MESSAGE.SUCCESS);
+            }
+        } else {
+            response.setCode(HttpStatus.BAD_REQUEST.value());
+            response.setMessage(Constant.HTTP_MESSAGE.FAILED);
+        }
+
+        return response;
+    }
+
 }

@@ -8,42 +8,398 @@
 <header th:replace="user/common/header :: header"></header>
 
 <div class="container rounded bg-white mt-5" style="padding-top: 50px;margin-bottom: 50px">
-  <div class="row">
-    <div class="col-md-4 border-right">
-      <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" src="https://i.imgur.com/0eg0aG0.jpg" width="90"><span class="font-weight-bold">John Doe</span><span class="text-black-50">john_doe12@bbb.com</span><span>United States</span></div>
+    <div class="row">
+        <div class="col-md-4 border-right">
+            <div style="text-align: center; margin: 0 auto; height: 300px;">
+                <h6 class="avata" style="font-size: 20px;">Ảnh đại diện</h6>
+                <div id="images" class="profile-image mt-5">
+                    <!-- Image will be injected here -->
+                </div>
+                <label for="fileUpload" class="btn btn-secondary mt-3">Chọn ảnh</label>
+                <input type="file" id="fileUpload" accept="image/*" style="display: none;">
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="p-4 rounded bg-white shadow-sm">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div class="d-flex flex-row align-items-center">
+                        <h4 class="mb-0"><i class="fas fa-user-circle mr-2"></i>Thông tin cá nhân</h4>
+                    </div>
+                    <div class="rounded-container" style="border: 1px solid blueviolet;padding: 10px;border-radius: 20px;cursor: pointer">
+                        <a data-toggle="modal" data-target="#exampleModalLong" class="custom-button">
+                            <i class="fas fa-key mr-1"></i> Đổi mật khẩu
+                            <span class="line-animation"></span>
+                        </a>
+                    </div>
+
+                <input type="text" id="customerId" hidden="hidden">
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="fullname" class="form-label">Họ và tên</label>
+                        <input type="text" class="form-control" id="fullname">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="username" class="form-label">Tên đăng nhập</label>
+                        <input type="text" class="form-control" id="username">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="phone" class="form-label">Số điện thoại</label>
+                        <input type="text" class="form-control" id="phone">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="text" class="form-control" id="email">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label for="address" class="form-label">Địa chỉ</label>
+                        <input type="text" class="form-control" id="address">
+                    </div>
+                </div>
+                <div class="text-end">
+                    <button class="btn btn-primary" id="saveButton" type="button">Lưu thông tin</button>
+                </div>
+            </div>
+        </div>
+        <style>
+            /* Custom styles for better appearance */
+
+            body {
+                background-color: #f8f9fa;
+            }
+
+            h4 {
+                color: #007bff;
+            }
+
+
+
+            .shadow-sm {
+                box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
+            }
+
+            .form-label {
+                font-weight: bold;
+            }
+
+            .form-control {
+                border-radius: 10px;
+                border-color: #ccc;
+            }
+
+            /* Button styles */
+            .btn-primary {
+                /*background-color: #007bff;*/
+                border-color: #007bff;
+                padding: 10px 20px;
+                border-radius: 5px;
+                transition: all 0.3s ease;
+            }
+
+
+            .btn-secondary {
+                background-color: #6c757d;
+                border-color: #6c757d;
+                padding: 10px 20px;
+                border-radius: 5px;
+                transition: all 0.3s ease;
+            }
+
+            .btn-secondary:hover {
+                background-color: #5a6268;
+                border-color: #5a6268;
+            }
+
+            /* Modal styles */
+            .modal-content {
+                border-radius: 10px;
+            }
+
+            .modal-header {
+                color: #fff;
+                border-radius: 10px 10px 0 0;
+            }
+
+            .modal-title {
+                font-weight: bold;
+            }
+
+            .modal-body {
+                padding: 20px;
+            }
+
+            .modal-footer {
+                border-radius: 0 0 10px 10px;
+            }
+
+            /* Định dạng biểu tượng chìa khóa */
+            .fa-key {
+                font-size: 16px;
+            }
+
+        </style>
     </div>
-    <div class="col-md-8">
-      <div class="p-3 py-5">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <div class="d-flex flex-row align-items-center back">
-            <h6>Thông tin cá nhân</h6>
-          </div>
+    <div class="col-lg-6 mt-5">
+        <div class="modal fade" id="exampleModalLong" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Đổi mật khẩu</h5>
+                        <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card-body">
+                            <form>
+                                <div class="form-group">
+                                    <label>Mật khẩu cũ</label>
+                                    <input type="password" class="form-control" id="oldPasswordInput"
+                                           placeholder="Nhập mật khẩu cũ">
+                                    <span id="oldPasswordError" style="color: red;"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Mật khẩu mới</label>
+                                    <input type="password" class="form-control" id="newPasswordInput"
+                                           placeholder="Nhập mật khẩu mới">
+                                    <span id="newPasswordError" style="color: red;"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Nhập lại mật khẩu mới</label>
+                                    <input type="password" class="form-control" id="confirmPasswordInput"
+                                           placeholder="Nhập lại mật khẩu mới">
+                                    <span id="confirmPasswordError" style="color: red;"></span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="button" class="btn btn-primary" id="changePasswordBtn">Đổi mật khẩu</button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="row mt-2">
-          <div class="col-md-6"><input type="text" class="form-control" placeholder="first name" value="John"></div>
-          <div class="col-md-6"><input type="text" class="form-control" value="Doe" placeholder="Doe"></div>
-        </div>
-        <div class="row mt-3">
-          <div class="col-md-6"><input type="text" class="form-control" placeholder="Email" value="john_doe12@bbb.com"></div>
-          <div class="col-md-6"><input type="text" class="form-control" value="+19685969668" placeholder="Phone number"></div>
-        </div>
-        <div class="row mt-3">
-          <div class="col-md-6"><input type="text" class="form-control" placeholder="address" value="D-113, right avenue block, CA,USA"></div>
-          <div class="col-md-6"><input type="text" class="form-control" value="USA" placeholder="Country"></div>
-        </div>
-        <div class="row mt-3">
-          <div class="col-md-6"><input type="text" class="form-control" placeholder="Bank Name" value="Bank of America"></div>
-          <div class="col-md-6"><input type="text" class="form-control" value="043958409584095" placeholder="Account Number"></div>
-        </div>
-        <div class="mt-5 text-right"><button class="btn btn-primary profile-button" type="button">Lưu thông tin</button></div>
-      </div>
     </div>
-  </div>
 </div>
 <footer th:replace="user/common/footer :: footer"></footer>
-<!-- footer part end-->
 
 <div th:replace="user/common/script :: script"></div>
-</body>
+<style>
+    .avata {
+        font-family: "Roboto", sans-serif;
+        padding: 20px 0px 0px 0px;
+    }
 
+    .profile-image {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto;
+    }
+
+    .profile-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .btn-secondary {
+        background-color: #e9ecef;
+        border: none;
+        color: #495057;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 5px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .btn-secondary:hover {
+        background-color: #6c757d;
+    }
+
+    .btn-secondary::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 2px solid transparent;
+        transition: border-color 0.3s;
+    }
+
+    .btn-secondary:hover::after {
+        border-color: white;
+    }
+
+    input[type="file"] {
+        display: none;
+    }
+
+    label[for="fileUpload"] {
+        display: inline-block;
+        cursor: pointer;
+        border: 2px solid transparent;
+        padding: 10px 20px;
+        border-radius: 5px;
+        transition: border-color 0.3s;
+    }
+
+    label[for="fileUpload"]:hover {
+        border-color: #6c757d;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: 'http://localhost:8080/api/customer/common/getUser',
+            type: 'GET',
+            success: function (data) {
+                let imageTag = data.data.image ? '<img src="data:image/png;base64,' + data.data.image + '" alt="Customer Image" style="border-radius: 50%; width: 150px; height: 150px">' : '<img src="placeholder.jpg" alt="Placeholder Image" style="max-width: 100px; max-height: 100px;">';
+                $('#customerId').val(data.data.id);
+                $('#fullname').val(data.data.fullname);
+                $('#username').val(data.data.username);
+                $('#phone').val(data.data.phone);
+                $('#email').val(data.data.email);
+                $('#address').val(data.data.address);
+                $('#images').html(imageTag);
+                console.log(data);
+            },
+            error: function (error) {
+                console.error(error);
+            }
+        });
+
+        // Handle image preview
+        $('#fileUpload').change(function () {
+            if (this.files && this.files[0]) {
+                let reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#images').html('<img src="' + e.target.result + '" alt="Customer Image" style="border-radius: 50%; width: 150px; height: 150px">');
+                }
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+
+
+        $('#saveButton').click(function () {
+            let formData = new FormData();
+            formData.append('id', $('#customerId').val());
+            formData.append('fullname', $('#fullname').val());
+            formData.append('phone', $('#phone').val());
+            formData.append('email', $('#email').val());
+            formData.append('address', $('#address').val());
+            formData.append('username', $('#username').val());
+            let fileUpload = $('#fileUpload')[0].files[0];
+            if (fileUpload) {
+                formData.append('imageFile', fileUpload);
+            }
+
+            $.ajax({
+                url: 'http://localhost:8080/api/customer/common/update/' + $('#customerId').val(),
+                type: 'PUT',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    alert('Cập nhật thành công!');
+                    console.log(response);
+                },
+                error: function (error) {
+                    alert('Cập nhật thất bại!');
+                    console.error(error);
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('#changePasswordBtn').click(function () {
+            var oldPassword = $('#oldPasswordInput').val();
+            var newPassword = $('#newPasswordInput').val();
+            var confirmPassword = $('#confirmPasswordInput').val();
+
+
+            $('#oldPasswordError').text('');
+            $('#newPasswordError').text('');
+            $('#confirmPasswordError').text('');
+
+
+            if (oldPassword.trim() === '' && newPassword.trim() === '' && confirmPassword.trim() === '') {
+                $('#oldPasswordError').text('Vui lòng nhập mật khẩu cũ!');
+                $('#newPasswordError').text('Vui lòng nhập mật khẩu mới!');
+                $('#confirmPasswordError').text('Vui lòng nhập mật khẩu mới!');
+                return;
+            }
+            if (/\s/.test(oldPassword)) {
+                $('#oldPasswordError').text('Mật khẩu cũ không được chứa khoảng trắng!');
+                return;
+            }
+
+
+            if (newPassword.trim() === '') {
+                $('#newPasswordError').text('Vui lòng nhập mật khẩu mới!');
+                return;
+            }
+            if (/\s/.test(newPassword)) {
+                $('#newPasswordError').text('Mật khẩu mới không được chứa khoảng trắng!');
+                return;
+            }
+
+
+            if (/[!@#$%^&*(),.?":{}|<>]/.test(newPassword)) {
+                $('#newPasswordError').text('Mật khẩu mới không được chứa ký tự đặc biệt!');
+                return;
+            }
+            if (newPassword.length < 8) {
+                $('#newPasswordError').text('Mật khẩu phải có từ 8 kí tự trở lên!');
+                return;
+            }
+
+            if (newPassword !== confirmPassword) {
+                $('#confirmPasswordError').text('Mật khẩu không khớp!');
+                return;
+            }
+
+            var changePasswordData = {
+                id: $('#customerId').val(),
+                oldPassword: oldPassword,
+                newPassword: newPassword,
+                confirmPassword: confirmPassword
+            };
+            $.ajax({
+                url: 'http://localhost:8080/api/customer/updatePassWord/' + changePasswordData.id,
+                type: 'PUT',
+                contentType: 'application/json',
+                data: JSON.stringify(changePasswordData),
+                success: function (response) {
+                    alert('Cập nhật mật khẩu thành công!');
+                    console.log(response);
+                    $('#exampleModalLong').modal('hide');
+                },
+                error: function (error) {
+                    alert('Cập nhật mật khẩu thất bại!');
+                    console.error(error);
+                }
+            });
+        });
+    });
+</script>
+
+</body>
 </html>

@@ -15,7 +15,7 @@ public class CustomerEntity extends AbstractEntity {
     private String phone;
     private String address;
     private String password;
-    private String certificate;
+    private String email;
 
     @ManyToOne
     @JoinColumn(name = "role_id")

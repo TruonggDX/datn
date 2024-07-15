@@ -40,10 +40,8 @@
                                 <div class="col-md-6"><input type="date" class="form-control" id="dob"></div>
                         </div>
                         <div class="row mt-3">
-                            <div class="col-md-6"><input type="text" class="form-control" placeholder="Bank Name"
-                                                         value="Bank of America"></div>
-                            <div class="col-md-6"><input type="text" class="form-control" value="043958409584095"
-                                                         placeholder="Account Number"></div>
+                            <div class="col-md-6"><input type="text" class="form-control"  id="certificate"></div>
+                            <div class="col-md-6"><input type="text" class="form-control" id="description"></div>
                         </div>
                         <div style="margin-top: 20px">
                             <div class="col-md-12"><a style="float: right" data-toggle="modal"
@@ -123,6 +121,8 @@
                 $('#address').val(data.data.address);
                 let birthday = formatDateForInput(data.data.birthday);
                 $('#dob').val(birthday);
+                $('#certificate').val(data.data.certificate);
+                $('#description').val(data.data.description);
                 console.log(data)
             },
             error: function (error) {

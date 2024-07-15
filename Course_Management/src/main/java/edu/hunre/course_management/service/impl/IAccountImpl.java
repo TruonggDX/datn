@@ -17,9 +17,9 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-//import org.springframework.security.core.Authentication;
-//import org.springframework.security.core.context.SecurityContextHolder;
-//import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -89,7 +89,8 @@ public class IAccountImpl implements IAccountService {
         accountEntity.setDeleted(false);
         accountEntity.setCreatedDate(LocalDateTime.now());
         accountEntity.setCreatedBy(userDTO.getCreatedByUs());
-
+        accountEntity.setCertificate(userDTO.getCertificate());
+        accountEntity.setDescription(userDTO.getDescription());
         Set<RoleEntity> roleEntities = new HashSet<>();
         for (Long roleId : userDTO.getRoleId()) {
             RoleEntity roleEntity = roleRepository.findById(roleId).orElse(null);
@@ -119,11 +120,12 @@ public class IAccountImpl implements IAccountService {
         }
         AccountEntity accountEntity = optionalUser.get();
         accountEntity.setFullname(userDTO.getFullname());
-        accountEntity.setUsername(userDTO.getUsername());
         accountEntity.setPhone(userDTO.getPhone());
         accountEntity.setAddress(userDTO.getAddress());
         accountEntity.setBirthday(userDTO.getBirthday());
         accountEntity.setEmail(userDTO.getEmail());
+        accountEntity.setCertificate(userDTO.getCertificate());
+        accountEntity.setDescription(userDTO.getDescription());
         accountEntity.setDeleted(false);
         accountEntity.setModifiedDate(userDTO.getModifiedDate().now());
         accountEntity.setModifiedBy(userDTO.getModifiedBy());
@@ -234,26 +236,26 @@ public class IAccountImpl implements IAccountService {
         }
         return response;
     }
-//    @Override
-//    public BaseResponse<AccountDTO> getUser() {
-//        BaseResponse<AccountDTO> response = new BaseResponse<>();
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        if (authentication.getPrincipal() instanceof UserDetails) {
-//            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-//            String username = userDetails.getUsername();
-//            AccountEntity accountEntity = accountRepository.findByUsername(username);
-//            if (accountEntity != null) {
-//                AccountDTO accountDto = modelMapper.map(accountEntity, AccountDTO.class);
-//                response.setData(accountDto);
-//                response.setCode(HttpStatus.OK.value());
-//                response.setMessage(Constant.HTTP_MESSAGE.SUCCESS);
-//                return response;
-//            } else {
-//                response.setCode(HttpStatus.BAD_REQUEST.value());
-//                response.setMessage(Constant.HTTP_MESSAGE.FAILED);
-//                return response;
-//            }
-//        }
-//        return response;
-//    }
+    @Override
+    public BaseResponse<AccountDTO> getUser() {
+        BaseResponse<AccountDTO> response = new BaseResponse<>();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            String username = userDetails.getUsername();
+            AccountEntity accountEntity = accountRepository.findByUsername(username);
+            if (accountEntity != null) {
+                AccountDTO accountDto = modelMapper.map(accountEntity, AccountDTO.class);
+                response.setData(accountDto);
+                response.setCode(HttpStatus.OK.value());
+                response.setMessage(Constant.HTTP_MESSAGE.SUCCESS);
+                return response;
+            } else {
+                response.setCode(HttpStatus.BAD_REQUEST.value());
+                response.setMessage(Constant.HTTP_MESSAGE.FAILED);
+                return response;
+            }
+        }
+        return response;
+    }
 }

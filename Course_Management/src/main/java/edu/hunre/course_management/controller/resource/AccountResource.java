@@ -70,13 +70,13 @@ public class AccountResource {
         }
     }
 
-//    @GetMapping("/common/getUser")
-//    public ResponseEntity<BaseResponse<AccountDTO>> getCurrentUser() {
-//        BaseResponse<AccountDTO> response = iAccountService.getUser();
-//        if (response.getCode() == HttpStatus.OK.value()) {
-//            return ResponseEntity.ok(response);
-//        } else {
-//            return ResponseEntity.status(response.getCode()).body(response);
-//        }
-//    }
+    @GetMapping("/common/getUser")
+    public ResponseEntity<BaseResponse<AccountDTO>> getCurrentUser() {
+        BaseResponse<AccountDTO> response = iAccountService.getUser();
+        if (response.getCode() == HttpStatus.OK.value()) {
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(response.getCode()).body(response);
+        }
+    }
 }
