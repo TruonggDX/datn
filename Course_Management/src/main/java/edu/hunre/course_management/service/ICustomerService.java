@@ -1,6 +1,8 @@
 package edu.hunre.course_management.service;
 
+
 import edu.hunre.course_management.model.dto.CustomerDTO;
+import edu.hunre.course_management.model.request.ChagePasswordDTO;
 import edu.hunre.course_management.model.request.RegisterDTO;
 import edu.hunre.course_management.model.response.BaseResponse;
 import org.springframework.data.domain.Page;
@@ -17,4 +19,6 @@ public interface ICustomerService {
     BaseResponse<?> findCustomerByID(Long customerID);
     BaseResponse<RegisterDTO> registerCustomer(RegisterDTO registerDTO);
     BaseResponse<List<CustomerDTO>> findCustomerByUsernameAndFullname(String condition);
+    BaseResponse<CustomerDTO> getUser();
+    BaseResponse<?> updatePassWord(Long id, ChagePasswordDTO chagePasswordDTO);
 }

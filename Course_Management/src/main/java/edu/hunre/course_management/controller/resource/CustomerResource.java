@@ -1,14 +1,11 @@
 package edu.hunre.course_management.controller.resource;
 
-import edu.hunre.course_management.exception.ResourceNotFoundException;
-import edu.hunre.course_management.model.dto.AccountDTO;
+
 import edu.hunre.course_management.model.dto.CustomerDTO;
-import edu.hunre.course_management.model.dto.CustomerDTO;
+import edu.hunre.course_management.model.request.ChagePasswordDTO;
 import edu.hunre.course_management.model.request.RegisterDTO;
 import edu.hunre.course_management.model.response.BaseResponse;
 import edu.hunre.course_management.service.ICustomerService;
-import jakarta.servlet.annotation.MultipartConfig;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -38,26 +35,18 @@ public class CustomerResource {
         return new ResponseEntity<>(response, HttpStatus.valueOf(response.getCode()));
     }
 
-    //    @PutMapping("/admin/update/{id}")
-//    public ResponseEntity<BaseResponse<?>> updateCustomer(@PathVariable Long id, @RequestBody CustomerDTO customerDTO) {
-//        BaseResponse<?> response = iCustomerService.updateCustomer(id, customerDTO);
-//        return ResponseEntity.status(response.getCode()).body(response);
-//    }
-//    @PutMapping("/admin/update/{id}" ,consumes ="multipart/form-data")
-    @PostMapping(value="/admin/update/{id}", consumes = "multipart/form-data")
+
+    @PutMapping("/common/update/{id}")
     public ResponseEntity<BaseResponse<?>> updateCustomer(
             @PathVariable Long id,
-            @RequestPart("customerDTO") CustomerDTO customerDTO,
-            @RequestPart(value = "imageFile", required = false) MultipartFile imageFile) {
-
+            @ModelAttribute CustomerDTO customerDTO,
+            @RequestParam(required = false) MultipartFile imageFile
+    ) {
         BaseResponse<?> response = iCustomerService.updateCustomer(id, customerDTO, imageFile);
-
-        if (response.getCode() == HttpStatus.OK.value()) {
-            return ResponseEntity.ok(response);
-        } else {
-            return ResponseEntity.status(response.getCode()).body(response);
-        }
+        return ResponseEntity.status(response.getCode()).body(response);
     }
+
+
 
     @DeleteMapping("/admin/delete/{customerId}")
     public ResponseEntity<?> deleteCustomer(@PathVariable Long customerId) {
@@ -91,5 +80,25 @@ public class CustomerResource {
     @PostMapping("/register")
     public BaseResponse<RegisterDTO> registerCustomer(@RequestBody RegisterDTO registerDTO) {
         return iCustomerService.registerCustomer(registerDTO);
+    }
+
+    @GetMapping("/common/getUser")
+    public ResponseEntity<BaseResponse<CustomerDTO>> getCurrentUser() {
+        BaseResponse<CustomerDTO> response = iCustomerService.getUser();
+        if (response.getCode() == HttpStatus.OK.value()) {
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(response.getCode()).body(response);
+        }
+    }
+
+    @PutMapping("/updatePassWord/{id}")
+    public ResponseEntity<BaseResponse<?>> updatePass(@PathVariable Long id, @RequestBody ChagePasswordDTO chagePasswordDTO){
+        BaseResponse<?> response = iCustomerService.updatePassWord(id,chagePasswordDTO);
+        if (response.getCode() == HttpStatus.OK.value()) {
+            return ResponseEntity.ok(response);
+        }else {
+            return ResponseEntity.status(response.getCode()).body(response);
+        }
     }
 }

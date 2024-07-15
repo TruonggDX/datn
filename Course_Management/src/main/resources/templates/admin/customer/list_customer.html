@@ -19,15 +19,17 @@
                         <div id="dataTable3_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
                             <div class="row">
                                 <div class="col-sm-12 col-md-6">
-                                    <input style="width: 100px" id="addRole" class="btn btn-rounded btn-secondary mb-3"
-                                           data-toggle="modal" data-target="#exampleModalLong" type="button"
-                                           value="Thêm">
+                                    <input style="width: 100px;" id="addCustomer"
+                                           class="btn btn-rounded btn-secondary mb-3" data-toggle="modal"
+                                           data-target="#exampleModalLong" type="reset" value="Thêm">
                                 </div>
                                 <div class="col-sm-12 col-md-6">
-                                    <div id="dataTable3_filter" class="dataTables_filter"><label>Tìm kiếm:<input
-                                            type="search" style="width: 250px" class="form-control form-control-sm"
-                                            placeholder=""
-                                            aria-controls="dataTable3"></label></div>
+                                    <div id="dataTable3_filter" class="dataTables_filter"><label>Tìm kiếm:
+                                        <input type="search" style="width: 250px" class="form-control form-control-sm"
+                                               onkeyup="seachPro()" name="condition" id="searchCondition" >
+                                        <div id="renSearch"></div>
+                                    </label>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
@@ -36,11 +38,15 @@
                                         <thead class="text-capitalize">
                                         <tr role="row">
                                             <th>STT</th>
-                                            <th>Quyền</th>
+                                            <th>Tên đăng nhập</th>
+                                            <th>Họ và tên</th>
+                                            <th>Số điện thoại</th>
+                                            <th>Địa chỉ</th>
+                                            <th>Avata</th>
                                             <th>Thao tác</th>
                                         </tr>
                                         </thead>
-                                        <tbody id="list_role">
+                                        <tbody id="customer_list">
                                         <!--     content        -->
                                         </tbody>
                                     </table>
@@ -91,26 +97,60 @@
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 id="title_modal" class="modal-title">User Information</h5>
+                            <h5 id="title_modal" class="modal-title">Thông tin người dùng</h5>
                             <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
                         </div>
                         <div class="modal-body">
-                            <form>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <input type="text" id="idRole" name="idRole" hidden="hidden">
-                                        <div class="form-group">
-                                            <label>Tên quyền</label>
-                                            <input type="text" name="name" class="form-control" id="name"
-                                                   placeholder="Nhập tên quyền">
+                            <div class="row">
+                                <div class="col-md-6" id="imageAvata">
+                                    <div class="form-group">
+                                        <label style="margin-left: 39%">Ảnh đại diện</label>
+                                        <div id="images" class="image-preview mt-2">
                                         </div>
                                     </div>
                                 </div>
-                            </form>
+                                <div class="col-md-6" id="inputContainer">
+                                    <input id="customerId" hidden="hidden" type="text">
+                                    <div class="form-group">
+                                        <label for="username">Tên đăng nhập</label>
+                                        <input type="text" class="form-control" id="username"
+                                               placeholder="Nhập tên đăng nhập">
+                                        <span id="usernameError" style="color: red;"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="fullname">Họ và tên</label>
+                                        <input type="text" class="form-control" id="fullname"
+                                               placeholder="Nhập họ và tên">
+                                        <span id="fullnameError" style="color: red;"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="phone">Số điện thoại</label>
+                                        <input type="text" class="form-control" id="phone"
+                                               placeholder="Nhập số điện thoại">
+                                        <span id="phoneError" style="color: red;"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <input type="email" class="form-control" id="email" placeholder="Nhập email">
+                                        <span id="emailError" style="color: red;"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="address">Địa chỉ</label>
+                                        <input type="text" class="form-control" id="address" placeholder="Nhập địa chỉ">
+                                        <span id="addressError" style="color: red;"></span>
+                                    </div>
+                                    <div class="form-group" id="hiddenPass">
+                                        <label for="address">Mật khẩu</label>
+                                        <input type="password" class="form-control" id="password" placeholder="Nhập mật khẩu">
+                                        <span id="passwordError" style="color: red;"></span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" id="update-role-btn" class="btn btn-primary">Save changes</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                            <button type="button" id="update-user-btn" class="btn btn-primary">Lưu thay đổi</button>
                         </div>
                     </div>
                 </div>
@@ -119,6 +159,435 @@
     </div>
 </div>
 
+<style>
+    .image-preview {
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    /* Image preview style */
+    .image-preview img {
+        max-width: 100%;
+        max-height: 200px;
+        border: 1px solid #ddd;
+        padding: 5px;
+        border-radius: 5px;
+    }
+
+</style>
 <div th:replace="admin/common/script :: script"></div>
+<script>
+    $(document).ready(function () {
+        initData();
+    });
+
+    function initData() {
+        let page = 0;
+        let size = 7;
+        getCustomer(page, size);
+    }
+
+    function getCustomer(page, size) {
+        let bodyTable = $('#customer_list');
+        bodyTable.empty();
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/api/customer/admin/list?page=" + page + "&size=" + size,
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                let users = response?.data?.content;
+                for (let i = 0; i < users.length; i++) {
+                    let data = users[i];
+                    let imageTag = data.image ? '<img src="data:image/png;base64,' + data.image + '" alt="Customer Image" style="max-width: 100px; max-height: 100px;">' : '<img src="placeholder.jpg" alt="Placeholder Image" style="max-width: 100px; max-height: 100px;">';
+
+                    let row = '<tr class="odd">' +
+                        '<td style="max-width: 50px;">' + (i + 1) + '</td>' +
+                        '<td>' + data.username + '</td>' +
+                        '<td>' + data.fullname + '</td>' +
+                        '<td>' + data.phone + '</td>' +
+                        '<td>' + data.address + '</td>' +
+                        '<td style="width: 125px; text-align: center;">' + imageTag + '</td>' +
+                        '<td style="width: 140px;">' +
+                        '<a data-toggle="modal" data-target="#exampleModalLong" type="button" class="btn btn-default edit-user-btn" data-id="' + data.id + '"><i style="color: black;font-size: 18px" class="fa-regular fa-pen-to-square"></i></a>' +
+                        '<a type="button" class="btn btn-default delete-user-btn" data-id="' + data.id + '"><i style="color: black;font-size: 18px" class="fa-regular fa-trash-can"></i></a>' +
+                        '</td>' +
+                        '</tr>';
+                    bodyTable.append(row);
+                }
+
+
+                // Phân trang
+                let totalPage = response.data.totalPages;
+                let currentPage = response.data.pageable.pageNumber;
+                if (totalPage > 0) {
+                    $("#pageId").empty();
+                    let pages = '<li class="page-item"><a class="page-link" onclick="changePage(' + (currentPage - 1) + ',7,event)" href="#"><i class="fa-solid fa-chevron-up fa-rotate-270"></i></a></li>';
+                    for (let i = 0; i < totalPage; i++) {
+                        if (currentPage === i) {
+                            pages += '            <li class="page-item active">\n' +
+                                '                <a class="page-link " onclick="changePage(' + i + ',7,event)" href="#">' + (i + 1) + '</a></li>\n' +
+                                '            <li class="page-item">';
+                        } else {
+                            pages += '            <li class="page-item">\n' +
+                                '                <a class="page-link" onclick="changePage(' + i + ',7,event)" href="#">' + (i + 1) + '</a></li>\n' +
+                                '            <li class="page-item">';
+                        }
+                    }
+                    pages += '<li class="page-item"><a class="page-link" onclick="changePage(' + (currentPage + 1) + ',7,event)" href="#"><i class="fa-solid fa-chevron-up fa-rotate-90"></i></a></li>';
+                    $("#pageId").append(pages);
+                }
+                updateAnDelete()
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+
+    }
+
+    function getInforUser(user) {
+        $('#customerId').val(user.id);
+        $('#username').val(user.username);
+        $('#fullname').val(user.fullname);
+        $('#address').val(user.address);
+        $('#phone').val(user.phone);
+        $('#email').val(user.email);
+
+        if (user.image) {
+            let imageTag = '<img src="data:image/png;base64,' + user.image + '" alt="Customer Image" style="max-width: 250px; max-height: 250px;margin-top: 20px">';
+            $('#images').html(imageTag);
+        } else {
+            let placeholderTag = '<img src="placeholder.jpg" alt="Placeholder Image" style="max-width: 100px; max-height: 100px;">';
+            $('#images').html(placeholderTag);
+        }
+        $('#imageAvata').show();
+        $('#inputContainer').removeClass('col-md-12').addClass('col-md-6');
+        $('.modal-lg').width(900)
+        $('#hiddenPass').hide()
+    }
+
+    function resetInfor() {
+        $('#title_modal').text('Thêm khách hàng');
+        $('#customerId').val('');
+        $('#username').val('');
+        $('#fullname').val('');
+        $('#address').val('');
+        $('#phone').val('');
+        $('#email').val('');
+    }
+
+    function showAlert(title, message, type) {
+        var alertHtml = '<div class="alert alert-' + type + ' alert-dismissible fade show" role="alert" style="margin-left: 70%">' +
+            '<strong>' + title + '</strong> ' + message +
+            '</div>';
+        var alertElement = $(alertHtml);
+        $('.alert_message').prepend(alertElement);
+        setTimeout(function () {
+            alertElement.alert('close');
+        }, 2000);
+    }
+
+    function changePage(page, size, event) {
+        event.preventDefault();
+        getCustomer(page, size);
+    }
+
+
+    function seachPro() {
+        var searchCondition = $("#searchCondition").val();
+        let html = "";
+        let url = "http://localhost:8080/api/customer/admin/";
+
+        if (searchCondition == "") {
+            url += getCustomer(0, 7);
+        } else {
+            url += "searchByCondition/" + searchCondition;
+        }
+
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function (response) {
+                var users = response.data;
+                if (users && users.length > 0) {
+                    for (let i = 0; i < users.length; i++) {
+                        let data = users[i];
+                        let imageTag = data.image ? '<img src="data:image/png;base64,' + data.image + '" alt="Customer Image" style="max-width: 100px; max-height: 100px;">' : '<img src="placeholder.jpg" alt="Placeholder Image" style="max-width: 100px; max-height: 100px;">';
+
+                        let row = '<tr class="odd">' +
+                            '<td style="max-width: 50px;">' + (i + 1) + '</td>' +
+                            '<td>' + data.username + '</td>' +
+                            '<td>' + data.fullname + '</td>' +
+                            '<td>' + data.phone + '</td>' +
+                            '<td>' + data.address + '</td>' +
+                            '<td>' + imageTag + '</td>' +
+                            '<td style="width: 125px">' +
+                            '<a data-toggle="modal" data-target="#exampleModalLong" type="button" class="btn btn-default edit-user-btn" data-id="' + data.id + '"><i style="color: black; font-size: 18px;" class="fa-regular fa-pen-to-square"></i></a>' +
+                            '<a type="button" class="btn btn-default delete-user-btn" data-id="' + data.id + '"><i style="color: black; font-size: 18px;" class="fa-regular fa-trash-can"></i></a>' +
+                            '</td>' +
+                            '</tr>';
+                        html += row;
+                    }
+                    document.getElementById("customer_list").innerHTML = html;
+                } else {
+                    html = '<tr><td colspan="7" style="text-align: center;">Không tìm thấy tài khoản người dùng</td></tr>';
+                    document.getElementById("customer_list").innerHTML = html;
+                }
+                updateAnDelete();
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+
+
+    function updateAnDelete() {
+        $('.edit-user-btn').click(function (event) {
+            event.preventDefault();
+            var customerId = $(this).data('id');
+
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/api/customer/admin/search/" + customerId,
+                success: function (response) {
+                    $('#title_modal').text('Cập nhập tài khoản');
+                    var user = response.data;
+                    getInforUser(user);
+
+                    $('#update-user-btn').off('click').on('click', function () {
+                        if (!validateForm()) {
+                            return;
+                        }
+
+                        var formData = new FormData();
+                        formData.append('id', $('#customerId').val());
+                        formData.append('username', $('#username').val());
+                        formData.append('fullname', $('#fullname').val());
+                        formData.append('address', $('#address').val());
+                        formData.append('phone', $('#phone').val());
+                        formData.append('email', $('#email').val());
+
+                        $.ajax({
+                            type: "PUT",
+                            url: "http://localhost:8080/api/customer/common/update/" + $('#customerId').val(),
+                            data: formData,
+                            processData: false,
+                            contentType: false,
+                            success: function (updateResponse) {
+                                console.log(updateResponse);
+                                $('#exampleModalLong').modal('hide');
+                                window.location.reload();
+                            },
+                            error: function (updateError) {
+                                console.log(updateError);
+                            }
+                        });
+                    });
+
+                    $('#exampleModalLong').modal('show');
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        });
+
+        function validateForm() {
+            var username = $('#username').val();
+            var fullname = $('#fullname').val();
+            var address = $('#address').val();
+            var phone = $('#phone').val();
+            var email = $('#email').val();
+            var password = $('#password').val();
+
+            $('#usernameError').text('');
+            $('#fullnameError').text('');
+            $('#addressError').text('');
+            $('#phoneError').text('');
+            $('#emailError').text('');
+            $('#passwordError').text('');
+            var isValid = true;
+            if (username === '') {
+                $('#usernameError').text('Tên đăng nhập không được để trống');
+                isValid = false;
+            }
+            if (fullname === '') {
+                $('#fullnameError').text('Họ và tên không được để trống');
+                isValid = false;
+            }
+            if (address === '') {
+                $('#addressError').text('Địa chỉ không được để trống');
+                isValid = false;
+            }
+            if (phone === '') {
+                $('#phoneError').text('Số điện thoại không được để trống');
+                isValid = false;
+            } else if (!validatePhone(phone)) {
+                $('#phoneError').text('Số điện thoại phải 10 số');
+                isValid = false;
+            }
+            if (email === '') {
+                $('#emailError').text('Email không được để trống');
+                isValid = false;
+            } else if (!validateEmail(email)) {
+                $('#emailError').text('Email không hợp lệ');
+                isValid = false;
+            }
+            if (username === '' && fullname === '' && address === '' && phone === '' && email === '' && password === '') {
+                $('#usernameError').text('Tên đăng nhập không được để trống');
+                $('#fullnameError').text('Họ và tên không được để trống');
+                $('#addressError').text('Địa chỉ không được để trống');
+                $('#phoneError').text('Số điện thoại không được để trống');
+                $('#emailError').text('Email không được để trống');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+
+
+// Sự kiện khi người dùng bắt đầu chỉnh sửa input
+        $('input').on('input', function () {
+            var inputId = $(this).attr('id');
+            $('#' + inputId + 'Error').text(''); // Xóa thông báo lỗi của trường này
+        });
+
+
+
+        function validatePhone(phone) {
+            var regex = /^\d{10}$/;
+            return regex.test(phone);
+        }
+
+        function validateEmail(email) {
+            var regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return regex.test(email);
+        }
+
+        $('#addCustomer').click(function (event) {
+            event.preventDefault();
+            resetInfor();
+            $('#imageAvata').hide();
+            $('#inputContainer').removeClass('col-md-6').addClass('col-md-12');
+            $('#exampleModalLong').modal('show');
+            $('.modal-lg').width(500)
+            $('#hiddenPass').show()
+
+            $('#exampleModalLong').off('click', '.btn-primary').on('click', '.btn-primary', function () {
+                var formData = {
+                    username: $('#username').val(),
+                    fullname: $('#fullname').val(),
+                    phone: $('#phone').val(),
+                    email: $('#email').val(),
+                    address: $('#address').val(),
+                    password: $('#password').val(),
+                    roleDtos: {
+                        id: 2,
+                        roleName: 'USER'
+                    }
+                };
+
+                var hasError = false;
+
+                if (formData.username.trim() === '') {
+                    $('#usernameError').text('Tên đăng nhập không được để trống');
+                    hasError = true;
+                } else {
+                    $('#usernameError').text('');
+                }
+
+                if (formData.fullname.trim() === '') {
+                    $('#fullnameError').text('Họ và tên không được để trống');
+                    hasError = true;
+                } else {
+                    $('#fullnameError').text('');
+                }
+
+                if (formData.phone.trim() === '') {
+                    $('#phoneError').text('Số điện thoại không được để trống');
+                    hasError = true;
+                } else if (formData.phone.trim().length !== 10) {
+                    $('#phoneError').text('Số điện thoại phải có 10 số');
+                    hasError = true;
+                } else {
+                    $('#phoneError').text('');
+                }
+
+                if (formData.email.trim() === '') {
+                    $('#emailError').text('Email không được để trống');
+                    hasError = true;
+                } else if (!validateEmail(formData.email.trim())) {
+                    $('#emailError').text('Email không đúng định dạng');
+                    hasError = true;
+                } else {
+                    $('#emailError').text('');
+                }
+
+                if (formData.address.trim() === '') {
+                    $('#addressError').text('Địa chỉ không được để trống');
+                    hasError = true;
+                } else {
+                    $('#addressError').text('');
+                }
+
+                if (formData.password.trim() === '') {
+                    $('#passwordError').text('Mật khẩu không được để trống');
+                    hasError = true;
+                } else if (formData.password.trim().length < 8) {
+                    $('#passwordError').text('Mật khẩu phải từ 8 kí tự trở lên');
+                    hasError = true;
+                } else {
+                    $('#passwordError').text('');
+                }
+
+                if (!hasError) {
+                    $.ajax({
+                        type: "POST",
+                        url: "http://localhost:8080/api/customer/admin/create",
+                        contentType: "application/json",
+                        data: JSON.stringify(formData),
+                        dataType: "json",
+                        success: function (response) {
+                            console.log(response);
+                            $('#exampleModalLong').modal('hide');
+                            window.location.reload();
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
+                }
+            });
+        });
+
+
+
+
+        $('.delete-user-btn').click(function (event) {
+            event.preventDefault();
+            var customerId = $(this).data('id');
+            if (confirm('Bạn chắc chắn muốn xóa khách hàng này?')) {
+                $.ajax({
+                    type: "DELETE",
+                    url: "http://localhost:8080/api/customer/admin/delete/" + customerId,
+                    success: function (response) {
+                        console.log(response);
+                        $('#deleteBtn' + customerId).closest('tr').remove();
+                        showAlert('Thành công!', 'Bạn đã xóa thành công 01 khách hàng.', 'success');
+                        getCustomer(0, 7)
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            }
+        });
+    }
+
+
+</script>
 </body>
 </html>

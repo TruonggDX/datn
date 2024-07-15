@@ -3,6 +3,11 @@
 <head th:replace="admin/common/head :: head"></head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
+<script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
+
 <div id="preloader">
     <div class="loader"></div>
 </div>
@@ -21,7 +26,7 @@
                                 <div class="col-sm-12 col-md-6">
                                     <input style="width: 100px;" id="addAccount"
                                            class="btn btn-rounded btn-secondary mb-3" data-toggle="modal"
-                                           data-target="#exampleModalLong" type="reset" value="Thêm" >
+                                           data-target="#exampleModalLong" type="reset" value="Thêm">
                                 </div>
                                 <div class="col-sm-12 col-md-6">
                                     <div id="dataTable3_filter" class="dataTables_filter"><label>Tìm kiếm:
@@ -47,7 +52,7 @@
                                             <th>Thao tác</th>
                                         </tr>
                                         </thead>
-                                        <tbody id="user-list">
+                                        <tbody id="user_list">
                                         <!--     content        -->
                                         </tbody>
                                     </table>
@@ -106,7 +111,6 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <input id="userId" hidden="hidden" type="text">
-                                        <!--                                        <input type="text" hidden="hidden" id="roleId" name="roleId">-->
                                         <div class="form-group">
                                             <label for="username">Tên đăng nhập</label>
                                             <input type="text" class="form-control" id="username"
@@ -153,11 +157,26 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="certificate">Bằng cấp</label>
+                                            <input type="text" class="form-control" id="certificate"
+                                                   placeholder="Nhập bằng cấp">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="description">Mô tả</label>
+                                            <input type="email" class="form-control" id="description"
+                                                   placeholder="Nhập mô tả">
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label>Quyền</label>
-                                    <select class="form-control" id="role">
-                                        <option value="admin">Admin</option>
-                                        <option value="user">User</option>
+                                    <select id="role" placeholder="Chọn tối đa 2 quyền !" multiple>
+
                                     </select>
                                 </div>
                             </form>
@@ -173,6 +192,7 @@
     </div>
 </div>
 
+
 <div th:replace="admin/common/script :: script"></div>
 <script>
     $(document).ready(function () {
@@ -187,7 +207,7 @@
     }
 
     function getUser(page, size) {
-        let bodyTable = $('#user-list');
+        let bodyTable = $('#user_list');
         bodyTable.empty();
         $.ajax({
             type: "GET",
@@ -258,6 +278,8 @@
         $('#phone').val(user.phone);
         $('#email').val(user.email);
         $('#role').val(user.roleId);
+        $('#certificate').val(user.certificate);
+        $('#description').val(user.description);
     }
 
     function resetInfor() {
@@ -269,6 +291,8 @@
         $('#address').val('');
         $('#phone').val('');
         $('#email').val('');
+        $('#certificate').val('');
+        $('#description').val('');
     }
 
     function showAlert(title, message, type) {
@@ -285,27 +309,6 @@
     function changePage(page, size, event) {
         event.preventDefault();
         getUser(page, size);
-    }
-
-    function getRole() {
-        let list = $('#role');
-        list.empty();
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8080/api/role/list",
-            success: function (response) {
-                let role = response?.data?.content;
-
-                for (let i = 0; i < role.length; i++) {
-                    let data = role[i];
-                    let row = '<option style="margin-top: 30px" value="' + data.id + '">' + data.name + '</option>';
-                    list.append(row);
-                }
-            },
-            error: function (error) {
-                console.log(error);
-            }
-        });
     }
 
     function seachPro() {
@@ -335,7 +338,7 @@
                         let data = users[i];
                         let row = '<tr class="odd">' +
                             '<td style="max-width: 50px;">' + (i + 1) + '</td>' +
-                            '<td>' + data.username + '</td>' +
+                            '<td readonly="readonly">' + data.username + '</td>' +
                             '<td>' + data.fullname + '</td>' +
                             '<td>' + data.phone + '</td>' +
                             '<td>' + data.address + '</td>' +
@@ -347,7 +350,8 @@
                             '</tr>';
                         html += row;
                     }
-                    document.getElementById("user-list").innerHTML = html;
+                    document.getElementById("user_list").innerHTML = html;
+
                 }
                 updateAnDelete();
 
@@ -372,6 +376,13 @@
 
                     console.log(user)
                     $('#update-user-btn').off('click').on('click', function () {
+
+                        var roleIdArray = [];
+                        $('#role :selected').each(function (i, selected) {
+                            roleIdArray[i] = $(selected).val();
+                        });
+
+
                         var updateUser = {
                             id: $('#userId').val(),
                             username: $('#username').val(),
@@ -380,11 +391,13 @@
                             address: $('#address').val(),
                             phone: $('#phone').val(),
                             email: $('#email').val(),
-                            roleId: $('#role').val()
+                            certificate: $('#certificate').val(),
+                            description: $('#description').val(),
+                            roleId: roleIdArray
                         };
                         $.ajax({
                             type: "PUT",
-                            url: "http://localhost:8080/api/account/update/" + updateUser.id,
+                            url: "http://localhost:8080/api/account/admin/update/" + updateUser.id,
                             contentType: "application/json",
                             data: JSON.stringify(updateUser),
                             success: function (updateResponse) {
@@ -407,11 +420,28 @@
         $('#addAccount').click(function (event) {
             event.preventDefault();
             resetInfor();
+            var roleIdArray = [];
+            $('#role :selected').each(function (i, selected) {
+                roleIdArray[i] = $(selected).val();
+            });
+            var formAdd = {
+                id: $('#userId').val(),
+                username: $('#username').val(),
+                fullname: $('#fullname').val(),
+                birthday: $('#dob').val(),
+                address: $('#address').val(),
+                phone: $('#phone').val(),
+                email: $('#email').val(),
+                certificate: $('#certificate').val(),
+                description: $('#description').val(),
+                roleId: roleIdArray
+            };
             $.ajax({
                 type: "POST",
-                url: "http://localhost:8080/api/account/create/",
+                url: "http://localhost:8080/api/account/admin/create",
                 success: function (response) {
-                    var user = response.data;
+                    console.log(response);
+                    window.location.reload()
 
                 },
                 error: function (error) {
@@ -419,7 +449,44 @@
                 }
             });
         })
-
+        // $('#addAccount').click(function () {
+        //     event.preventDefault();
+        //     resetInfor();
+        //     $('#exampleModalLong').modal('show');
+        //     $('#exampleModalLong').off('click', '.btn-primary').on('click', '.btn-primary', function () {
+        //         var roleIdArray = [];
+        //         $('#role :selected').each(function (i, selected) {
+        //             roleIdArray[i] = $(selected).val();
+        //         });
+        //         var formData = {
+        //             id: $('#userId').val(),
+        //             username: $('#username').val(),
+        //             fullname: $('#fullname').val(),
+        //             birthday: $('#dob').val(),
+        //             address: $('#address').val(),
+        //             phone: $('#phone').val(),
+        //             email: $('#email').val(),
+        //             certificate: $('#certificate').val(),
+        //             description: $('#description').val(),
+        //             roleId: roleIdArray
+        //         };
+        //         $.ajax({
+        //             type: "POST",
+        //             url: "http://localhost:8080/api/account/admin/create",
+        //             contentType: "application/json",
+        //             data: JSON.stringify(formData),
+        //             dataType: "json",
+        //             success: function (response) {
+        //                 console.log(response);
+        //                 $('#exampleModalLong').modal('hide');
+        //                 window.location.reload();
+        //             },
+        //             error: function (error) {
+        //                 console.log(error);
+        //             }
+        //         });
+        //     });
+        // });
         $('.delete-user-btn').click(function (event) {
             event.preventDefault();
             var userId = $(this).data('id');
@@ -437,6 +504,34 @@
                         console.log(error);
                     }
                 });
+            }
+        });
+    }
+
+    function getRole() {
+        let list = $('#role');
+        list.empty();
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/api/role/list",
+            success: function (response) {
+                let roles = response?.data?.content;
+
+                for (let i = 0; i < roles.length; i++) {
+                    let data = roles[i];
+                    let row = '<option value="' + data.id + '">' + data.name + '</option>';
+                    list.append(row);
+                }
+
+                var multipleCancelButton = new Choices('#role', {
+                    removeItemButton: true,
+                    maxItemCount: 2,
+                    searchResultLimit: 5,
+                    renderChoiceLimit: 5
+                });
+            },
+            error: function (error) {
+                console.log(error);
             }
         });
     }

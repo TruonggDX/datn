@@ -20,6 +20,9 @@ public class AccountEntity extends AbstractEntity{
     private String password;
     private Date birthday;
     private String email;
+    private String certificate;
+    private String description;
+
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinTable(
