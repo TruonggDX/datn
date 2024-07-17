@@ -44,7 +44,7 @@ public class SecurityConfig {
                                 //admin
 //                                .requestMatchers("/api/account/admin/**").hasAnyRole("ADMIN")
                                 .requestMatchers("/api/account/admin/**").permitAll()
-                                .requestMatchers("/api/role/**").hasAnyRole("ADMIN")
+                                .requestMatchers("/api/role/**").permitAll()
                                 .requestMatchers("/api/customer/admin/**").hasAnyRole("ADMIN")
                                 .requestMatchers("/api/customer/register").permitAll()
 
@@ -71,6 +71,7 @@ public class SecurityConfig {
 
                                 //test permiall
                                 .requestMatchers("/api/certificate/admin/**").permitAll()
+                                .requestMatchers("/admin/demo").permitAll()
 
                                 .requestMatchers("/process-after-login").hasAnyRole(new String[]{"ADMIN", "USER", "EMPLOYEE"})
                 )

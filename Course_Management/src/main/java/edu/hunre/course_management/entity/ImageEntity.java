@@ -28,7 +28,8 @@ public class ImageEntity extends AbstractEntity implements Serializable {
         private CustomerEntity customer;
 
 
-        @OneToOne(mappedBy = "imageEntity", fetch = FetchType.LAZY)
-        private CustomerEntity customerEntity;
+        @OneToOne
+        @JoinColumn(name = "account_id")
+        private AccountEntity accountEntity;
 
 }

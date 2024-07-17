@@ -43,8 +43,8 @@ public class AccountEntity extends AbstractEntity{
     private List<CertificateEntity> certificateEntities;
 
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "image_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "accountEntity", cascade = CascadeType.ALL)
     private ImageEntity imageEntity;
+
 
 }
