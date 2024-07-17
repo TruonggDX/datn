@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -32,9 +33,27 @@ public class AccountResource {
         return new ResponseEntity<>(response, HttpStatus.valueOf(response.getCode()));
     }
 
+//    @PutMapping("/admin/update/{id}")
+//    public ResponseEntity<BaseResponse<AccountDTO>> updateUser(@PathVariable Long id, @RequestBody AccountDTO userDTO) {
+//        BaseResponse<AccountDTO> response = iAccountService.updateUser(id, userDTO);
+//        return ResponseEntity.status(response.getCode()).body(response);
+//    }
+
+//    @PostMapping("/admin/{accountId}")
+//    public ResponseEntity<BaseResponse<?>> addCertificate(
+//            @PathVariable Long accountId,
+//            @RequestBody CerAccountRequest cerAccountRequest) {
+//        BaseResponse<?> response = iAccountService.addCertificate(accountId, cerAccountRequest);
+//        return new ResponseEntity<>(response, HttpStatus.valueOf(response.getCode()));
+//    }
+
     @PutMapping("/admin/update/{id}")
-    public ResponseEntity<BaseResponse<AccountDTO>> updateUser(@PathVariable Long id, @RequestBody AccountDTO userDTO) {
-        BaseResponse<AccountDTO> response = iAccountService.updateUser(id, userDTO);
+    public ResponseEntity<BaseResponse<?>> updateCustomer(
+            @PathVariable Long id,
+            @ModelAttribute AccountDTO accountDto,
+            @RequestParam(required = false) MultipartFile imageFile
+    ) {
+        BaseResponse<?> response = iAccountService.updateUser(id, accountDto, imageFile);
         return ResponseEntity.status(response.getCode()).body(response);
     }
 

@@ -19,7 +19,11 @@
                 <input type="file" id="fileUpload" accept="image/*" style="display: none;">
             </div>
         </div>
+
         <div class="col-md-8">
+            <div style="margin-left: 50%" class="alert_message">
+
+            </div>
             <div class="p-4 rounded bg-white shadow-sm">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <div class="d-flex flex-row align-items-center">
@@ -315,7 +319,8 @@
                 processData: false,
                 contentType: false,
                 success: function (response) {
-                    alert('Cập nhật thành công!');
+                    showAlert('Thành công!', 'Cập nhật thông tin thành công!', 'success');
+                    // alert('Cập nhật thành công!');
                     console.log(response);
                 },
                 error: function (error) {
@@ -399,6 +404,18 @@
             });
         });
     });
+
+
+    function showAlert(title, message, type) {
+        var alertHtml = '<div class="alert alert-' + type + ' alert-dismissible fade show" role="alert">' +
+            '<strong>' + title + '</strong> ' + message +
+            '</div>';
+        var alertElement = $(alertHtml);
+        $('.alert_message').prepend(alertElement);
+        setTimeout(function () {
+            alertElement.alert('close');
+        }, 2000);
+    }
 </script>
 
 </body>

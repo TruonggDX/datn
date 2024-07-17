@@ -1,15 +1,13 @@
 package edu.hunre.course_management.service.impl;
 
-import edu.hunre.course_management.entity.AccountEntity;
 import edu.hunre.course_management.entity.CustomerEntity;
 import edu.hunre.course_management.entity.ImageEntity;
 import edu.hunre.course_management.entity.RoleEntity;
 import edu.hunre.course_management.model.dto.CustomerDTO;
-import edu.hunre.course_management.model.dto.CustomerDTO;
 import edu.hunre.course_management.model.dto.ImageDTO;
 import edu.hunre.course_management.model.dto.RoleDTO;
-import edu.hunre.course_management.model.request.ChagePasswordDTO;
-import edu.hunre.course_management.model.request.RegisterDTO;
+import edu.hunre.course_management.model.request.ChagePasswordRequest;
+import edu.hunre.course_management.model.request.RegisterRequest;
 import edu.hunre.course_management.model.response.BaseResponse;
 import edu.hunre.course_management.repository.CustomerRepository;
 import edu.hunre.course_management.repository.ImageRepository;
@@ -148,11 +146,6 @@ public class ICustomerImpl implements ICustomerService {
         }
 
         CustomerEntity customer = customerEntityOptional.get();
-//        if (customerRepository.existsByUsername(customerDTO.getUsername())) {
-//            response.setCode(HttpStatus.BAD_REQUEST.value());
-//            response.setMessage(Constant.HTTP_MESSAGE.FAILED);
-//            return response;
-//        }
         customer.setUsername(customerDTO.getUsername());
         customer.setFullname(customerDTO.getFullname());
         customer.setPhone(customerDTO.getPhone());
@@ -161,9 +154,7 @@ public class ICustomerImpl implements ICustomerService {
 
         try {
             if (imageFile != null && !imageFile.isEmpty()) {
-                // Kiểm tra xem đã có ảnh liên kết với khách hàng hay chưa
                 if (customer.getImageEntity() != null) {
-                    // Đã có ảnh, cập nhật lại
                     ImageEntity oldImageEntity = customer.getImageEntity();
                     imageService.updateImage(oldImageEntity.getId(), imageFile);
                 } else {
@@ -180,7 +171,6 @@ public class ICustomerImpl implements ICustomerService {
 
             customerRepository.save(customer);
 
-            // Map customer entity back to DTO
             CustomerDTO updatedCustomerDTO = modelMapper.map(customer, CustomerDTO.class);
             RoleEntity roleEntity = customer.getRoleEntity();
             RoleDTO roleDTO = modelMapper.map(roleEntity, RoleDTO.class);
@@ -221,17 +211,14 @@ public class ICustomerImpl implements ICustomerService {
                 return response;
             }
 
-            // Set image entity as deleted
             ImageEntity imageEntity = imageEntityOptional.get();
             imageEntity.setDeleted(true);
-            imageRepository.save(imageEntity); // Save the updated image entity
+            imageRepository.save(imageEntity);
         }
 
-        // Set customer as deleted
         customer.setDeleted(true);
-        customerRepository.save(customer); // Save the updated customer entity
+        customerRepository.save(customer);
 
-        // Prepare response
         CustomerDTO customerDto = modelMapper.map(customer, CustomerDTO.class);
         response.setCode(HttpStatus.OK.value());
         response.setMessage(Constant.HTTP_MESSAGE.SUCCESS);
@@ -262,10 +249,6 @@ public class ICustomerImpl implements ICustomerService {
         roleDTO.setName(roleEntities.getName());
 
         ImageEntity imageEntitys = customer.getImageEntity();
-//        CustomerDTO customerDTO = modelMapper.map(imageEntitys, CustomerDTO.class);
-
-
-
         CustomerDTO customerDTO = modelMapper.map(customer, CustomerDTO.class);
         if (imageEntitys != null) {
             try {
@@ -285,8 +268,8 @@ public class ICustomerImpl implements ICustomerService {
     }
 
     @Override
-    public BaseResponse<RegisterDTO> registerCustomer(RegisterDTO registerDTO) {
-        BaseResponse<RegisterDTO> response = new BaseResponse<>();
+    public BaseResponse<RegisterRequest> registerCustomer(RegisterRequest registerDTO) {
+        BaseResponse<RegisterRequest> response = new BaseResponse<>();
         try {
             if (customerRepository.existsByUsername(registerDTO.getUsername())) {
                 response.setCode(HttpStatus.BAD_REQUEST.value());
@@ -390,7 +373,7 @@ public class ICustomerImpl implements ICustomerService {
     }
 
     @Override
-    public BaseResponse<?> updatePassWord(Long id, ChagePasswordDTO chagePasswordDTO) {
+    public BaseResponse<?> updatePassWord(Long id, ChagePasswordRequest chagePasswordDTO) {
         BaseResponse<?> response = new BaseResponse<>();
         Optional<CustomerEntity> customerEntityOptional = customerRepository.findById(id);
         if (customerEntityOptional.isEmpty()) {

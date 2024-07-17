@@ -42,10 +42,12 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests((author) -> author.requestMatchers("/", "/login").permitAll()
                                 //admin
-                                .requestMatchers("/api/account/admin/**").hasAnyRole("ADMIN")
+//                                .requestMatchers("/api/account/admin/**").hasAnyRole("ADMIN")
+                                .requestMatchers("/api/account/admin/**").permitAll()
                                 .requestMatchers("/api/role/**").hasAnyRole("ADMIN")
                                 .requestMatchers("/api/customer/admin/**").hasAnyRole("ADMIN")
                                 .requestMatchers("/api/customer/register").permitAll()
+
                                 .requestMatchers("/api/account/common/getUser").hasAnyRole(new String[]{"ADMIN", "EMPLOYEE"})
 
                                 //employy
@@ -64,6 +66,11 @@ public class SecurityConfig {
 
                                 //common
                                 .requestMatchers("/api/customer/common/update/**").permitAll()
+//                                .requestMatchers("/api/certificate/common/update/**").hasAnyRole(new String[]{"ADMIN", "EMPLOYEE"})
+                                .requestMatchers("/api/certificate/common/update/**").permitAll()
+
+                                //test permiall
+                                .requestMatchers("/api/certificate/admin/**").permitAll()
 
                                 .requestMatchers("/process-after-login").hasAnyRole(new String[]{"ADMIN", "USER", "EMPLOYEE"})
                 )
