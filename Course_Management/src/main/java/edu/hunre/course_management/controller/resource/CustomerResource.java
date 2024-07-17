@@ -2,8 +2,8 @@ package edu.hunre.course_management.controller.resource;
 
 
 import edu.hunre.course_management.model.dto.CustomerDTO;
-import edu.hunre.course_management.model.request.ChagePasswordDTO;
-import edu.hunre.course_management.model.request.RegisterDTO;
+import edu.hunre.course_management.model.request.ChagePasswordRequest;
+import edu.hunre.course_management.model.request.RegisterRequest;
 import edu.hunre.course_management.model.response.BaseResponse;
 import edu.hunre.course_management.service.ICustomerService;
 import jakarta.validation.constraints.Min;
@@ -78,7 +78,7 @@ public class CustomerResource {
     }
 
     @PostMapping("/register")
-    public BaseResponse<RegisterDTO> registerCustomer(@RequestBody RegisterDTO registerDTO) {
+    public BaseResponse<RegisterRequest> registerCustomer(@RequestBody RegisterRequest registerDTO) {
         return iCustomerService.registerCustomer(registerDTO);
     }
 
@@ -93,7 +93,7 @@ public class CustomerResource {
     }
 
     @PutMapping("/updatePassWord/{id}")
-    public ResponseEntity<BaseResponse<?>> updatePass(@PathVariable Long id, @RequestBody ChagePasswordDTO chagePasswordDTO){
+    public ResponseEntity<BaseResponse<?>> updatePass(@PathVariable Long id, @RequestBody ChagePasswordRequest chagePasswordDTO){
         BaseResponse<?> response = iCustomerService.updatePassWord(id,chagePasswordDTO);
         if (response.getCode() == HttpStatus.OK.value()) {
             return ResponseEntity.ok(response);

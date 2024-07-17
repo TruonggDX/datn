@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
-import org.apache.tomcat.util.codec.binary.Base64;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -75,30 +74,25 @@ public class IImageImpl implements IImageService {
     @Override
     @Transactional
     public void updateImage(Long imageId, MultipartFile newFile) throws IOException {
-        // Tìm kiếm entity ảnh cần cập nhật
         ImageEntity imageEntity = imageRepository.findById(imageId)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy ảnh với ID: " + imageId));
 
-        // Xóa file ảnh cũ từ hệ thống nếu tồn tại
         if (imageEntity.getName() != null) {
             Path oldPath = Paths.get(imageEntity.getName());
             Files.deleteIfExists(oldPath);
         }
 
-        // Upload file ảnh mới và lưu thông tin vào entity ảnh
         String originalFilename = StringUtils.cleanPath(Objects.requireNonNull(newFile.getOriginalFilename()));
         Path targetLocation = this.uploadLocation.resolve(originalFilename);
         Files.copy(newFile.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
-        // Cập nhật thông tin của ảnh trong entity
         imageEntity.setName(originalFilename);
         imageEntity.setType(newFile.getContentType());
-        imageEntity.setUploadDir(targetLocation.toString());  // Lưu đường dẫn mới của file
+        imageEntity.setUploadDir(targetLocation.toString());
         imageEntity.setFile(newFile.getBytes());
         imageEntity.setModifiedDate(LocalDateTime.now());
         imageEntity.setDeleted(false);
 
-        // Lưu lại entity đã cập nhật vào cơ sở dữ liệu
         imageRepository.save(imageEntity);
     }
 

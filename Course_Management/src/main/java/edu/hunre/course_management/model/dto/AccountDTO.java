@@ -35,7 +35,7 @@ public class AccountDTO {
     @NotNull(message = "dateOfBirth must be not null")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(pattern = "MM/dd/yyyy")
-    private Date birthday;
+    private Date birthday; // ví dụ :  "birthday": "01/15/1990"
 
     @Email(message = "email invalid format")
     private String email;
@@ -49,6 +49,10 @@ public class AccountDTO {
     private String modifiedBy;
     private LocalDateTime modifiedDate;
     List<RoleDTO> roleDtos;
-    private String certificate;
     private String description;
+    private String title;
+    private String image;
+    private Long image_id;
+    private List<Long> certificateId;
+    private String certificate;
 }
