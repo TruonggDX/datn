@@ -52,7 +52,7 @@ public class AccountDTO {
     private String description;
     private String title;
     private String image;
-    private Long image_id;
     private List<Long> certificateId;
+    private Long image_id;
     private String certificate;
 }

@@ -33,19 +33,6 @@ public class AccountResource {
         return new ResponseEntity<>(response, HttpStatus.valueOf(response.getCode()));
     }
 
-//    @PutMapping("/admin/update/{id}")
-//    public ResponseEntity<BaseResponse<AccountDTO>> updateUser(@PathVariable Long id, @RequestBody AccountDTO userDTO) {
-//        BaseResponse<AccountDTO> response = iAccountService.updateUser(id, userDTO);
-//        return ResponseEntity.status(response.getCode()).body(response);
-//    }
-
-//    @PostMapping("/admin/{accountId}")
-//    public ResponseEntity<BaseResponse<?>> addCertificate(
-//            @PathVariable Long accountId,
-//            @RequestBody CerAccountRequest cerAccountRequest) {
-//        BaseResponse<?> response = iAccountService.addCertificate(accountId, cerAccountRequest);
-//        return new ResponseEntity<>(response, HttpStatus.valueOf(response.getCode()));
-//    }
 
     @PutMapping("/admin/update/{id}")
     public ResponseEntity<BaseResponse<?>> updateCustomer(

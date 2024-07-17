@@ -5,10 +5,7 @@ import edu.hunre.course_management.entity.ImageEntity;
 import edu.hunre.course_management.entity.RoleEntity;
 import edu.hunre.course_management.entity.AccountEntity;
 import edu.hunre.course_management.exception.ResourceNotFoundException;
-import edu.hunre.course_management.model.dto.CertificateDTO;
-import edu.hunre.course_management.model.dto.ImageDTO;
-import edu.hunre.course_management.model.dto.RoleDTO;
-import edu.hunre.course_management.model.dto.AccountDTO;
+import edu.hunre.course_management.model.dto.*;
 import edu.hunre.course_management.model.response.BaseResponse;
 import edu.hunre.course_management.repository.CertificateRepository;
 import edu.hunre.course_management.repository.ImageRepository;
@@ -45,6 +42,7 @@ public class IAccountImpl implements IAccountService {
     private ImageRepository imageRepository;
     @Autowired
     private IImageService imageService;
+
     @Autowired
     private ModelMapper modelMapper;
 
@@ -126,7 +124,7 @@ public class IAccountImpl implements IAccountService {
         if (accountRepository.findByUsername(userDTO.getUsername()) != null) {
             // Thông báo rằng tên người dùng đã tồn tại trong hệ thống
             response.setCode(HttpStatus.BAD_REQUEST.value());
-            response.setMessage("Tài khoản đã tồn tại trong hệ thống");
+            response.setMessage(Constant.HTTP_MESSAGE.FAILED);
             return response;
         }
 
@@ -151,52 +149,6 @@ public class IAccountImpl implements IAccountService {
         return response;
     }
 
-    //    @Override
-//    public BaseResponse<AccountDTO> updateUser(Long userId, AccountDTO userDTO) {
-//        BaseResponse<AccountDTO> response = new BaseResponse<>();
-//        Optional<AccountEntity> optionalUser = accountRepository.findById(userId);
-//        if (optionalUser.isEmpty()) {
-//            return new BaseResponse<>(HttpStatus.NOT_FOUND.value(), Constant.HTTP_MESSAGE.FAILED, null);
-//        }
-//        AccountEntity accountEntity = optionalUser.get();
-//        accountEntity.setFullname(userDTO.getFullname());
-//        accountEntity.setPhone(userDTO.getPhone());
-//        accountEntity.setAddress(userDTO.getAddress());
-//        accountEntity.setBirthday(userDTO.getBirthday());
-//        accountEntity.setEmail(userDTO.getEmail());
-//        accountEntity.setDescription(userDTO.getDescription());
-//        accountEntity.setDeleted(false);
-//        accountEntity.setModifiedDate(userDTO.getModifiedDate().now());
-//        accountEntity.setModifiedBy(userDTO.getModifiedBy());
-//
-//
-//        Set<RoleEntity> roleEntities = new HashSet<>();
-//        for (Long roleId : userDTO.getRoleId()) {
-//            RoleEntity roleEntity = roleRepository.findById(roleId).orElseThrow();
-//            if (roleEntity != null) {
-//                roleEntities.add(roleEntity);
-//            }
-//        }
-//        accountEntity.setRoles(roleEntities);
-//
-//
-//        AccountEntity user = accountRepository.save(accountEntity);
-//        AccountDTO userDTOs = modelMapper.map(user, AccountDTO.class);
-//        List<Long> roleIds = accountEntity.getRoles().stream().map(RoleEntity::getId).collect(Collectors.toList());
-//        userDTOs.setRoleId(roleIds);
-//        List<RoleDTO> roleDTOS = accountEntity.getRoles().stream().map(roleEntity -> {
-//            RoleDTO roleDTO = modelMapper.map(roleEntity, RoleDTO.class);
-//            roleDTO.setId(roleEntity.getId());
-//            roleDTO.setName(roleEntity.getName());
-//            return roleDTO;
-//        }).collect(Collectors.toList());
-//        userDTOs.setRoleDtos(roleDTOS);
-//
-//        response.setData(userDTOs);
-//        response.setCode(HttpStatus.OK.value());
-//        response.setMessage(Constant.HTTP_MESSAGE.SUCCESS);
-//        return response;
-//    }
     @Override
     public BaseResponse<AccountDTO> updateUser(Long userId, AccountDTO userDTO, MultipartFile imageFile) {
         BaseResponse<AccountDTO> response = new BaseResponse<>();
@@ -224,16 +176,15 @@ public class IAccountImpl implements IAccountService {
             }
         }
         accountEntity.setRoles(roleEntities);
-
         try {
             if (imageFile != null && !imageFile.isEmpty()) {
                 if (accountEntity.getImageEntity() != null) {
                     ImageEntity oldImageEntity = accountEntity.getImageEntity();
                     imageService.updateImage(oldImageEntity.getId(), imageFile);
-                    accountEntity.setImageEntity(oldImageEntity);
                 } else {
                     ImageDTO uploadedImage = imageService.uploadFile(imageFile);
                     ImageEntity imageEntity = modelMapper.map(uploadedImage, ImageEntity.class);
+                    imageEntity.setAccountEntity(accountEntity);
                     imageEntity.setDeleted(false);
                     imageEntity.setCreatedDate(LocalDateTime.now());
                     imageRepository.save(imageEntity);
@@ -243,10 +194,9 @@ public class IAccountImpl implements IAccountService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
         AccountEntity user = accountRepository.save(accountEntity);
         AccountDTO userDTOs = modelMapper.map(user, AccountDTO.class);
+        userDTOs.setImage_id(user.getImageEntity().getId());
         List<Long> roleIds = accountEntity.getRoles().stream().map(RoleEntity::getId).collect(Collectors.toList());
         userDTOs.setRoleId(roleIds);
         List<RoleDTO> roleDTOS = accountEntity.getRoles().stream().map(roleEntity -> {
@@ -296,17 +246,28 @@ public class IAccountImpl implements IAccountService {
             response.setMessage(Constant.HTTP_MESSAGE.FAILED);
             return response;
         }
-        AccountDTO userDTO = modelMapper.map(accountEntity, AccountDTO.class);
+        ImageEntity imageEntitys = accountEntity.getImageEntity();
+        AccountDTO accountDTO = modelMapper.map(accountEntity, AccountDTO.class);
+        accountDTO.setImage_id(accountEntity.getImageEntity().getId());
+        if (imageEntitys != null) {
+            try {
+                byte[] fileBytes = imageEntitys.getFile();
+                String base64Image = Base64.getEncoder().encodeToString(fileBytes);
+                accountDTO.setImage(base64Image);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         List<Long> roleIds = accountEntity.getRoles().stream().map(RoleEntity::getId).collect(Collectors.toList());
-        userDTO.setRoleId(roleIds);
+        accountDTO.setRoleId(roleIds);
         List<RoleDTO> roleDTOS = accountEntity.getRoles().stream().map(roleEntity -> {
             RoleDTO roleDTO = modelMapper.map(roleEntity, RoleDTO.class);
             roleDTO.setId(roleEntity.getId());
             roleDTO.setName(roleEntity.getName());
             return roleDTO;
         }).collect(Collectors.toList());
-        userDTO.setRoleDtos(roleDTOS);
-        response.setData(userDTO);
+        accountDTO.setRoleDtos(roleDTOS);
+        response.setData(accountDTO);
         response.setCode(HttpStatus.OK.value());
         response.setMessage(Constant.HTTP_MESSAGE.SUCCESS);
         return response;
@@ -328,6 +289,18 @@ public class IAccountImpl implements IAccountService {
                     roleDTO.setName(roleEntity.getName());
                     return roleDTO;
                 }).collect(Collectors.toList());
+
+                ImageEntity imageEntity = user.getImageEntity();
+                if (imageEntity != null) {
+                    try {
+                        byte[] fileBytes = imageEntity.getFile();
+                        String base64Image = Base64.getEncoder().encodeToString(fileBytes);
+                        userDTO.setImage(base64Image);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
                 userDTO.setRoleDtos(roleDTOS);
                 userDTOS.add(userDTO);
             }
@@ -341,38 +314,6 @@ public class IAccountImpl implements IAccountService {
         return response;
     }
 
-//    @Override
-//    public BaseResponse<?> addCertificate(Long id, CertificateDTO cerAccountRequest) {
-//        BaseResponse<CertificateDTO> response = new BaseResponse<>();
-//        Optional<AccountEntity> optionalUser = accountRepository.findById(id);
-//        if(optionalUser.isEmpty()){
-//            response.setCode(HttpStatus.BAD_REQUEST.value());
-//            response.setMessage(Constant.HTTP_MESSAGE.FAILED);
-//            return response;
-//        }
-//        AccountEntity accountEntity = optionalUser.get();
-//        CertificateEntity certificateEntity = new CertificateEntity();
-//        certificateEntity.setCertificateName(cerAccountRequest.getCertificateName());
-//        certificateEntity.setDescription(cerAccountRequest.getDescription());
-//        certificateEntity.setIssuingOrganization(cerAccountRequest.getIssuingOrganization());
-//        certificateEntity.setCertificateType(cerAccountRequest.getCertificateType());
-//        certificateEntity.setCertificateNumber(cerAccountRequest.getCertificateNumber());
-//        certificateEntity.setIssueDate(cerAccountRequest.getIssueDate());
-//        certificateEntity.setCertificateStatus(cerAccountRequest.getCertificateStatus());
-//        certificateEntity.setDeleted(false);
-//        certificateEntity.setCreatedDate(LocalDateTime.now());
-//        certificateEntity.setAccountEntity(accountEntity);
-//        accountEntity.getCertificateEntities().add(certificateEntity);
-//        cerAccountRequest.setAccount_id(certificateEntity.getAccountEntity().getId());
-//        certificateEntity = certificateRepository.save(certificateEntity);
-//        Long certificateId = certificateEntity.getId();
-//        cerAccountRequest.setId(certificateId);
-//        accountRepository.save(accountEntity);
-//        response.setCode(HttpStatus.OK.value());
-//        response.setMessage(Constant.HTTP_MESSAGE.SUCCESS);
-//        response.setData(cerAccountRequest);
-//        return response;
-//    }
 
     @Override
     public BaseResponse<AccountDTO> getUser() {
