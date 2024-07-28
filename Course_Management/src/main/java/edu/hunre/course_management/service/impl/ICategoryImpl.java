@@ -153,15 +153,22 @@ public class ICategoryImpl implements ICategoryService {
     public BaseResponse<CategoryDTO> deleteCategory(Long id) {
         BaseResponse<CategoryDTO> response = new BaseResponse<>();
         Optional<CategoryEntity> categoryEntity = categoryRepository.findById(id);
-        if(categoryEntity.isEmpty()  || categoryEntity.get().getDeleted()){
+        if (categoryEntity.isEmpty() || categoryEntity.get().getDeleted()) {
             response.setMessage(Constant.HTTP_MESSAGE.FAILED);
             response.setCode(HttpStatus.BAD_REQUEST.value());
             return response;
         }
         CategoryEntity category = categoryEntity.get();
+        List<CategoryEntity> childCategories = categoryRepository.findByParentId(id);
+        for (CategoryEntity child : childCategories) {
+            child.setDeleted(true);
+            categoryRepository.save(child);
+        }
+
         category.setDeleted(true);
         CategoryDTO categoryDTO = categoryMapper.toDTO(category);
         categoryRepository.save(category);
+
         response.setMessage(Constant.HTTP_MESSAGE.SUCCESS);
         response.setCode(HttpStatus.OK.value());
         response.setData(categoryDTO);
@@ -169,11 +176,12 @@ public class ICategoryImpl implements ICategoryService {
         return response;
     }
 
+
     @Override
     public BaseResponse<List<CategoryDTO>> getAllParentCategories() {
         BaseResponse<List<CategoryDTO>> response = new BaseResponse<>();
         List<CategoryDTO> parentCategories = categoryRepository.findAll().stream()
-                .filter(categoryEntity -> categoryEntity.getParent() == null)
+                .filter(categoryEntity -> categoryEntity.getParent() == null && !categoryEntity.getDeleted())
                 .map(categoryMapper::toDTO)
                 .collect(Collectors.toList());
 
