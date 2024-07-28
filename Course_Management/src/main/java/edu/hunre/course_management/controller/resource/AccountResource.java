@@ -2,6 +2,8 @@ package edu.hunre.course_management.controller.resource;
 
 import edu.hunre.course_management.exception.ResourceNotFoundException;
 import edu.hunre.course_management.model.dto.AccountDTO;
+import edu.hunre.course_management.model.request.AccountRequest;
+import edu.hunre.course_management.model.request.ChagePasswordRequest;
 import edu.hunre.course_management.model.response.BaseResponse;
 import edu.hunre.course_management.service.IAccountService;
 import jakarta.validation.Valid;
@@ -28,7 +30,7 @@ public class AccountResource {
     }
 
     @PostMapping("/admin/create")
-    public ResponseEntity<BaseResponse<?>> createUser(@Valid @RequestBody AccountDTO userDTO) {
+    public ResponseEntity<BaseResponse<?>> createUser(@RequestBody AccountDTO userDTO) {
         BaseResponse<?> response = iAccountService.createUser(userDTO);
         return new ResponseEntity<>(response, HttpStatus.valueOf(response.getCode()));
     }
@@ -66,10 +68,11 @@ public class AccountResource {
         }
         return ResponseEntity.notFound().build();
     }
+
     @GetMapping("/admin/searchByKey/{keyword}")
     public ResponseEntity<BaseResponse<List<AccountDTO>>> findAccByUserNameAndFullName(@PathVariable String keyword) {
         BaseResponse<List<AccountDTO>> response = iAccountService.findUserByUsAndFn(keyword);
-        if (response.getCode()==HttpStatus.OK.value()) {
+        if (response.getCode() == HttpStatus.OK.value()) {
             return ResponseEntity.ok(response);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
@@ -85,4 +88,28 @@ public class AccountResource {
             return ResponseEntity.status(response.getCode()).body(response);
         }
     }
+
+    @PutMapping("/updatePassWord/{id}")
+    public ResponseEntity<BaseResponse<?>> updatePass(@PathVariable Long id, @RequestBody ChagePasswordRequest chagePasswordDTO) {
+        BaseResponse<?> response = iAccountService.updatePassWord(id, chagePasswordDTO);
+        if (response.getCode() == HttpStatus.OK.value()) {
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(response.getCode()).body(response);
+        }
+    }
+
+    @PutMapping("/admin/updateBatch/{accountId}")
+    public ResponseEntity<BaseResponse<?>> updateBatch(
+            @PathVariable Long accountId,
+            @ModelAttribute AccountDTO accountDto,
+            @RequestParam(required = false) MultipartFile imageFile){
+        BaseResponse<?> response = iAccountService.updateBatch(accountId, accountDto, imageFile);
+        if (response.getCode() == HttpStatus.OK.value()) {
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(response.getCode()).body(response);
+        }
+    }
+
 }

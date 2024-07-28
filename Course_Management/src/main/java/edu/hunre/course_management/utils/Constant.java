@@ -1,6 +1,10 @@
 package edu.hunre.course_management.utils;
 
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+
 public class Constant {
     public static final String ROLE_ADMIN="ADMIN";
     public static final String ROLE_USER="USER";
@@ -16,5 +20,7 @@ public class Constant {
 
 
     }
-
+    public static Date convertToDateViaInstant(LocalDate dateToConvert) {
+        return Date.from(dateToConvert.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    }
 }

@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/common/head :: head"></head>
+<link th:href="@{/admin/plugins/toastr/css/toastr.min.css}" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+<body>
+
+<div id="preloader">
+    <div class="loader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"/>
+        </svg>
+    </div>
+</div>
+
+<div id="main-wrapper">
+    <header th:replace="admin/common/header :: header"></header>
+    <aside th:replace="admin/common/sidebar :: sidebar"></aside>
+    <div class="content-body">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Danh sách chứng chỉ / Bằng cấp</h4>
+                            <div class="col-sm-12 col-md-12"
+                                 style="display: flex; justify-content: space-between; align-items: center;">
+                                <div class="col-sm-6 col-md-6">
+                                    <input style="width: 100px" id="addCertificate" class="btn btn-rounded btn-primary mb-5"
+                                           data-toggle="modal" data-target="#exampleModalLong" type="button"
+                                           value="Thêm">
+                                </div>
+                                <div class="col-sm-6 col-md-6">
+                                    <div class="form-group"
+                                         style="display: flex; align-items: center;width: 330px;float: right">
+                                        <label style="margin-right: 10px; width: 80px;">Tìm kiếm</label>
+                                        <input type="search" onkeyup="searchPro()" name="condition" id="searchCondition"
+                                               class="form-control input-rounded"
+                                               placeholder="Nhập tên chứng chỉ hoặc người dùng">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered zero-configuration">
+                                    <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Tên chứng chỉ</th>
+                                        <th>Loại chứng chỉ</th>
+                                        <th>Tổ chức cấp</th>
+                                        <th>Trạng thái</th>
+                                        <th>Người dùng</th>
+                                        <th>Thao tác</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="certificate_list">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="bootstrap-pagination">
+                                <nav>
+                                    <ul id="pageId" class="pagination justify-content-end">
+
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 mt-5">
+        <div class="card">
+            <div class="modal fade" id="exampleModalLong">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 id="title_modal" class="modal-title">User Information</h5>
+                            <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input id="cerId" hidden="hidden" type="text">
+                                        <input id="accId" hidden="hidden" type="text">
+                                        <div class="form-group">
+                                            <label>Tên chứng chỉ</label>
+                                            <input type="text" class="form-control" id="certificateName"
+                                                   placeholder="Nhập tên chứng chỉ">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Loại chứng chỉ</label>
+                                            <input type="text" class="form-control" id="certificateType"
+                                                   placeholder="Nhập loại chứng chỉ">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Tổ chức cấp</label>
+                                            <input type="text" class="form-control" id="issuingOrganization"
+                                                   placeholder="Nhập tổ chức cấp">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Số chứng chỉ</label>
+                                            <input type="text" class="form-control" id="certificateNumber"
+                                                   placeholder="Nhập số chứng chỉ">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Ngày cấp</label>
+                                            <input type="date" class="form-control" id="issueDate"
+                                                   placeholder="Nhập ngày cấp">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Trạng thái</label>
+                                            <select class="form-control" id="certificateStatus">
+                                                <option>Expired </option>
+                                                <option>Active</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="description">Mô tả</label>
+                                            <textarea type="text" class="form-control" id="description"
+                                                      placeholder="Nhập mô tả"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" id="accountFrist">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Người dùng</label>
+                                            <input type="text" class="form-control" id="accountName">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row" id="accountSecond">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Người dùng</label>
+                                            <select class="form-control" id="accountId">
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                            <button type="button" id="update-cer-btn" class="btn btn-primary">Lưu</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="admin/common/script :: script"></div>
+<script>
+    $(document).ready(function () {
+        initData();
+        var updateMessage = localStorage.getItem('updateMessage');
+        if (updateMessage) {
+            showToastr(updateMessage, "Thành công", "success");
+            localStorage.removeItem('updateMessage');
+        }
+    });
+
+    function initData() {
+        let page = 0;
+        let size = 7;
+        getCertificate(page, size);
+        getAccount()
+    }
+
+    function getCertificate(page, size) {
+        let bodyTable = $('#certificate_list');
+        bodyTable.empty();
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/api/certificate/admin/list?page=" + page + "&size=" + size,
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                let certificates = response?.data?.content;
+                for (let i = 0; i < certificates.length; i++) {
+                    let data = certificates[i];
+                    let row = '<tr class="odd">' +
+                        '<td style="max-width: 50px;" >' + (i + 1) + '</td>' +
+                        '<td>' + data.certificateName + '</td>' +
+                        '<td>' + data.certificateType + '</td>' +
+                        '<td>' + data.issuingOrganization + '</td>' +
+                        '<td>' + data.certificateStatus + '</td>' +
+                        '<td>' + data.accountName + '</td>' +
+                        '<td >' +
+                        '<a data-toggle="modal" data-target="#exampleModalLong" type="button" class="btn btn-default edit-user-btn" data-id="' + data.id + '" ><i style="color: black;font-size: 18px" class="fa-regular fa-pen-to-square"></i></a>' +
+                        '<a type="button" class="btn btn-default delete-cer-btn" data-id="' + data.id + '" ><i style="color: black;font-size: 18px" class="fa-regular fa-trash-can"></i></a>' +
+                        '</td>' +
+                        '</tr>';
+                    bodyTable.append(row);
+                }
+
+
+                let totalPage = response.data.totalPages;
+                let currentPage = response.data.pageable.pageNumber;
+                if (totalPage > 0) {
+                    $("#pageId").empty();
+                    let pages = '<li class="page-item"><a class="page-link" onclick="changePage(' + (currentPage - 1) + ',7,event)" href="#">Previous</a></li>';
+                    for (let i = 0; i < totalPage; i++) {
+                        if (currentPage === i) {
+                            pages += '<li class="page-item active"><a class="page-link" onclick="changePage(' + i + ',7,event)" href="#">' + (i + 1) + '</a></li>';
+                        } else {
+                            pages += '<li class="page-item"><a class="page-link" onclick="changePage(' + i + ',7,event)" href="#">' + (i + 1) + '</a></li>';
+                        }
+                    }
+                    pages += '<li class="page-item"><a class="page-link" onclick="changePage(' + (currentPage + 1) + ',7,event)" href="#">Next</a></li>';
+                    $("#pageId").append(pages);
+                }
+                updateAnDelete()
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+
+    }
+
+
+    function changePage(page, size, event) {
+        event.preventDefault();
+        getCertificate(page, size);
+    }
+
+
+    function updateAnDelete() {
+
+        $('#addCertificate').click(function (event) {
+            event.preventDefault();
+            resetInfor();
+            $('.modal-lg').width(900)
+            $('#accountFrist').hide()
+            $('#accountSecond').show()
+
+            $('#exampleModalLong').off('click', '.btn-primary').on('click', '.btn-primary', function () {
+                var formAdd = {
+                    id: $('#cerId').val(),
+                    certificateName: $('#certificateName').val(),
+                    description: $('#description').val(),
+                    issuingOrganization: $('#issuingOrganization').val(),
+                    certificateType: $('#certificateType').val(),
+                    certificateNumber: $('#certificateNumber').val(),
+                    issueDate: $('#issueDate').val(),
+                    certificateStatus: $('#certificateStatus').val(),
+                    account_id: $('#accountId').val()
+                };
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost:8080/api/certificate/admin/certifice/" + formAdd.account_id,
+                    contentType: "application/json",
+                    data: JSON.stringify(formAdd),
+                    dataType: "json",
+                    success: function (response) {
+                        console.log(response);
+                        localStorage.setItem('updateMessage', 'Đã thêm chứng chỉ thành công!');
+                        window.location.reload();
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            });
+        });
+
+        $('.edit-user-btn').click(function (event) {
+            event.preventDefault();
+            var cerId = $(this).data('id');
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/api/certificate/admin/searchById/" + cerId,
+                success: function (response) {
+                    $('#title_modal').text('Cập nhập chứng chỉ / Bằng cấp');
+                    var certificate = response.data;
+                    console.log(certificate)
+                    getInforCertificate(certificate);
+                    $('#update-cer-btn').off('click').on('click', function () {
+
+                        var updateCer = {
+                            id: $('#cerId').val(),
+                            certificateName: $('#certificateName').val(),
+                            description: $('#description').val(),
+                            issuingOrganization: $('#issuingOrganization').val(),
+                            certificateType: $('#certificateType').val(),
+                            certificateNumber: $('#certificateNumber').val(),
+                            issueDate: $('#issueDate').val(),
+                            certificateStatus: $('#certificateStatus').val()
+                        };
+                        $.ajax({
+                            type: "PUT",
+                            url: "http://localhost:8080/api/certificate/common/update/" + updateCer.id,
+                            contentType: "application/json",
+                            data: JSON.stringify(updateCer),
+                            success: function (updateResponse) {
+                                console.log(updateResponse);
+                                localStorage.setItem('updateMessage', 'Đã cập nhật chứng chỉ thành công');
+                                window.location.reload();
+                            },
+                            error: function (updateError) {
+                                console.log(updateError);
+                            }
+                        });
+                    });
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        });
+
+
+        $('.delete-cer-btn').click(function (event) {
+            event.preventDefault();
+            var cerId = $(this).data('id');
+            swal({
+                    title: "Bạn có chắc chắn muốn xóa?",
+                    text: "Bạn sẽ không thể khôi phục lại chứng chỉ này sau khi xóa !!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Có, xóa đi !!",
+                    cancelButtonText: "Hủy bỏ",
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+                },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        $.ajax({
+                            type: "DELETE",
+                            url: "http://localhost:8080/api/certificate/admin/delete/" + cerId,
+                            success: function (response) {
+                                console.log(response)
+                                swal("Đã xóa !!", "Tài khoản đã được xóa thành công !!", "success");
+                                var deletedRow = $('.delete-cer-btn[data-id="' + cerId + '"]').closest('tr');
+                                deletedRow.remove();
+                            },
+                            error: function (error) {
+                                swal("Lỗi !!", "Đã xảy ra lỗi trong quá trình xóa tài khoản !!", "error");
+                                console.log(error);
+                            }
+                        });
+                    }
+                });
+        });
+    }
+
+    function getInforCertificate(data) {
+        $('#cerId').val(data.id);
+        $('#certificateName').val(data.certificateName);
+        $('#description').val(data.description);
+        $('#issuingOrganization').val(data.issuingOrganization);
+        $('#certificateType').val(data.certificateType);
+        $('#certificateNumber').val(data.certificateNumber);
+        $('#issueDate').val(data.issueDate);
+        $('#certificateStatus').val(data.certificateStatus);
+        $('#accountName').val(data.accountName);
+        $('#accountFrist').show()
+        $('#accountSecond').hide()
+    }
+
+
+    function resetInfor() {
+        $('#title_modal').text('Thêm chứng chỉ');
+        $('#cerId').val('');
+        $('#certificateName').val('');
+        $('#description').val('');
+        $('#issuingOrganization').val('');
+        $('#certificateType').val('');
+        $('#certificateNumber').val('');
+        $('#issueDate').val('');
+        $('#certificateStatus').val('');
+        $('#accountName').val('');
+    }
+
+    function showToastr(message, title = "Thông báo", type = "info") {
+        toastr.options = {
+            closeButton: true,
+            debug: false,
+            newestOnTop: true,
+            progressBar: true,
+            positionClass: "toast-top-right",
+            preventDuplicates: true,
+            onclick: null,
+            showDuration: "300",
+            hideDuration: "1000",
+            extendedTimeOut: "1000",
+            showEasing: "swing",
+            hideEasing: "linear",
+            showMethod: "fadeIn",
+            hideMethod: "fadeOut",
+            tapToDismiss: false
+        };
+        toastr[type](message, title);
+    }
+    function searchPro() {
+        var searchCondition = $("#searchCondition").val();
+        let html = "";
+        let url = "http://localhost:8080/api/certificate/admin/";
+
+        if (searchCondition === "") {
+            getCertificate(0, 7);
+            return;
+        } else {
+            url += "searchByCondition/" + searchCondition;
+        }
+
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function(response) {
+                console.log(response);
+                let certificates = response?.data;
+                if (certificates && certificates.length > 0) {
+                    for (let i = 0; i < certificates.length; i++) {
+                        let data = certificates[i];
+                        let row = '<tr class="odd">' +
+                            '<td style="max-width: 50px;">' + (i + 1) + '</td>' +
+                            '<td>' + data.certificateName + '</td>' +
+                            '<td>' + data.certificateType + '</td>' +
+                            '<td>' + data.issuingOrganization + '</td>' +
+                            '<td>' + data.certificateStatus + '</td>' +
+                            '<td>' + data.accountName + '</td>' +
+                            '<td>' +
+                            '<a data-toggle="modal" data-target="#exampleModalLong" type="button" class="btn btn-default edit-user-btn" data-id="' + data.id + '">' +
+                            '<i style="color: black; font-size: 18px" class="fa-regular fa-pen-to-square"></i></a>' +
+                            '<a type="button" class="btn btn-default delete-cer-btn" data-id="' + data.id + '">' +
+                            '<i style="color: black; font-size: 18px" class="fa-regular fa-trash-can"></i></a>' +
+                            '</td>' +
+                            '</tr>';
+                        html += row;
+                    }
+                    document.getElementById("certificate_list").innerHTML = html;
+                } else {
+                    html = '<tr><td colspan="7" style="text-align: center;">Không tìm thấy chứng chỉ</td></tr>';
+                    document.getElementById("certificate_list").innerHTML = html;
+                }
+                updateAnDelete();
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    }
+    function getAccount() {
+        let list = $('#accountId');
+        list.empty();
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/api/account/admin/list",
+            success: function (response) {
+                let account = response?.data?.content;
+
+                for (let i = 0; i <account.length; i++) {
+                    let data = account[i];
+                    let row = '<option value="' + data.id + '">' + data.fullname + '</option>';
+                    list.append(row);
+                }
+                console.log(response)
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+
+</script>
+</body>
+</html>

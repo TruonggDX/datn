@@ -1,38 +1,45 @@
 <div th:fragment="script">
-    <!-- jquery latest version -->
-    <script th:src="@{/admin/assets/js/vendor/jquery-2.2.4.min.js}"></script>
-    <!-- bootstrap 4 js -->
-    <script th:src="@{/admin/assets/js/popper.min.js}"></script>
-    <script th:src="@{/admin/assets/js/bootstrap.min.js}"></script>
-    <script th:src="@{/admin/assets/js/owl.carousel.min.js}"></script>
-    <script th:src="@{/admin/assets/js/metisMenu.min.js}"></script>
-    <script th:src="@{/admin/assets/js/jquery.slimscroll.min.js}"></script>
-    <script th:src="@{/admin/assets/js/jquery.slicknav.min.js}"></script>
+    <script th:src="@{/admin/plugins/common/common.min.js}"></script>
+    <script th:src="@{/admin/js/custom.min.js}"></script>
+    <script th:src="@{/admin/js/settings.js}"></script>
+    <script th:src="@{/admin/js/gleek.js}"></script>
+    <script th:src="@{/admin/js/styleSwitcher.js}"></script>
 
-    <!-- start chart js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
-    <!-- start highcharts js -->
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <!-- start zingchart js -->
-    <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
-    <script>
-        zingchart.MODULESDIR = "https://cdn.zingchart.com/modules/";
-        ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "ee6b7db5b51705a13dc2339db3edaf6d"];
-    </script>
-    <!-- all line chart activation -->
-    <script th:src="@{/admin/assets/js/line-chart.js}"></script>
-    <!-- all pie chart -->
-    <script th:src="@{/admin/assets/js/pie-chart.js}"></script>
-    <!-- others plugins -->
-    <script th:src="@{/admin/assets/js/plugins.js}"></script>
-    <script th:src="@{/admin/assets/js/scripts.js}"></script>
+    <!-- Chartjs -->
+    <script th:src="@{/admin/plugins/chart.js/Chart.bundle.min.js}"></script>
+    <!-- Circle progress -->
+    <script th:src="@{/admin/plugins/circle-progress/circle-progress.min.js}"></script>
+    <!-- Datamap -->
+    <script th:src="@{/admin/plugins/d3v3/index.js}"></script>
+    <script th:src="@{/admin/plugins/topojson/topojson.min.js}"></script>
+    <script th:src="@{/admin/plugins/datamaps/datamaps.world.min.js}"></script>
+    <!-- Morrisjs -->
+    <script th:src="@{/admin/plugins/raphael/raphael.min.js}"></script>
+    <script th:src="@{/admin/plugins/morris/morris.min.js}"></script>
+    <!-- Pignose Calender -->
+    <script th:src="@{/admin/plugins/moment/moment.min.js}"></script>
+    <script th:src="@{/admin/plugins/pg-calendar/js/pignose.calendar.min.js}"></script>
+    <!-- ChartistJS -->
+    <script th:src="@{/admin/plugins/chartist/js/chartist.min.js}"></script>
+    <script th:src="@{/admin/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js}"></script>
 
 
 
-<!--    table-->
-    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
-    <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
+    <script th:src="@{/admin/js/dashboard/dashboard-1.js}"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
+
+
+
+
+
+    <script th:src="@{/admin/plugins/sweetalert/js/sweetalert.min.js}"></script>
+    <script th:src="@{/admin/plugins/sweetalert/js/sweetalert.init.js}"></script>
 </div>

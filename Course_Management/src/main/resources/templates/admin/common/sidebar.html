@@ -1,91 +1,172 @@
-<aside th:fragment="sidebar" xmlns:sec="http://www.w3.org/1999/xhtml">
-    <div class="sidebar-menu">
-        <div class="sidebar-header">
-            <div class="logo">
-                <a href="index.html"><img src="assets/images/icon/logo.png" alt="logo"></a>
-            </div>
-        </div>
-        <div class="main-menu">
-            <div class="menu-inner">
-                <nav>
-                    <ul class="metismenu" id="menu">
-                        <li class="active">
-                            <a th:href="@{/admin/dashbroad}" aria-expanded="true"><i class="ti-dashboard"></i><span>dashboard</span></a>
-                        </li>
-                        <li >
-                            <a  href="javascript:void(0)" aria-expanded="true"><i class="ti-layout-sidebar-left"></i><span>Tài khoản</span></a>
-                            <ul class="collapse">
-                                <li><a th:href="@{/admin/account/list}">Danh sách tài khoản</a></li>
-                                <li><a href="index3-horizontalmenu.html">Horizontal Sidebar</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" aria-expanded="true"><i class="ti-pie-chart"></i><span>Quyền</span></a>
-                            <ul class="collapse">
-                                <li><a th:href="@{/admin/role/list}">Danh sách quyền</a></li>
-                            </ul>
-                        </li>
-
-                        <li>
-                            <a href="javascript:void(0)" aria-expanded="true"><i class="ti-palette"></i><span>Khách hàng</span></a>
-                            <ul class="collapse">
-                                <li><a th:href="@{/admin/customer/list}">Danh sách khách hàng</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" aria-expanded="true"><i class="ti-slice"></i><span>icons</span></a>
-                            <ul class="collapse">
-                                <li><a href="fontawesome.html">fontawesome icons</a></li>
-                                <li><a href="themify.html">themify icons</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" aria-expanded="true"><i class="fa fa-table"></i>
-                                <span>Tables</span></a>
-                            <ul class="collapse">
-                                <li><a href="table-basic.html">basic table</a></li>
-                                <li><a href="table-layout.html">table layout</a></li>
-                                <li><a href="datatable.html">datatable</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="maps.html"><i class="ti-map-alt"></i> <span>maps</span></a></li>
-                        <li><a href="invoice.html"><i class="ti-receipt"></i> <span>Invoice Summary</span></a></li>
-                        <li>
-                            <a href="javascript:void(0)" aria-expanded="true"><i class="ti-layers-alt"></i> <span>Pages</span></a>
-                            <ul class="collapse">
-                                <li><a href="login.html">Login</a></li>
-                                <li><a href="login2.html">Login 2</a></li>
-                                <li><a href="login3.html">Login 3</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" aria-expanded="true"><i class="fa fa-exclamation-triangle"></i>
-                                <span>Error</span></a>
-                            <ul class="collapse">
-                                <li><a href="404.html">Error 404</a></li>
-                                <li><a href="403.html">Error 403</a></li>
-                                <li><a href="500.html">Error 500</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" aria-expanded="true"><i class="fa fa-align-left"></i> <span>Multi
-                                        level menu</span></a>
-                            <ul class="collapse">
-                                <li><a href="#">Item level (1)</a></li>
-                                <li><a href="#">Item level (1)</a></li>
-                                <li><a href="#" aria-expanded="true">Item level (1)</a>
-                                    <ul class="collapse">
-                                        <li><a href="#">Item level (2)</a></li>
-                                        <li><a href="#">Item level (2)</a></li>
-                                        <li><a href="#">Item level (2)</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="#">Item level (1)</a></li>
-                            </ul>
-                        </li>
+<aside th:fragment="sidebar">
+    <div class="nk-sidebar">
+        <div class="nk-nav-scroll">
+            <ul class="metismenu" id="menu">
+                <li class="nav-label">Trang chủ</li>
+                <li id="accounts">
+                    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                        <i class="icon-speedometer menu-icon"></i><span class="nav-text">Tài khoản</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        <li><a th:href="@{/admin/account/list}">Danh sách tài khoản</a></li>
+                        <!--                         <li><a href="./index-2.html">Home 2</a></li>-->
                     </ul>
-                </nav>
-            </div>
+                </li>
+                <li id="roles" class="mega-menu mega-menu-sm">
+                    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                        <i class="icon-globe-alt menu-icon"></i><span class="nav-text">Quyền</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        <li><a th:href="@{/admin/role/list}">Danh sách quyền</a></li>
+                        <!--                        <li><a href="./layout-one-column.html">One Column</a></li>-->
+
+                    </ul>
+                </li>
+                <li>
+                    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                        <i class="icon-envelope menu-icon"></i> <span class="nav-text">Khách hàng</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        <li><a th:href="@{/admin/customer/list}">Danh sách khách hàng</a></li>
+                        <!--                        <li><a href="./email-read.html">Read</a></li>-->
+                        <!--                        <li><a href="./email-compose.html">Compose</a></li>-->
+                    </ul>
+                </li>
+                <li>
+                    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                        <i class="icon-screen-tablet menu-icon"></i><span class="nav-text">Chứng chỉ/Bằng cấp</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        <li><a th:href="@{/admin/certificate/list}">Danh sách chứng chỉ</a></li>
+                        <!--                        <li><a href="./app-calender.html">Calender</a></li>-->
+                    </ul>
+                </li>
+                <li>
+                    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                        <i class="icon-graph menu-icon"></i> <span class="nav-text">Charts</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        <li><a href="./chart-flot.html">Flot</a></li>
+                        <li><a href="./chart-morris.html">Morris</a></li>
+                        <li><a href="./chart-chartjs.html">Chartjs</a></li>
+                        <li><a href="./chart-chartist.html">Chartist</a></li>
+                        <li><a href="./chart-sparkline.html">Sparkline</a></li>
+                        <li><a href="./chart-peity.html">Peity</a></li>
+                    </ul>
+                </li>
+                <li class="nav-label">UI Components</li>
+                <li>
+                    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                        <i class="icon-grid menu-icon"></i><span class="nav-text">UI Components</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        <li><a href="./ui-accordion.html">Accordion</a></li>
+                        <li><a href="./ui-alert.html">Alert</a></li>
+                        <li><a href="./ui-badge.html">Badge</a></li>
+                        <li><a href="./ui-button.html">Button</a></li>
+                        <li><a href="./ui-button-group.html">Button Group</a></li>
+                        <li><a href="./ui-cards.html">Cards</a></li>
+                        <li><a href="./ui-carousel.html">Carousel</a></li>
+                        <li><a href="./ui-dropdown.html">Dropdown</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                        <i class="icon-layers menu-icon"></i><span class="nav-text">Components</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        <li><a href="./uc-nestedable.html">Nestedable</a></li>
+                        <li><a href="./uc-noui-slider.html">Noui Slider</a></li>
+                        <li><a href="./uc-sweetalert.html">Sweet Alert</a></li>
+                        <li><a href="./uc-toastr.html">Toastr</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="widgets.html" aria-expanded="false">
+                        <i class="icon-badge menu-icon"></i><span class="nav-text">Widget</span>
+                    </a>
+                </li>
+                <li class="nav-label">Forms</li>
+                <li>
+                    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                        <i class="icon-note menu-icon"></i><span class="nav-text">Forms</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        <li><a href="./form-basic.html">Basic Form</a></li>
+                        <li><a href="./form-validation.html">Form Validation</a></li>
+                        <li><a href="./form-step.html">Step Form</a></li>
+                        <li><a href="./form-editor.html">Editor</a></li>
+                        <li><a href="./form-picker.html">Picker</a></li>
+                    </ul>
+                </li>
+                <!--                <li class="nav-label">Table</li>-->
+                <!--                <li>-->
+                <!--                    <a class="has-arrow" href="javascript:void()" aria-expanded="false">-->
+                <!--                        <i class="icon-menu menu-icon"></i><span class="nav-text">Table</span>-->
+                <!--                    </a>-->
+                <!--                    <ul aria-expanded="false">-->
+                <!--                        <li><a href="./table-basic.html" aria-expanded="false">Basic Table</a></li>-->
+                <!--                        <li><a href="./table-datatable.html" aria-expanded="false">Data Table</a></li>-->
+                <!--                    </ul>-->
+                <!--                </li>-->
+                <!--                <li class="nav-label">Pages</li>-->
+                <!--                <li>-->
+                <!--                    <a class="has-arrow" href="javascript:void()" aria-expanded="false">-->
+                <!--                        <i class="icon-notebook menu-icon"></i><span class="nav-text">Pages</span>-->
+                <!--                    </a>-->
+                <!--                    <ul aria-expanded="false">-->
+                <!--                        <li><a href="./page-login.html">Login</a></li>-->
+                <!--                        <li><a href="./page-register.html">Register</a></li>-->
+                <!--                        <li><a href="./page-lock.html">Lock Screen</a></li>-->
+                <!--                        <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Error</a>-->
+                <!--                            <ul aria-expanded="false">-->
+                <!--                                <li><a href="./page-error-404.html">Error 404</a></li>-->
+                <!--                                <li><a href="./page-error-403.html">Error 403</a></li>-->
+                <!--                                <li><a href="./page-error-400.html">Error 400</a></li>-->
+                <!--                                <li><a href="./page-error-500.html">Error 500</a></li>-->
+                <!--                                <li><a href="./page-error-503.html">Error 503</a></li>-->
+                <!--                            </ul>-->
+                <!--                        </li>-->
+                <!--                    </ul>-->
+                <!--                </li>-->
+            </ul>
         </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: 'http://localhost:8080/api/account/common/getUser',
+                type: 'GET',
+                success: function (data) {
+                    var roleDtos = data.data.roleDtos;
+                    console.log('name role :', roleDtos);
+                    var isAdmin = false;
+                    if (roleDtos!= null && roleDtos.length > 0) {
+                        for (var i = 0; i < roleDtos.length; i++) {
+                            if (roleDtos[i].name === 'ADMIN') {
+                                isAdmin = true;
+                                break;
+                            }
+                        }
+                    } else {
+                        console.error('loiiiii roi');
+                    }
+                    if (isAdmin) {
+                        $('#accounts').show();
+                        $('#roles').show();
+                    } else {
+                        $('#accounts').hide();
+                        $('#roles').hide();
+                    }
+                },
+                error: function (error) {
+                    console.error(error);
+                }
+            });
+        });
+
+
+
+    </script>
 </aside>

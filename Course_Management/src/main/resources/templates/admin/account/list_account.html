@@ -1,90 +1,71 @@
-<!doctype html>
-<html class="no-js" lang="en" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="admin/common/head :: head"></head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
-<script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
+<link th:href="@{/admin/plugins/toastr/css/toastr.min.css}" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<body>
 
 <div id="preloader">
-    <div class="loader"></div>
+    <div class="loader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"/>
+        </svg>
+    </div>
 </div>
-<div class="page-container">
-    <aside th:replace="admin/common/sidebar :: sidebar"></aside>
-    <div class="main-content">
-        <nav th:replace="admin/common/navbar :: navbar"></nav>
-        <div class="col-12 mt-4">
-            <div class="alert_message">
-            </div>
-            <div class="card">
-                <div class="card-body">
-                    <div class="data-tables datatable-dark">
-                        <div id="dataTable3_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
-                            <div class="row">
-                                <div class="col-sm-12 col-md-6">
-                                    <input style="width: 100px;" id="addAccount"
-                                           class="btn btn-rounded btn-secondary mb-3" data-toggle="modal"
-                                           data-target="#exampleModalLong" type="reset" value="Thêm">
-                                </div>
-                                <div class="col-sm-12 col-md-6">
-                                    <div id="dataTable3_filter" class="dataTables_filter"><label>Tìm kiếm:
-                                        <input type="search" style="width: 250px" class="form-control form-control-sm"
-                                               onkeyup="seachPro()" name="condition" id="searchCondition" placeholder=""
-                                               aria-controls="dataTable3">
-                                        <div id="renSearch"></div>
-                                    </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <table style="width: 100%;">
-                                        <thead class="text-capitalize">
-                                        <tr role="row">
-                                            <th>STT</th>
-                                            <th>Tên đăng nhập</th>
-                                            <th>Họ và tên</th>
-                                            <th>Số điện thoại</th>
-                                            <th>Địa chỉ</th>
-                                            <th>Quyền</th>
-                                            <th>Thao tác</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody id="user_list">
-                                        <!--     content        -->
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <style>
-                                th, td {
-                                    border: 1px solid #dddddd;
-                                    padding: 8px;
-                                    text-align: center;
 
-                                }
-                            </style>
-                            <div class="row">
-                                <div class="col-sm-12 col-md-12" style="margin-top: 20px;">
-                                    <div class="dataTables_paginate paging_simple_numbers" id="dataTable3_paginate">
-                                        <ul class="pagination" id="pageId">
-                                            <li class="page-item disabled">
-                                                <a class="page-link" href="#" tabindex="-1">Previous</a>
-                                            </li>
-                                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                            <li class="page-item active">
-                                                <a class="page-link" href="#">2 <span
-                                                        class="sr-only">(current)</span></a>
-                                            </li>
-                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">Next</a>
-                                            </li>
-                                        </ul>
+<div id="main-wrapper">
+    <header th:replace="admin/common/header :: header"></header>
+    <aside th:replace="admin/common/sidebar :: sidebar"></aside>
+    <div class="content-body">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Danh sách tài khoản</h4>
+                            <div class="col-sm-12 col-md-12"
+                                 style="display: flex; justify-content: space-between; align-items: center;">
+                                <div class="col-sm-6 col-md-6">
+                                    <input style="width: 100px" id="addAccount" class="btn btn-rounded btn-primary mb-5"
+                                           data-toggle="modal" data-target="#exampleModalLong" type="button"
+                                           value="Thêm">
+                                </div>
+                                <div class="col-sm-6 col-md-6">
+                                    <div class="form-group"
+                                         style="display: flex; align-items: center;width: 330px;float: right">
+                                        <label style="margin-right: 10px; width: 80px;">Tìm kiếm</label>
+                                        <input type="search" onkeyup="seachPro()" name="condition" id="searchCondition"  class="form-control input-rounded"
+                                               placeholder="Nhập username hoặc fullname">
                                     </div>
                                 </div>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered zero-configuration">
+                                    <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Tên đăng nhập</th>
+                                        <th>Họ và tên</th>
+                                        <th>Số điện thoại</th>
+                                        <th>Địa chỉ</th>
+                                        <th>Quyền</th>
+                                        <th>Thao tác</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="user_list">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="bootstrap-pagination">
+                                <nav>
+                                    <ul id="pageId" class="pagination justify-content-end">
+
+                                    </ul>
+                                </nav>
                             </div>
                         </div>
                     </div>
@@ -92,15 +73,10 @@
             </div>
         </div>
     </div>
-</div>
-
-
-<!--modal-->
-<div class="col-lg-6 mt-5">
-    <div class="card">
-        <div class="card-body">
+    <div class="col-lg-6 mt-5">
+        <div class="card">
             <div class="modal fade" id="exampleModalLong">
-                <div class="modal-dialog modal-lg">
+                <div class="modal-dialog exampleModalLong">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 id="title_modal" class="modal-title">User Information</h5>
@@ -129,7 +105,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="dob">Ngày sinh</label>
-                                            <input type="text" class="form-control" id="dob"
+                                            <input type="date" class="form-control" id="dob"
                                                    placeholder="Nhập ngày sinh">
                                         </div>
                                     </div>
@@ -157,31 +133,34 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row" id="hiddenPass">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="password">Mật khẩu</label>
+                                            <input type="password" class="form-control" id="password"
+                                                      placeholder="Nhập mật khẩu"></input>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="description">Mô tả</label>
-                                            <textarea type="text" class="form-control" id="description" placeholder="Nhập mô tả"></textarea>
+                                            <textarea type="text" class="form-control" id="description"
+                                                      placeholder="Nhập mô tả"></textarea>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Bằng cấp/Chứng chỉ</label>
-                                    <select id="certificate" placeholder="Chọn bằng cấp" multiple>
-
-                                    </select>
-                                </div>
-                                <div class="form-group">
                                     <label>Quyền</label>
                                     <select id="role" placeholder="Chọn tối đa 2 quyền !" multiple>
-
                                     </select>
                                 </div>
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" id="update-user-btn" class="btn btn-primary">Save changes</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                            <button type="button" id="update-user-btn" class="btn btn-primary">Lưu</button>
                         </div>
                     </div>
                 </div>
@@ -189,12 +168,17 @@
         </div>
     </div>
 </div>
-
-
 <div th:replace="admin/common/script :: script"></div>
 <script>
+    var multipleCancelButton = null;
     $(document).ready(function () {
+
         initData();
+        var updateMessage = localStorage.getItem('updateMessage');
+        if (updateMessage) {
+            showToastr(updateMessage, "Thành công", "success");
+            localStorage.removeItem('updateMessage');
+        }
     });
 
     function initData() {
@@ -202,7 +186,6 @@
         let size = 7;
         getUser(page, size);
         getRole();
-        getCertificate();
     }
 
     function getUser(page, size) {
@@ -231,7 +214,7 @@
                         '<td>' + data.phone + '</td>' +
                         '<td>' + data.address + '</td>' +
                         '<td>' + roleNames + '</td>' +
-                        '<td style="width: 125px">' +
+                        '<td >' +
                         '<a data-toggle="modal" data-target="#exampleModalLong" type="button" class="btn btn-default edit-user-btn" data-id="' + data.id + '" ><i style="color: black;font-size: 18px" class="fa-regular fa-pen-to-square"></i></a>' +
                         '<a type="button" class="btn btn-default delete-user-btn" data-id="' + data.id + '" ><i style="color: black;font-size: 18px" class="fa-regular fa-trash-can"></i></a>' +
                         '</td>' +
@@ -239,24 +222,20 @@
                     bodyTable.append(row);
                 }
 
-                // Phân trang
+
                 let totalPage = response.data.totalPages;
                 let currentPage = response.data.pageable.pageNumber;
                 if (totalPage > 0) {
                     $("#pageId").empty();
-                    let pages = '<li class="page-item"><a class="page-link" onclick="changePage(' + (currentPage - 1) + ',7,event)" href="#"><i class="fa-solid fa-chevron-up fa-rotate-270"></i></a></li>';
+                    let pages = '<li class="page-item"><a class="page-link" onclick="changePage(' + (currentPage - 1) + ',7,event)" href="#">Previous</a></li>';
                     for (let i = 0; i < totalPage; i++) {
                         if (currentPage === i) {
-                            pages += '            <li class="page-item active">\n' +
-                                '                <a class="page-link " onclick="changePage(' + i + ',7,event)" href="#">' + (i + 1) + '</a></li>\n' +
-                                '            <li class="page-item">';
+                            pages += '<li class="page-item active"><a class="page-link" onclick="changePage(' + i + ',7,event)" href="#">' + (i + 1) + '</a></li>';
                         } else {
-                            pages += '            <li class="page-item">\n' +
-                                '                <a class="page-link" onclick="changePage(' + i + ',7,event)" href="#">' + (i + 1) + '</a></li>\n' +
-                                '            <li class="page-item">';
+                            pages += '<li class="page-item"><a class="page-link" onclick="changePage(' + i + ',7,event)" href="#">' + (i + 1) + '</a></li>';
                         }
                     }
-                    pages += '<li class="page-item"><a class="page-link" onclick="changePage(' + (currentPage + 1) + ',7,event)" href="#"><i class="fa-solid fa-chevron-up fa-rotate-90"></i></a></li>';
+                    pages += '<li class="page-item"><a class="page-link" onclick="changePage(' + (currentPage + 1) + ',7,event)" href="#">Next</a></li>';
                     $("#pageId").append(pages);
                 }
                 updateAnDelete()
@@ -268,70 +247,7 @@
 
     }
 
-    function getInforUser(user) {
-        $('#userId').val(user.id);
-        $('#username').val(user.username);
-        $('#fullname').val(user.fullname);
-        $('#dob').val(user.birthday);
-        $('#address').val(user.address);
-        $('#phone').val(user.phone);
-        $('#email').val(user.email);
-        $('#role').val(user.roleId);
-        console.log('role id ', user.roleId)
-        $('#certificate').val(user.certificate);
-        $('#description').val(user.description);
 
-        updateRoleChoices(user.roleDtos);
-    }
-    function setSelectedRoles(selectedRoleIds) {
-        var selectElement = document.getElementById('role');
-        if (!selectElement.choices) {
-            // Initialize Choices.js if not already initialized
-            new Choices('#role', {
-                removeItemButton: true,
-                maxItemCount: 2,
-                searchResultLimit: 5,
-                renderChoiceLimit: 5
-            });
-        } else {
-            // Clear existing selections
-            selectElement.choices.clearStore();
-        }
-
-        // Set selected roles
-        if (selectedRoleIds && selectedRoleIds.length > 0) {
-            for (let i = 0; i < selectedRoleIds.length; i++) {
-                selectElement.choices.setValueByChoice(selectedRoleIds[i]);
-            }
-        }
-    }
-
-
-
-
-    function resetInfor() {
-        $('#title_modal').text('Thêm tài khoản');
-        $('#userId').val('');
-        $('#username').val('');
-        $('#fullname').val('');
-        $('#dob').val('');
-        $('#address').val('');
-        $('#phone').val('');
-        $('#email').val('');
-        $('#certificate').val('');
-        $('#description').val('');
-    }
-
-    function showAlert(title, message, type) {
-        var alertHtml = '<div class="alert alert-' + type + ' alert-dismissible fade show" role="alert" style="margin-left: 70%">' +
-            '<strong>' + title + '</strong> ' + message +
-            '</div>';
-        var alertElement = $(alertHtml);
-        $('.alert_message').prepend(alertElement);
-        setTimeout(function () {
-            alertElement.alert('close');
-        }, 2000);
-    }
 
     function changePage(page, size, event) {
         event.preventDefault();
@@ -342,6 +258,7 @@
         var searchCondition = $("#searchCondition").val();
         let html = "";
         let url = "http://localhost:8080/api/account/admin/";
+
         if (searchCondition == "") {
             url += getUser(0, 7);
         } else {
@@ -364,24 +281,25 @@
                         }
                         let data = users[i];
                         let row = '<tr class="odd">' +
-                            '<td style="max-width: 50px;">' + (i + 1) + '</td>' +
-                            '<td readonly="readonly">' + data.username + '</td>' +
+                            '<td style="max-width: 50px;" >' + (i + 1) + '</td>' +
+                            '<td>' + data.username + '</td>' +
                             '<td>' + data.fullname + '</td>' +
                             '<td>' + data.phone + '</td>' +
                             '<td>' + data.address + '</td>' +
                             '<td>' + roleNames + '</td>' +
-                            '<td style="width: 125px">' +
-                            '<a data-toggle="modal" data-target="#exampleModalLong" type="button" class="btn btn-default edit-user-btn" data-id="' + data.id + '"><i style="color: black; font-size: 18px;" class="fa-regular fa-pen-to-square"></i></a>' +
-                            '<a type="button" class="btn btn-default delete-user-btn" data-id="' + data.id + '"><i style="color: black; font-size: 18px;" class="fa-regular fa-trash-can"></i></a>' +
+                            '<td >' +
+                            '<a data-toggle="modal" data-target="#exampleModalLong" type="button" class="btn btn-default edit-user-btn" data-id="' + data.id + '" ><i style="color: black;font-size: 18px" class="fa-regular fa-pen-to-square"></i></a>' +
+                            '<a type="button" class="btn btn-default delete-user-btn" data-id="' + data.id + '" ><i style="color: black;font-size: 18px" class="fa-regular fa-trash-can"></i></a>' +
                             '</td>' +
                             '</tr>';
                         html += row;
                     }
                     document.getElementById("user_list").innerHTML = html;
-
+                } else {
+                    html = '<tr><td colspan="7" style="text-align: center;">Không tìm thấy tài khoản người dùng</td></tr>';
+                    document.getElementById("user_list").innerHTML = html;
                 }
                 updateAnDelete();
-
             },
             error: function (error) {
                 console.log(error);
@@ -389,48 +307,94 @@
         });
     }
 
+
+
     function updateAnDelete() {
+
+        $('#addAccount').click(function (event) {
+            event.preventDefault();
+            resetInfor();
+            $('#hiddenPass').show()
+            $('#exampleModalLong').off('click', '.btn-primary').on('click', '.btn-primary', function () {
+                var roleIdArray = [];
+                $('#role :selected').each(function (i, selected) {
+                    roleIdArray[i] = $(selected).val();
+                });
+                var formAdd = {
+                    id: $('#userId').val(),
+                    username: $('#username').val(),
+                    fullname: $('#fullname').val(),
+                    birthday: $('#dob').val(),
+                    address: $('#address').val(),
+                    phone: $('#phone').val(),
+                    email: $('#email').val(),
+                    certificate: $('#certificate').val(),
+                    password: $('#password').val(),
+                    description: $('#description').val(),
+                    roleId: roleIdArray
+                };
+
+                    $.ajax({
+                        type: "POST",
+                        url: "http://localhost:8080/api/account/admin/create",
+                        contentType: "application/json",
+                        data: JSON.stringify(formAdd),
+                        dataType: "json",
+                        success: function (response) {
+                            console.log(response);
+                            window.location.reload();
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
+            });
+        });
         $('.edit-user-btn').click(function (event) {
             event.preventDefault();
-            var userId = $(this).data('id');
+            var accoundId = $(this).data('id');
             $.ajax({
                 type: "GET",
-                url: "http://localhost:8080/api/account/admin/search/" + userId,
+                url: "http://localhost:8080/api/account/admin/search/" + accoundId,
                 success: function (response) {
                     $('#title_modal').text('Cập nhập tài khoản');
                     var user = response.data;
-                    getInforUser(user);
-
                     console.log(user)
-
+                    console.log('id role : ')
+                    getInforUser(user);
+                    $('#hiddenPass').hide()
                     $('#update-user-btn').off('click').on('click', function () {
-
                         var roleIdArray = [];
                         $('#role :selected').each(function (i, selected) {
-                            roleIdArray[i] = $(selected).val();
+                            roleIdArray[i] = parseInt($(selected).val(), 10);
+                        });
+                        console.log('id role', roleIdArray)
+                        var dobElement = document.getElementById('dob');
+                        var dobValue = dobElement.value
+                        var formattedDob = new Date(dobValue).toISOString().split('T')[0];
+                        var formData = new FormData();
+                        formData.append('id', $('#userId').val());
+                        formData.append('username', $('#username').val());
+                        formData.append('fullname', $('#fullname').val());
+                        formData.append('birthday', formattedDob);
+                        formData.append('address', $('#address').val());
+                        formData.append('phone', $('#phone').val());
+                        formData.append('email', $('#email').val());
+                        formData.append('description', $('#description').val());
+                        roleIdArray.forEach(function(roleId) {
+                            formData.append('roleId', roleId);
                         });
 
 
-                        var updateUser = {
-                            id: $('#userId').val(),
-                            username: $('#username').val(),
-                            fullname: $('#fullname').val(),
-                            birthday: $('#dob').val(),
-                            address: $('#address').val(),
-                            phone: $('#phone').val(),
-                            email: $('#email').val(),
-                            certificate: $('#certificate').val(),
-                            description: $('#description').val(),
-                            roleId: roleIdArray
-                        };
                         $.ajax({
                             type: "PUT",
-                            url: "http://localhost:8080/api/account/admin/update/" + updateUser.id,
-                            contentType: "application/json",
-                            data: JSON.stringify(updateUser),
+                            url: "http://localhost:8080/api/account/admin/update/" + $('#userId').val(),
+                            data: formData,
+                            processData: false,
+                            contentType: false,
                             success: function (updateResponse) {
                                 console.log(updateResponse);
-                                $('#exampleModalLong').modal('hide');
+                                localStorage.setItem('updateMessage', 'Đã cập nhật tài khoản thành công');
                                 window.location.reload();
                             },
                             error: function (updateError) {
@@ -438,101 +402,48 @@
                             }
                         });
                     });
-                    $('#exampleModalLong').modal('show');
-                },
-                error: function (error) {
-                    console.log(error);
-                }
-            });
-        });
-        $('#addAccount').click(function (event) {
-            event.preventDefault();
-            resetInfor();
-            var roleIdArray = [];
-            $('#role :selected').each(function (i, selected) {
-                roleIdArray[i] = $(selected).val();
-            });
-            var formAdd = {
-                id: $('#userId').val(),
-                username: $('#username').val(),
-                fullname: $('#fullname').val(),
-                birthday: $('#dob').val(),
-                address: $('#address').val(),
-                phone: $('#phone').val(),
-                email: $('#email').val(),
-                certificate: $('#certificate').val(),
-                description: $('#description').val(),
-                roleId: roleIdArray
-            };
-            $.ajax({
-                type: "POST",
-                url: "http://localhost:8080/api/account/admin/create",
-                success: function (response) {
-                    console.log(response);
-                    window.location.reload()
 
                 },
                 error: function (error) {
                     console.log(error);
                 }
             });
-        })
-        // $('#addAccount').click(function () {
-        //     event.preventDefault();
-        //     resetInfor();
-        //     $('#exampleModalLong').modal('show');
-        //     $('#exampleModalLong').off('click', '.btn-primary').on('click', '.btn-primary', function () {
-        //         var roleIdArray = [];
-        //         $('#role :selected').each(function (i, selected) {
-        //             roleIdArray[i] = $(selected).val();
-        //         });
-        //         var formData = {
-        //             id: $('#userId').val(),
-        //             username: $('#username').val(),
-        //             fullname: $('#fullname').val(),
-        //             birthday: $('#dob').val(),
-        //             address: $('#address').val(),
-        //             phone: $('#phone').val(),
-        //             email: $('#email').val(),
-        //             certificate: $('#certificate').val(),
-        //             description: $('#description').val(),
-        //             roleId: roleIdArray
-        //         };
-        //         $.ajax({
-        //             type: "POST",
-        //             url: "http://localhost:8080/api/account/admin/create",
-        //             contentType: "application/json",
-        //             data: JSON.stringify(formData),
-        //             dataType: "json",
-        //             success: function (response) {
-        //                 console.log(response);
-        //                 $('#exampleModalLong').modal('hide');
-        //                 window.location.reload();
-        //             },
-        //             error: function (error) {
-        //                 console.log(error);
-        //             }
-        //         });
-        //     });
-        // });
+            resetInfor();
+        });
+
+
         $('.delete-user-btn').click(function (event) {
             event.preventDefault();
             var userId = $(this).data('id');
-            if (confirm('Bạn chắc chắn muốn xóa tài khoản này?')) {
-                $.ajax({
-                    type: "DELETE",
-                    url: "http://localhost:8080/api/account/admin/delete/" + userId,
-                    success: function (response) {
-                        console.log(response);
-                        $('#deleteBtn' + userId).closest('tr').remove();
-                        showAlert('Thành công!', 'Bạn đã xóa thành công 01 tài khoản.', 'success');
-                        getUser(0, 7)
-                    },
-                    error: function (error) {
-                        console.log(error);
+            swal({
+                    title: "Bạn có chắc chắn muốn xóa?",
+                    text: "Bạn sẽ không thể khôi phục lại tài khoản này sau khi xóa !!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Có, xóa đi !!",
+                    cancelButtonText: "Hủy bỏ",
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+                },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        $.ajax({
+                            type: "DELETE",
+                            url: "http://localhost:8080/api/account/admin/delete/" + userId,
+                            success: function (response) {
+                                console.log(response)
+                                swal("Đã xóa !!", "Tài khoản đã được xóa thành công !!", "success");
+                                var deletedRow = $('.delete-user-btn[data-id="' + userId + '"]').closest('tr');
+                                deletedRow.remove();
+                            },
+                            error: function (error) {
+                                swal("Lỗi !!", "Đã xảy ra lỗi trong quá trình xóa tài khoản !!", "error");
+                                console.log(error);
+                            }
+                        });
                     }
                 });
-            }
         });
     }
 
@@ -551,7 +462,7 @@
                     list.append(row);
                 }
 
-                var multipleCancelButton = new Choices('#role', {
+                multipleCancelButton = new Choices('#role', {
                     removeItemButton: true,
                     maxItemCount: 2,
                     searchResultLimit: 5,
@@ -563,35 +474,64 @@
             }
         });
     }
+    function getInforUser(user) {
+        $('#userId').val(user.id);
+        $('#username').val(user.username);
+        $('#fullname').val(user.fullname);
+        $('#dob').val(user.birthday);
+        $('#address').val(user.address);
+        $('#phone').val(user.phone);
+        $('#email').val(user.email);
+        const numbers = user.roleId;
 
-    function getCertificate(){
-        let listCer = $('#certificate');
-        listCer.empty();
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8080/api/certificate/admin/list",
-            success: function (response) {
-                let cers = response?.data?.content;
+        const parseString = numbers.map(number => number.toString());
+        $('#role').val(parseString);
+        multipleCancelButton.setChoiceByValue(parseString);
 
-                for (let i = 0; i < cers.length; i++) {
-                    let data = cers[i];
-                    let row = '<option value="' + data.id + '">' + data.certificateName + '</option>';
-                    listCer.append(row);
-                }
-                console.log('data ',cers)
-
-                var multipleCancelButton = new Choices('#certificate', {
-                    removeItemButton: true,
-                    maxItemCount: 5,
-                    searchResultLimit: 5,
-                    renderChoiceLimit: 5
-                });
-            },
-            error: function (error) {
-                console.log(error);
-            }
-        });
+        $('#description').val(user.description);
     }
+
+
+
+
+    function resetInfor() {
+        $('#title_modal').text('Thêm tài khoản');
+        $('#userId').val('');
+        $('#username').val('');
+        $('#fullname').val('');
+        $('#dob').val('');
+        $('#address').val('');
+        $('#phone').val('');
+        $('#email').val('');
+        const parseString = ""
+        $('#role').val(parseString);
+        multipleCancelButton.setChoiceByValue(parseString);
+
+
+        $('#description').val('');
+    }
+
+    function showToastr(message, title = "Thông báo", type = "info") {
+        toastr.options = {
+            closeButton: true,
+            debug: false,
+            newestOnTop: true,
+            progressBar: true,
+            positionClass: "toast-top-right",
+            preventDuplicates: true,
+            onclick: null,
+            showDuration: "300",
+            hideDuration: "1000",
+            extendedTimeOut: "1000",
+            showEasing: "swing",
+            hideEasing: "linear",
+            showMethod: "fadeIn",
+            hideMethod: "fadeOut",
+            tapToDismiss: false
+        };
+        toastr[type](message, title);
+    }
+
 </script>
 </body>
 </html>

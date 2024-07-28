@@ -26,7 +26,7 @@ public class CertificateEntity extends AbstractEntity {
     private String certificateNumber;
 
     @Column(name = "issue_date")
-    private Date issueDate;
+    private String issueDate;
 
     @Column(name = "status")
     private String certificateStatus;

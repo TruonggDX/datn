@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="user/common/head :: head"></head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<body>
+<header th:replace="user/common/header :: header"></header>
+<section class="learning_part" style="padding: 120px 0px 0px 0px;">
+
+    <div class="container">
+        <h1>Giỏ hàng</h1>
+        <div class="row align-items-sm-center align-items-lg-stretch">
+            <div class="col-md-7 col-lg-9">
+                <p class="courceSpan"><span>2</span> Khóa học trong giỏ hàng</p>
+                <hr>
+                <div class="row">
+
+                    <div class="shopping-item-wrapper">
+                        <div class="shopping-item-image">
+                            <img src="https://img-b.udemycdn.com/course/240x135/950390_270f_3.jpg"
+                                 alt="Product Image">
+                        </div>
+                        <div class="shopping-item-details">
+                            <div class="shopping-item-title">Machine Learning A-Z: AI, Python & R + ChatGPT Prize</div>
+                            <div class="shopping-item-instructors">By Kirill Eremenko and 3 others</div>
+                            <div class="shopping-item-bestseller-rating">
+                                <div class="shopping-item-bestseller">Bestseller</div>
+                                <div class="shopping-item-rating">
+                                    <span class="rating-text" id="star"> 4.5</span>
+                                    <span class="rating-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </span>
+                                    <span class="rating-text">(187,705 ratings)</span>
+                                </div>
+                            </div>
+                            <div class="shopping-item-meta">43 total hours • 386 lectures • All Levels</div>
+                        </div>
+
+                        <div class="shopping-item-actions">
+                            <button type="button" class="btn-custom">Remove</button>
+                            <br>
+                            <button type="button" class="btn-custom mt-2">Save for Later</button>
+                            <br>
+                            <button type="button" class="btn-custom mt-2">Move to Wishlist</button>
+                        </div>
+                        <div class="shopping-item-price">
+                            <div class="ud-heading-md">₫1,899,000</div>
+                        </div>
+                    </div>
+                    <!--                    sp 2-->
+                    <div class="shopping-item-wrapper">
+                        <div class="shopping-item-image">
+                            <img src="https://img-b.udemycdn.com/course/240x135/950390_270f_3.jpg"
+                                 alt="Product Image">
+                        </div>
+                        <div class="shopping-item-details">
+                            <div class="shopping-item-title">Machine Learning A-Z: AI, Python & R + ChatGPT Prize</div>
+                            <div class="shopping-item-instructors">By Kirill Eremenko and 3 others</div>
+                            <div class="shopping-item-bestseller-rating">
+                                <div class="shopping-item-bestseller">Bestseller</div>
+                                <div class="shopping-item-rating">
+                                    <span class="rating-text" id="star"> 4.5</span>
+                                    <span class="rating-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </span>
+                                    <span class="rating-text">(187,705 ratings)</span>
+                                </div>
+                            </div>
+                            <div class="shopping-item-meta">43 total hours • 386 lectures • All Levels</div>
+                        </div>
+
+                        <div class="shopping-item-actions">
+                            <button type="button" class="btn-custom">Remove</button>
+                            <br>
+                            <button type="button" class="btn-custom mt-2">Save for Later</button>
+                            <br>
+                            <button type="button" class="btn-custom mt-2">Move to Wishlist</button>
+                        </div>
+
+                        <div class="shopping-item-price">
+                            <div class="ud-heading-md">₫1,899,000</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-5 col-lg-3">
+                <div class="learning_member_text">
+                    <div class="col-md-4">
+                        <div>
+                            <p id="totalAmount">Tổng tiền : </p>
+                            <p id="total">₫1,899,000</p>
+                            <button type="button" id="btn_pay" class="btn btn-primary">Checkout</button>
+                            <hr id="line">
+                            <div class="form-group">
+                                <label class="Promotions">Khuyến mãi:</label>
+                                <div class="promo-input-group">
+                                    <input type="text" class="form-control promo-input" placeholder="Nhập mã giảm giá">
+                                    <button type="button" class="btn btn-primary promo-button">Áp dụng</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- learning part end-->
+
+
+<!--::review_part start::-->
+<section class="special_cource">
+    <div class="container">
+        <div class="row justify-content-center" style="height: 100px">
+            <div class="col-xl-5">
+                <div class="section_tittle text-center">
+                    <p>Khóa học</p>
+                    <h2>Bạn cũng có thể thích</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-lg-4">
+                <div class="single_special_cource">
+                    <img th:src="@{/user/img/special_cource_1.png}" class="special_img" alt="">
+                    <div class="special_cource_text">
+                        <h2 style="font-size: 17px">Trí tuệ nhân tạo AZ 2024: Xây dựng 7 AI + LLM & ChatGPT</h2>
+                        <span>created : Đinh Xuân Trường</span> <br>
+
+                        <div class="rating-container">
+                            <span class="rating-number">4.5</span>
+                            <span class="rating-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </span>
+                            <span class="rating-text">(187,705 ratings)</span>
+                        </div>
+
+
+                        <span style="font-weight: bold;font-size: 18px">$1.799.000</span> <br>
+                        <div class="shopping-item-bestseller">Bestseller</div>
+                        <div>
+                            <button type="button" class="btn_addproduct">Thêm vào giỏ hàng</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-4">
+                <div class="single_special_cource">
+                    <img th:src="@{/user/img/special_cource_2.png}" class="special_img" alt="">
+                    <div class="special_cource_text">
+
+                        <h2 style="font-size: 17px">Trí tuệ nhân tạo AZ 2024: Xây dựng 7 AI + LLM & ChatGPT</h2>
+                        <span>created : Đinh Xuân Trường</span> <br>
+
+                        <div class="rating-container">
+                            <span class="rating-number">4.5</span>
+                            <span class="rating-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </span>
+                            <span class="rating-text">(187,705 ratings)</span>
+                        </div>
+
+
+                        <span style="font-weight: bold;font-size: 18px">$1.799.000</span> <br>
+                        <div class="shopping-item-bestseller">Bestseller</div>
+                        <div>
+                            <button type="button" class="btn_addproduct">Thêm vào giỏ hàng</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-4">
+                <div class="single_special_cource">
+                    <img th:src="@{/user/img/special_cource_3.png}" class="special_img" alt="">
+                    <div class="special_cource_text">
+                        <h2 style="font-size: 17px">Trí tuệ nhân tạo AZ 2024: Xây dựng 7 AI + LLM & ChatGPT</h2>
+                        <span>created : Đinh Xuân Trường</span> <br>
+
+                        <div class="rating-container">
+                            <span class="rating-number">4.5</span>
+                            <span class="rating-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </span>
+                            <span class="rating-text">(187,705 ratings)</span>
+                        </div>
+
+
+                        <span style="font-weight: bold;font-size: 18px">$1.799.000</span> <br>
+                        <div class="shopping-item-bestseller">Bestseller</div>
+                        <div>
+                            <button type="button" class="btn_addproduct">Thêm vào giỏ hàng</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<footer th:replace="user/common/footer :: footer"></footer>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<div th:replace="user/common/script :: script"></div>
+</body>
+
+</html>

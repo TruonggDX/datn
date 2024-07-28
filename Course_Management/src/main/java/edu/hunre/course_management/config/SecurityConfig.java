@@ -44,10 +44,10 @@ public class SecurityConfig {
                                 //admin
 //                                .requestMatchers("/api/account/admin/**").hasAnyRole("ADMIN")
                                 .requestMatchers("/api/account/admin/**").permitAll()
-                                .requestMatchers("/api/role/**").permitAll()
+                                .requestMatchers("/api/role/**").hasAnyRole("ADMIN")
                                 .requestMatchers("/api/customer/admin/**").hasAnyRole("ADMIN")
                                 .requestMatchers("/api/customer/register").permitAll()
-
+                                .requestMatchers("/api/category/admin/**").permitAll()
                                 .requestMatchers("/api/account/common/getUser").hasAnyRole(new String[]{"ADMIN", "EMPLOYEE"})
 
                                 //employy
@@ -60,18 +60,22 @@ public class SecurityConfig {
                                 //user
                                 .requestMatchers("/api/customer/common/getUser").hasAnyRole("USER")
 //                        .requestMatchers("/api/customer/updatePassWord/**").hasAnyRole("USER")
-                                .requestMatchers("/api/customer/updatePassWord/**").permitAll()
-                                .requestMatchers("/home/**").permitAll()
+
+                                .requestMatchers("/dashbroad/**").permitAll()
+                                .requestMatchers("/cart/**").permitAll()
+
 
 
                                 //common
-                                .requestMatchers("/api/customer/common/update/**").permitAll()
+                                .requestMatchers("/api/customer/common/update/**").hasAnyRole(new String[]{"ADMIN", "USER"})
+                                .requestMatchers("/api/customer/updatePassWord/**").permitAll()
+                                .requestMatchers("/api/account/updatePassWord/**").hasAnyRole(new String[]{"ADMIN", "EMPLOYEE"})
 //                                .requestMatchers("/api/certificate/common/update/**").hasAnyRole(new String[]{"ADMIN", "EMPLOYEE"})
                                 .requestMatchers("/api/certificate/common/update/**").permitAll()
 
                                 //test permiall
                                 .requestMatchers("/api/certificate/admin/**").permitAll()
-                                .requestMatchers("/admin/demo").permitAll()
+
 
                                 .requestMatchers("/process-after-login").hasAnyRole(new String[]{"ADMIN", "USER", "EMPLOYEE"})
                 )
@@ -92,12 +96,6 @@ public class SecurityConfig {
                 .requestMatchers("/admin/**", "/auth/**", "/user/**")
         );
     }
-
-    @Bean
-    public SpringSecurityDialect springSecurityDialect() {
-        return new SpringSecurityDialect();
-    }
-
 
     public static void main(String[] args) {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();

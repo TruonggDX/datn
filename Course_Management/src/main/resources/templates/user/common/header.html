@@ -1,10 +1,13 @@
 <!--::header part start::-->
 <header th:fragment="header" class="main_menu home_menu">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <div class="container" >
     <div class="row align-items-center">
       <div class="col-lg-12">
         <nav class="navbar navbar-expand-lg navbar-light">
-          <a class="navbar-brand" href="index.html"> <img src="img/logo.png" alt="logo"> </a>
+          <a class="navbar-brand" th:href="@{/dashbroad/home}"> <img th:src="@{/user/img/logo.png}" alt="logo"> </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse"
                   data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                   aria-expanded="false" aria-label="Toggle navigation">
@@ -15,7 +18,7 @@
                id="navbarSupportedContent">
             <ul class="navbar-nav align-items-center">
               <li class="nav-item active">
-                <a class="nav-link" href="index.html">Home</a>
+                <a class="nav-link" th:href="@{/dashbroad/home}">Home</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="about.html">About</a>
@@ -27,23 +30,32 @@
                 <a class="nav-link" href="blog.html">Blog</a>
               </li>
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="blog.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Pages
+                <a class="nav-link" th:href="@{/cart/list}" >
+                  <div class="cart-icon-container">
+                    <img style="width: 30px" th:src="@{/user/img/shopping-cart.png}">
+                    <span class="cart-badge">1</span>
+                  </div>
+                </a>
+              </li>
+              <li class="nav-item dropdown" id="personal">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <img id="user-icon" src="default-user.png" alt="User" style="width: 32px; height: 32px; border-radius: 50%;">
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="single-blog.html">Single blog</a>
-                  <a class="dropdown-item" href="elements.html">Elements</a>
+                  <a class="dropdown-item" th:href="@{/dashbroad/profile}">
+                    <i class="fas fa-user-circle mr-2"></i> Profile
+                  </a>
+                  <a class="dropdown-item" th:href="@{/logout}">
+                    <i class="fas fa-sign-out-alt mr-2"></i> Đăng xuất
+                  </a>
+                  <a class="dropdown-item" th:href="@{/dashbroad/cart}">
+                    <i class="fas fa-sign-out-alt mr-2"></i> Danh sách khóa học
+                  </a>
                 </div>
               </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="blog.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Cá nhân
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" th:href="@{/user/profile}">Profile</a>
-                  <a class="dropdown-item" th:href="@{/logout}">Đăng xuất</a>
-                </div>
-              </li>
+
+
+
               <li class="d-none d-lg-block">
                 <a th:href="@{/login}" id="lgin" class="btn_1" href="#">Đăng nhập</a>
               </li>
@@ -53,5 +65,111 @@
       </div>
     </div>
   </div>
+  <hr style="margin: 0px">
+  <script>
+    $(document).ready(function () {
+      $.ajax({
+        url: 'http://localhost:8080/api/customer/common/getUser',
+        type: 'GET',
+        success: function (data) {
+          if (data && data.data) {
+            $('#lgin').hide();
+            $('#personal').show()
+            let userImage = data.data.image ? 'data:image/png;base64,' + data.data.image : 'placeholder.jpg';
+            $('#user-icon').attr('src', userImage);
+
+          }
+
+          console.log(data);
+        },
+        error: function (error) {
+          console.error(error);
+        }
+      });
+    });
+
+    $('#personal').hide()
+  </script>
+  <style>
+    #user-icon {
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      object-fit: cover;
+    }
+    #personal {
+      position: relative;
+    }
+    .dropdown-menu {
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      background-color: #fff;
+      border: 1px solid #ddd;
+      padding: 0;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      margin-top: 0.5rem;
+      min-width: 200px;
+      left: auto;
+      transform: translateX(-100%);
+    }
+    .dropdown-menu .dropdown-item {
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      color: #333;
+      transition: background-color 0.3s;
+    }
+
+    .dropdown-menu .dropdown-item:hover {
+      background-color: #f8f9fa;
+    }
+
+    .dropdown-menu .dropdown-item .fa {
+      margin-right: 0.5rem;
+    }
+    #navbarDropdown {
+      position: relative;
+    }
+    .dropdown-menu.profile-menu {
+      min-width: 200px;
+    }
+    .dropdown-menu.profile-menu .dropdown-item {
+      display: flex;
+      align-items: center;
+    }
+    .dropdown-menu.profile-menu .dropdown-item i {
+      font-size: 1.2rem;
+      margin-right: 0.5rem;
+    }
+    .dropdown-menu.profile-menu .dropdown-item:last-child {
+      border-top: 1px solid #ddd;
+    }
+    .dropdown-menu.profile-menu .dropdown-item:hover {
+      background-color: #f1f1f1;
+    }
+    .cart-icon-container {
+      position: relative;
+      display: inline-block;
+    }
+    .cart-badge {
+      position: absolute;
+      top: -15px;
+      right: -10px;
+      background-color: #a435f0;
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: bold;
+    }
+  </style>
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
 </header>
-<!-- Header part end-->

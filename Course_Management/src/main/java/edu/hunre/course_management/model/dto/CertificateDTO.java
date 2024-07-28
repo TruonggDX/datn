@@ -13,7 +13,7 @@ public class CertificateDTO {
     private String issuingOrganization;
     private String certificateType;
     private String certificateNumber;
-    private Date issueDate;
+    private String issueDate;
     private String certificateStatus;
     private String accountName;
 

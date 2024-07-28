@@ -33,9 +33,9 @@ public class AccountDTO {
     private String password;
 
     @NotNull(message = "dateOfBirth must be not null")
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    @JsonFormat(pattern = "MM/dd/yyyy")
-    private Date birthday; // ví dụ :  "birthday": "01/15/1990"
+//    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+//    @JsonFormat(pattern = "MM/dd/yyyy")
+    private String birthday; // ví dụ :  "birthday": "01/15/1990"
 
     @Email(message = "email invalid format")
     private String email;
