@@ -21,9 +21,8 @@ public class AccountEntity extends AbstractEntity{
     private String phone;
     private String address;
     private String password;
-    private Date birthday;
+    private String birthday;
     private String email;
-    private String certificate;
     private String description;
     private String title;
 

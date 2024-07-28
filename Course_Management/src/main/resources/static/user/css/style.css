@@ -258,7 +258,7 @@ a:focus, .button:focus, button:focus, .btn:focus {
 
 /* line 140, E:/172 Etrain Education/172_Etrain_Education_html/sass/_common.scss */
 .section_tittle h2 {
-  font-size: 42px;
+  font-size: 26px;
   color: #0c2e60;
   line-height: 37px;
   font-weight: 700;
@@ -2430,7 +2430,6 @@ ul {
 
 /* line 284, E:/172 Etrain Education/172_Etrain_Education_html/sass/_menu.scss */
 .menu_fixed {
-  position: fixed;
   z-index: 9999 !important;
   width: 100%;
   background-color: #fff;

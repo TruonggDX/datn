@@ -1,0 +1,325 @@
+
+.cart-table img {
+    width: 120px;
+    height: 68px;
+    border-radius: 8px;
+}
+
+.cart-table td, .cart-table th {
+    vertical-align: middle;
+}
+
+.carousel-item img {
+    border-radius: 8px;
+}
+
+.shopping-item-wrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 15px;
+}
+
+.shopping-item-image {
+    flex: 1;
+    text-align: right;
+}
+
+.shopping-item-details {
+    flex: 4;
+    padding-left: 20px;
+}
+
+.shopping-item-actions {
+    flex: 2;
+    text-align: center;
+}
+
+.shopping-item-price {
+    flex: 1;
+    text-align: right;
+}
+
+.shopping-item-title {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.shopping-item-instructors {
+    font-size: 14px;
+    color: black;
+}
+
+.shopping-item-bestseller {
+    display: inline-block;
+    padding: 2px 8px;
+    background-color: #eceb98;
+    color: #3d3c0a;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.shopping-item-rating {
+    font-size: 14px;
+    color: black;
+}
+
+.shopping-item-meta {
+    font-size: 12px;
+    color: #757575;
+}
+
+#btn_pay {
+    width: 250px;
+    height: 50px;
+}
+
+#totalAmount {
+    width: 100px;
+    color: black;
+    font-size: 20px;
+}
+
+#total {
+    font-size: 30px;
+    color: black;
+}
+
+#line {
+    width: 250px;
+}
+
+.Promotions {
+    width: 100px;
+}
+
+.promo-input-group {
+    display: flex;
+    align-items: center;
+}
+
+.promo-input {
+    flex: 1;
+    margin-right: 8px;
+}
+
+.promo-button {
+    white-space: nowrap;
+}
+
+.promo-input-group input {
+    width: 155px;
+}
+
+.shopping-item-details {
+    font-family: Arial, sans-serif;
+    margin-bottom: 20px;
+}
+
+
+.shopping-item-bestseller-rating {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+
+.shopping-item-rating {
+    display: flex;
+    align-items: center;
+    font-size: 1em;
+    color: #f08804;
+}
+
+.rating-text {
+    margin-left: 8px;
+    margin-right: 8px;
+    color: #757575;
+}
+
+
+.rating-stars {
+    display: flex;
+    align-items: center;
+}
+
+.rating-stars i {
+    margin-right: 2px;
+}
+
+#star {
+    color: black;
+    font-weight: bold;
+}
+
+.courceSpan {
+    color: black;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.btn-custom {
+    color: #007bff; /* Màu xanh */
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.btn-custom:hover,
+.btn-custom:focus {
+    text-decoration: underline;
+    outline: none;
+}
+
+.mt-2 {
+    margin-top: 0.5rem;
+}
+
+span {
+    margin: 10px 0px 10px 0px;
+}
+
+.btn_addproduct {
+    margin: 10px 0px 10px 0px;
+    text-align: center;
+    font-size: 17px;
+    border: 1px solid black;
+    width: 100%;
+    background: white;
+    font-weight: 600;
+    height: 40px;
+}
+
+.btn_addproduct:hover {
+    background-color: #b9b5b8;
+}
+.rating-container {
+    display: flex;
+    align-items: center;
+}
+
+.rating-number {
+    margin-right: 5px;
+    font-size: 16px;
+}
+
+.rating-stars {
+    display: flex;
+    margin-right: 5px;
+}
+
+.rating-stars i {
+    color: gold;
+    font-size: 16px;
+}
+
+.rating-text {
+    font-size: 16px;
+}
+#back-to-top {
+    display: none;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 99;
+    font-size: 18px;
+    border: none;
+    outline: none;
+    background-color: tomato;
+    color: white;
+    cursor: pointer;
+    padding: 15px;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+}
+
+#back-to-top:hover {
+    background-color: #333;
+}
+
+#back-to-top i {
+    font-size: 20px;
+}
+.menu-container {
+    width: 100%;
+    position: relative;
+}
+
+.menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    background-color: #f8f8f8;
+}
+
+.menu li {
+    position: relative;
+}
+
+.menu li a {
+    display: block;
+    padding: 15px 20px;
+    text-decoration: none;
+    color: #333;
+}
+
+.submenu-container {
+    display: none;
+    position: fixed; /* Changed to fixed for viewport alignment */
+    top: 140px; /* Adjust top position based on the height of your header/menu */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100vw; /* Full viewport width */
+    background-color: #2d2f31;
+    z-index: 1000; /* Ensure submenu appears above other elements */
+}
+
+.submenu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.submenu li {
+    margin: 0;
+}
+
+.submenu li a {
+    display: block;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+}
+
+.menu li:hover .submenu-container {
+    display: block;
+}
+.editSubManu:hover{
+    color: aqua;
+}
+.parent-category:hover{
+    color: orangered;
+}
+.submenu{
+    position: relative;
+}
+.submenu::before{
+    content: "";
+    position: absolute;
+    top: -20px;
+    left: 20px;
+    border-left: 10px solid transparent ;
+    border-right: 10px solid transparent;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid orange;
+}

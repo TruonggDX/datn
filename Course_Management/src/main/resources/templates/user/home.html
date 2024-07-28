@@ -1,14 +1,25 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="user/common/head :: head">
-</head>
-
+<head th:replace="user/common/head :: head"></head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"/>
 <body>
 <header th:replace="user/common/header :: header"></header>
+<section>
+    <div style="width: 100%; height: 100px; margin-top: 89px;">
+        <div class="menu-container">
+            <ul class="menu" id="parent-menu"></ul>
+        </div>
+    </div>
 
-<!-- banner part start-->
-<section class="banner_part">
+</section>
+
+<section style="margin-top: -46px;background-color: darkgrey;height: 500px">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-6 col-xl-6">
@@ -28,9 +39,7 @@
         </div>
     </div>
 </section>
-<!-- banner part start-->
 
-<!-- feature_part start-->
 <section class="feature_part">
     <div class="container">
         <div class="row">
@@ -75,9 +84,7 @@
         </div>
     </div>
 </section>
-<!-- upcoming_event part start-->
 
-<!-- learning part start-->
 <section class="learning_part">
     <div class="container">
         <div class="row align-items-sm-center align-items-lg-stretch">
@@ -96,9 +103,11 @@
                         days years under brought moveth.</p>
                     <ul>
                         <li><span class="ti-pencil-alt"></span>Him lights given i heaven second yielding seas
-                            gathered wear</li>
+                            gathered wear
+                        </li>
                         <li><span class="ti-ruler-pencil"></span>Fly female them whales fly them day deep given
-                            night.</li>
+                            night.
+                        </li>
                     </ul>
                     <a href="#" class="btn_1">Read More</a>
                 </div>
@@ -106,9 +115,7 @@
         </div>
     </div>
 </section>
-<!-- learning part end-->
 
-<!-- member_counter counter start -->
 <section class="member_counter">
     <div class="container">
         <div class="row">
@@ -139,9 +146,7 @@
         </div>
     </div>
 </section>
-<!-- member_counter counter end -->
 
-<!--::review_part start::-->
 <section class="special_cource padding_top">
     <div class="container">
         <div class="row justify-content-center">
@@ -190,7 +195,7 @@
                     <div class="special_cource_text">
                         <a href="course-details.html" class="btn_4">design</a>
                         <h4>$160.00</h4>
-                        <a href="course-details.html"> <h3>Web UX/UI Design </h3></a>
+                        <a href="course-details.html"><h3>Web UX/UI Design </h3></a>
                         <p>Which whose darkness saying were life unto fish wherein all fish of together called</p>
                         <div class="author_info">
                             <div class="author_img">
@@ -221,7 +226,7 @@
                     <div class="special_cource_text">
                         <a href="course-details.html" class="btn_4">Wordpress</a>
                         <h4>$140.00</h4>
-                        <a href="course-details.html">  <h3>Wordpress Development</h3> </a>
+                        <a href="course-details.html"><h3>Wordpress Development</h3></a>
                         <p>Which whose darkness saying were life unto fish wherein all fish of together called</p>
                         <div class="author_info">
                             <div class="author_img">
@@ -249,9 +254,7 @@
         </div>
     </div>
 </section>
-<!--::blog_part end::-->
 
-<!-- learning part start-->
 <section class="advance_feature learning_part">
     <div class="container">
         <div class="row align-items-sm-center align-items-xl-stretch">
@@ -289,9 +292,7 @@
         </div>
     </div>
 </section>
-<!-- learning part end-->
 
-<!--::review_part start::-->
 <section class="testimonial_part">
     <div class="container-fluid">
         <div class="row justify-content-center">
@@ -407,9 +408,7 @@
         </div>
     </div>
 </section>
-<!--::blog_part end::-->
 
-<!--::blog_part start::-->
 <section class="blog_part section_padding">
     <div class="container">
         <div class="row justify-content-center">
@@ -432,8 +431,8 @@
                             </a>
                             <p>Which whose darkness saying were life unto fish wherein all fish of together called</p>
                             <ul>
-                                <li> <span class="ti-comments"></span>2 Comments</li>
-                                <li> <span class="ti-heart"></span>2k Like</li>
+                                <li><span class="ti-comments"></span>2 Comments</li>
+                                <li><span class="ti-heart"></span>2k Like</li>
                             </ul>
                         </div>
                     </div>
@@ -450,8 +449,8 @@
                             </a>
                             <p>Which whose darkness saying were life unto fish wherein all fish of together called</p>
                             <ul>
-                                <li> <span class="ti-comments"></span>2 Comments</li>
-                                <li> <span class="ti-heart"></span>2k Like</li>
+                                <li><span class="ti-comments"></span>2 Comments</li>
+                                <li><span class="ti-heart"></span>2k Like</li>
                             </ul>
                         </div>
                     </div>
@@ -468,8 +467,8 @@
                             </a>
                             <p>Which whose darkness saying were life unto fish wherein all fish of together called</p>
                             <ul>
-                                <li> <span class="ti-comments"></span>2 Comments</li>
-                                <li> <span class="ti-heart"></span>2k Like</li>
+                                <li><span class="ti-comments"></span>2 Comments</li>
+                                <li><span class="ti-heart"></span>2k Like</li>
                             </ul>
                         </div>
                     </div>
@@ -478,13 +477,67 @@
         </div>
     </div>
 </section>
-<!--::blog_part end::-->
+<button id="back-to-top" title="Back to Top"><i class="fa-solid fa-angle-up"></i></button>
 
-<!-- footer part start-->
 <footer th:replace="user/common/footer :: footer"></footer>
-<!-- footer part end-->
-
 <div th:replace="user/common/script :: script"></div>
 </body>
-
 </html>
+<script>
+    $(document).ready(function () {
+        // Fetch parent categories and populate menu
+        function fetchParentCategories() {
+            $.ajax({
+                url: 'http://localhost:8080/api/category/admin/parents',
+                method: 'GET',
+                success: function (response) {
+                    console.log('Parent categories:', response);
+                    var data = response.data;
+                    var parentMenu = $('#parent-menu');
+                    parentMenu.empty();
+                    for (var i = 0; i < data.length; i++) {
+                        var category = data[i];
+                        parentMenu.append(
+                            '<li class="parent-item">' +
+                            '<a href="#" data-id="' + category.id + '" class="parent-category">' + category.name + '</a>' +
+                            '<div class="submenu-container" id="submenu-' + category.id + '">' +
+                            '<ul class="submenu"></ul>' +
+                            '</div>' +
+                            '</li>'
+                        );
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching parent categories:', error);
+                }
+            });
+        }
+        $('#parent-menu').on('mouseenter', '.parent-item', function () {
+            var parentId = $(this).find('.parent-category').data('id');
+            var subMenu = $(this).find('.submenu');
+            $.ajax({
+                url: 'http://localhost:8080/api/category/admin/searchByParentId/' + parentId,
+                method: 'GET',
+                success: function (response) {
+                    console.log('Subcategories:', response);
+                    var data = response.data;
+                    subMenu.empty();
+                    for (var i = 0; i < data.length; i++) {
+                        var category = data[i];
+                        subMenu.append('<li><a class="editSubMenu" href="#">' + category.name + '</a></li>');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching subcategories:', error);
+                }
+            });
+            $(this).find('.submenu-container').show();
+        });
+        $('#parent-menu').on('mouseleave', '.parent-item', function () {
+            $(this).find('.submenu-container').hide();
+        });
+        fetchParentCategories();
+    });
+
+
+</script>

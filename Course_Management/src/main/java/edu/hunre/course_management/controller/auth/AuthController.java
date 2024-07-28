@@ -76,7 +76,7 @@ public class AuthController {
         }
         boolean isUser = Constant.ROLE_USER.equalsIgnoreCase(roleDto.getName());
         if (isUser){
-            return "redirect:/user/home";
+            return "redirect:/dashbroad/home";
         }
         return "redirect:/logout";
     }

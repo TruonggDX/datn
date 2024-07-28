@@ -19,10 +19,6 @@ public interface CertificateRepository extends JpaRepository<CertificateEntity,L
     @Query(value = "SELECT c FROM CertificateEntity  c WHERE c.deleted=false ")
     Page<CertificateEntity> findAllCertificate(Pageable pageable);
 
-
-//    select * from certificate c
-//    join qlkh.account a on a.id = c.account_id
-//    where c.deleted=false and a.username like '%admin%'
-    @Query(value = "SELECT c FROM CertificateEntity c JOIN c.accountEntity a WHERE c.deleted=false AND a.fullname LIKE %:condition%")
+    @Query(value = "SELECT c FROM CertificateEntity c JOIN c.accountEntity a WHERE ( a.fullname LIKE %:condition% OR c.certificateName LIKE %:condition%) AND c.deleted=false")
     List<CertificateEntity> findAllCertificateByFullName(@Param("condition") String condition);
 }

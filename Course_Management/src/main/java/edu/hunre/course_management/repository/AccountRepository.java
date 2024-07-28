@@ -19,4 +19,5 @@ public interface AccountRepository extends JpaRepository<AccountEntity,Long> {
 
     @Query(value = "SELECT u FROM AccountEntity u WHERE (u.username LIKE %:condition% OR u.fullname LIKE %:condition%) AND u.deleted = false ")
     List<AccountEntity> findUserByUsernameAndFullname(@Param("condition") String condition);
+
 }
