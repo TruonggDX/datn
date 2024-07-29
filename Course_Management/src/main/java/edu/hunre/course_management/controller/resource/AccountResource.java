@@ -2,11 +2,9 @@ package edu.hunre.course_management.controller.resource;
 
 import edu.hunre.course_management.exception.ResourceNotFoundException;
 import edu.hunre.course_management.model.dto.AccountDTO;
-import edu.hunre.course_management.model.request.AccountRequest;
 import edu.hunre.course_management.model.request.ChagePasswordRequest;
 import edu.hunre.course_management.model.response.BaseResponse;
 import edu.hunre.course_management.service.IAccountService;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

@@ -3,7 +3,6 @@ package edu.hunre.course_management.service.impl;
 import edu.hunre.course_management.entity.*;
 import edu.hunre.course_management.exception.ResourceNotFoundException;
 import edu.hunre.course_management.model.dto.*;
-import edu.hunre.course_management.model.request.AccountRequest;
 import edu.hunre.course_management.model.request.ChagePasswordRequest;
 import edu.hunre.course_management.model.response.BaseResponse;
 import edu.hunre.course_management.repository.ImageRepository;

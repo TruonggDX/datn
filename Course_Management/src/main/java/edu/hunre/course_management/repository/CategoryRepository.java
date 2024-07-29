@@ -14,8 +14,11 @@ import java.util.List;
 public interface CategoryRepository extends JpaRepository<CategoryEntity,Long> {
     @Query(value = "SELECT c FROM CategoryEntity c WHERE c.deleted=false ")
     Page<CategoryEntity> findAllCategory(Pageable pageable);
-//    @Query("SELECT c FROM CategoryEntity c WHERE c.deleted = false AND c.parent = :parentId")
-//    List<CategoryEntity> findByParentId(@Param("parentId") Long parentId);
     List<CategoryEntity> findByParentId(Long parentId);
+
+    @Query("SELECT c FROM CategoryEntity c JOIN c.parent p WHERE c.deleted = false AND (p.name LIKE %:condition% OR c.name LIKE %:condition%)")
+    List<CategoryEntity> findByParentName(@Param("condition") String condition);
+
+
 
 }
