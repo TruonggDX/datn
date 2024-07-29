@@ -190,4 +190,30 @@ public class ICategoryImpl implements ICategoryService {
         response.setCode(HttpStatus.OK.value());
         return response;
     }
+
+    @Override
+    public BaseResponse<List<CategoryDTO>> getAllChildCategories(String condition) {
+        BaseResponse<List<CategoryDTO>> response = new BaseResponse<>();
+        List<CategoryEntity> categoryEntities = categoryRepository.findByParentName(condition);
+
+        if (categoryEntities == null || categoryEntities.isEmpty()) {
+            response.setMessage(Constant.HTTP_MESSAGE.FAILED);
+            response.setCode(HttpStatus.BAD_REQUEST.value());
+            response.setData(new ArrayList<>());
+        }
+        List<CategoryDTO> categoryDTOS = new ArrayList<>();
+        for (CategoryEntity categoryEntity : categoryEntities) {
+            CategoryDTO categoryDTO = categoryMapper.toDTO(categoryEntity);
+            categoryDTOS.add(categoryDTO);
+            List<CategoryEntity> childCategories = categoryRepository.findByParentId(categoryEntity.getId());
+            for (CategoryEntity childCategory : childCategories) {
+                CategoryDTO childCategoryDTO = categoryMapper.toDTO(childCategory);
+                categoryDTOS.add(childCategoryDTO);
+            }
+        }
+        response.setMessage(Constant.HTTP_MESSAGE.SUCCESS);
+        response.setCode(HttpStatus.OK.value());
+        response.setData(categoryDTOS);
+        return response;
+    }
 }

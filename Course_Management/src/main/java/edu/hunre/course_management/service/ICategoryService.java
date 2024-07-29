@@ -14,4 +14,6 @@ public interface ICategoryService {
     BaseResponse<CategoryDTO> updateCategory(Long id,CategoryDTO categoryDTO);
     BaseResponse<CategoryDTO> deleteCategory(Long id);
     BaseResponse<List<CategoryDTO>>getAllParentCategories();
+
+    BaseResponse<List<CategoryDTO>> getAllChildCategories(String condition);
 }

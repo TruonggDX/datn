@@ -70,5 +70,13 @@ public class CategoryResource {
             return ResponseEntity.status(response.getCode()).body(response);
         }
     }
-
+    @GetMapping("/admin/findChileCategoies/{condition}")
+    public ResponseEntity<BaseResponse<List<CategoryDTO>>> findChileCategoies(@PathVariable String condition) {
+        BaseResponse<List<CategoryDTO>> response = iCategoryService.getAllChildCategories(condition);
+        if (response.getCode() == HttpStatus.OK.value()) {
+            return ResponseEntity.status(response.getCode()).body(response);
+        }else {
+            return ResponseEntity.status(response.getCode()).body(response);
+        }
+    }
 }

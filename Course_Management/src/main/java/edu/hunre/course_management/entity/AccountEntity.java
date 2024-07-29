@@ -45,5 +45,7 @@ public class AccountEntity extends AbstractEntity{
     @OneToOne(mappedBy = "accountEntity", cascade = CascadeType.ALL)
     private ImageEntity imageEntity;
 
+    @OneToMany(mappedBy = "accountEntity")
+    private List<CourseEntity> courses;
 
 }

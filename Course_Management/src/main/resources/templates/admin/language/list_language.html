@@ -24,11 +24,11 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Danh sách danh mục</h4>
+                            <h4 class="card-title">Danh sách ngôn ngữ lập trình</h4>
                             <div class="col-sm-12 col-md-12"
                                  style="display: flex; justify-content: space-between; align-items: center;">
                                 <div class="col-sm-6 col-md-6">
-                                    <input style="width: 100px" id="addCategory" class="btn btn-rounded btn-primary mb-5"
+                                    <input style="width: 100px" id="addLanguage" class="btn btn-rounded btn-primary mb-5"
                                            data-toggle="modal" data-target="#exampleModalLong" type="button"
                                            value="Thêm">
                                 </div>
@@ -48,12 +48,12 @@
                                     <thead>
                                     <tr>
                                         <th>STT</th>
-                                        <th>Tên danh mục</th>
-                                        <th>Danh mục cha</th>
+                                        <th>Tên ngôn ngữ</th>
+                                        <th>Mô tả</th>
                                         <th>Thao tác</th>
                                     </tr>
                                     </thead>
-                                    <tbody id="category_list">
+                                    <tbody id="language_list">
                                     </tbody>
                                 </table>
                             </div>
@@ -82,27 +82,22 @@
                             <form>
 
 
-                                    <input id="categoryId" hidden="hidden" type="text">
-                                    <div class="form-group">
-                                        <label>Tên danh mục</label>
-                                        <input type="text" class="form-control" id="namecategory"
-                                               placeholder="Nhập tên danh mục">
-                                    </div>
-
-
-
-
-                                <div class="form-grup">
-                                    <label>Danh mục cha</label>
-                                    <select id="parentCategory" class="form-control" >
-                                        <option value="null">Không có danh mục cha</option>
-                                    </select>
+                                <input id="languageId" hidden="hidden" type="text">
+                                <div class="form-group">
+                                    <label>Tên ngôn ngữ</label>
+                                    <input type="text" class="form-control" id="namelanguage"
+                                           placeholder="Nhập tên ngôn ngữ lập trình">
                                 </div>
+                                <div class="form-group">
+                                    <label for="description">Mô tả:</label> <br>
+                                    <textarea id="description" class="form-control" name="description" rows="4" cols="50" placeholder="Nhập mô tả "></textarea>
+                                </div>
+
                             </form>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                            <button type="button" id="save-category-btn" class="btn btn-primary">Lưu</button>
+                            <button type="button" id="save-language-btn" class="btn btn-primary">Lưu</button>
                         </div>
                     </div>
                 </div>
@@ -114,7 +109,7 @@
 
 <script>
     $(document).ready(function () {
-        initCategoryData();
+        inintData();
         var updateMessage = localStorage.getItem('updateMessage');
         if (updateMessage) {
             showToastr(updateMessage, "Thành công", "success");
@@ -122,19 +117,18 @@
         }
     });
 
-    function initCategoryData() {
+    function inintData() {
         let page = 0;
         let size = 7;
-        getParent();
-        getCategories(page, size);
+        getLanguage(page, size);
     }
 
-    function getCategories(page, size) {
-        let bodyTable = $('#category_list');
+    function getLanguage(page, size) {
+        let bodyTable = $('#language_list');
         bodyTable.empty();
         $.ajax({
             type: "GET",
-            url: "http://localhost:8080/api/category/admin/list?page=" + page + "&size=" + size,
+            url: "http://localhost:8080/api/language/list?page=" + page + "&size=" + size,
             dataType: "json",
             success: function (response) {
                 let categories = response?.data?.content;
@@ -143,10 +137,10 @@
                     let row = '<tr class="odd">' +
                         '<td style="max-width: 50px;" >' + (i + 1) + '</td>' +
                         '<td>' + data.name + '</td>' +
-                        '<td>' + data.parentName + '</td>' +
+                        '<td>' + data.description + '</td>' +
                         '<td >' +
-                        '<a data-toggle="modal" data-target="#exampleModalLong" type="button" class="btn btn-default edit-category-btn" data-id="' + data.id + '" ><i style="color: black;font-size: 18px" class="fa-regular fa-pen-to-square"></i></a>' +
-                        '<a type="button" class="btn btn-default delete-category-btn" data-id="' + data.id + '" ><i style="color: black;font-size: 18px" class="fa-regular fa-trash-can"></i></a>' +
+                        '<a data-toggle="modal" data-target="#exampleModalLong" type="button" class="btn btn-default edit-language-btn" data-id="' + data.id + '" ><i style="color: black;font-size: 18px" class="fa-regular fa-pen-to-square"></i></a>' +
+                        '<a type="button" class="btn btn-default delete-language-btn" data-id="' + data.id + '" ><i style="color: black;font-size: 18px" class="fa-regular fa-trash-can"></i></a>' +
                         '</td>' +
                         '</tr>';
                     bodyTable.append(row);
@@ -156,18 +150,18 @@
                 let currentPage = response.data.pageable.pageNumber;
                 if (totalPage > 0) {
                     $("#pageId").empty();
-                    let pages = '<li class="page-item"><a class="page-link" onclick="changeCategoryPage(' + (currentPage - 1) + ',7,event)" href="#">Previous</a></li>';
+                    let pages = '<li class="page-item"><a class="page-link" onclick="changePage(' + (currentPage - 1) + ',7,event)" href="#">Previous</a></li>';
                     for (let i = 0; i < totalPage; i++) {
                         if (currentPage === i) {
-                            pages += '<li class="page-item active"><a class="page-link" onclick="changeCategoryPage(' + i + ',7,event)" href="#">' + (i + 1) + '</a></li>';
+                            pages += '<li class="page-item active"><a class="page-link" onclick="changePage(' + i + ',7,event)" href="#">' + (i + 1) + '</a></li>';
                         } else {
-                            pages += '<li class="page-item"><a class="page-link" onclick="changeCategoryPage(' + i + ',7,event)" href="#">' + (i + 1) + '</a></li>';
+                            pages += '<li class="page-item"><a class="page-link" onclick="changePage(' + i + ',7,event)" href="#">' + (i + 1) + '</a></li>';
                         }
                     }
-                    pages += '<li class="page-item"><a class="page-link" onclick="changeCategoryPage(' + (currentPage + 1) + ',7,event)" href="#">Next</a></li>';
+                    pages += '<li class="page-item"><a class="page-link" onclick="changePage(' + (currentPage + 1) + ',7,event)" href="#">Next</a></li>';
                     $("#pageId").append(pages);
                 }
-                updateAndDeleteCategory()
+                updateAndDelete()
             },
             error: function (error) {
                 console.log(error);
@@ -175,9 +169,9 @@
         });
     }
 
-    function changeCategoryPage(page, size, event) {
+    function changePage(page, size, event) {
         event.preventDefault();
-        getCategories(page, size);
+        getLanguage(page, size);
     }
 
     function seachPro() {
@@ -210,12 +204,12 @@
                             '</tr>';
                         html += row;
                     }
-                    document.getElementById("category_list").innerHTML = html;
+                    document.getElementById("language_list").innerHTML = html;
                 } else {
                     html = '<tr><td colspan="7" style="text-align: center;">Không tìm thấy danh mục </td></tr>';
-                    document.getElementById("category_list").innerHTML = html;
+                    document.getElementById("language_list").innerHTML = html;
                 }
-                updateAndDeleteCategory();
+                updateAndDelete();
             },
             error: function (error) {
                 console.log(error);
@@ -223,68 +217,65 @@
         });
     }
 
-    function updateAndDeleteCategory() {
-        $('#addCategory').click(function (event) {
+    function updateAndDelete() {
+        $('#addLanguage').click(function (event) {
             event.preventDefault();
             resetCategoryForm();
-            $('#title_modal').text('Thêm danh mục');
+            $('#title_modal').text('Thêm ngôn ngữ lập trình');
             $('#exampleModalLong').off('click', '.btn-primary').on('click', '.btn-primary', function () {
                 var categoryForm = {
-                    id: $('#categoryId').val(),
-                    name: $('#namecategory').val(),
-                    parentId: $('#parentCategory').val()
+                    id: $('#languageId').val(),
+                    name: $('#namelanguage').val(),
+                    description: $('#description').val()
                 };
 
                 $.ajax({
                     type: "POST",
-                    url: "http://localhost:8080/api/category/admin/create",
+                    url: "http://localhost:8080/api/language/create",
                     contentType: "application/json",
                     data: JSON.stringify(categoryForm),
                     dataType: "json",
                     success: function (response) {
-                        localStorage.setItem('updateMessage', 'Thêm danh mục thành công!');
+                        localStorage.setItem('updateMessage', 'Thêm ngôn ngữ lập trình thành công!');
                         location.reload();
                     },
                     error: function (error) {
-                        showToastr("Có lỗi xảy ra khi cập nhật danh mục!", "Thất bại", "error");
+                        showToastr("Có lỗi xảy ra khi thêm ngôn ngữ lập trình!", "Thất bại", "error");
                     }
                 });
             });
         });
 
-        $('.edit-category-btn').click(function (event) {
+        $('.edit-language-btn').click(function (event) {
             event.preventDefault();
-            var categoryId = $(this).data('id');
+            var languageId = $(this).data('id');
             $.ajax({
                 type: "GET",
-                url: "http://localhost:8080/api/category/admin/searchById/" + categoryId,
+                url: "http://localhost:8080/api/language/findById/" + languageId,
                 success: function (response) {
-                    var category = response.data;
-                    console.log('daytaa ', category)
-
-                    getInforCategory(category)
-                    $('#title_modal').text('Cập nhật danh mục');
-                    $('#save-category-btn').off('click').on('click', function () {
-                        var categoryForm = {
-                            id: $('#categoryId').val(),
-                            name: $('#namecategory').val(),
-                            parentId: $('#parentCategory').val()
+                    var language = response.data;
+                    getInforCategory(language)
+                    $('#title_modal').text('Cập nhật ngôn ngữ lập trình');
+                    $('#save-language-btn').off('click').on('click', function () {
+                        var languageForm = {
+                            id: $('#languageId').val(),
+                            name: $('#namelanguage').val(),
+                            description: $('#description').val()
                         };
 
                         $.ajax({
                             type: "PUT",
-                            url: "http://localhost:8080/api/category/admin/update/" + categoryId,
+                            url: "http://localhost:8080/api/language/update/" + languageId,
                             contentType: "application/json",
-                            data: JSON.stringify(categoryForm),
+                            data: JSON.stringify(languageForm),
                             dataType: "json",
                             success: function (response) {
                                 console.log('data response ', response)
-                                initCategoryData();
-                                localStorage.setItem('updateMessage', 'Cập nhật danh mục thành công!');
+                                localStorage.setItem('updateMessage', 'Cập nhật ngôn ngữ thành công!');
                                 location.reload();
                             },
                             error: function (error) {
-                                showToastr("Có lỗi xảy ra khi cập nhật danh mục!", "Thất bại", "error");
+                                showToastr("Có lỗi xảy ra khi cập nhật ngôn ngữ lập trình!", "Thất bại", "error");
                             }
                         });
                     });
@@ -295,12 +286,12 @@
             });
         });
 
-        $('.delete-category-btn').click(function (event) {
+        $('.delete-language-btn').click(function (event) {
             event.preventDefault();
-            var categoryId = $(this).data('id');
+            var languageId = $(this).data('id');
             swal({
                     title: "Bạn có chắc chắn muốn xóa?",
-                    text: "Bạn sẽ không thể khôi phục lại danh mục này sau khi xóa !!",
+                    text: "Bạn sẽ không thể khôi phục lại ngôn ngữ này sau khi xóa !!",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
@@ -313,16 +304,16 @@
                     if (isConfirm) {
                         $.ajax({
                             type: "DELETE",
-                            url: "http://localhost:8080/api/category/admin/delete/" + categoryId,
+                            url: "http://localhost:8080/api/language/delete/" + languageId,
                             success: function (response) {
                                 console.log(response)
-                                swal("Đã xóa !!", "Danh mục đã được xóa thành công !!", "success");
-                                var deletedRow = $('.delete-category-btn[data-id="' + categoryId + '"]').closest('tr');
+                                swal("Đã xóa !!", "Ngôn ngữ lập trình đã được xóa thành công !!", "success");
+                                var deletedRow = $('.delete-language-btn[data-id="' + languageId + '"]').closest('tr');
                                 deletedRow.remove();
                                 getCategories(0, 7);
                             },
                             error: function (error) {
-                                swal("Lỗi !!", "Đã xảy ra lỗi trong quá trình xóa danh mục !!", "error");
+                                swal("Lỗi !!", "Đã xảy ra lỗi trong quá trình xóa ngôn ngữ lập trình !!", "error");
                                 console.log(error);
                             }
                         });
@@ -331,45 +322,20 @@
         });
     }
 
-    function getInforCategory(category) {
-        $('#categoryId').val(category.id);
-        $('#namecategory').val(category.name);
+    function getInforCategory(language) {
+        $('#languageId').val(language.id);
+        $('#namelanguage').val(language.name);
+        $('#description').val(language.description);
 
-        if (category.parentId === null) {
-            $('#parentCategory').val('null');
-        } else {
-            $('#parentCategory').val(category.parentId);
-        }
     }
 
     function resetCategoryForm() {
-        $('#categoryId').val('');
-        $('#parentCategory').val('');
-        $('#namecategory').val('');
+        $('#languageId').val('');
+        $('#namelanguage').val('');
+        $('#description').val('');
 
     }
 
-    function getParent() {
-        let list = $('#parentCategory');
-        list.empty();
-        list.append('<option value="null">Null</option>');
-        $.ajax({
-            url: 'http://localhost:8080/api/category/admin/parents',
-            method: 'GET',
-            success: function (response) {
-                let categories = response?.data;
-                for (let i = 0; i < categories.length; i++) {
-                    let data = categories[i];
-                    let row = '<option value="' + data.id + '">' + data.name + '</option>';
-                    list.append(row);
-                }
-
-            },
-            error: function (xhr, status, error) {
-                console.error('Có lỗi xảy ra khi gọi API:', error);
-            }
-        });
-    }
 
     function showToastr(message, title = "Thông báo", type = "info") {
         toastr.options = {
