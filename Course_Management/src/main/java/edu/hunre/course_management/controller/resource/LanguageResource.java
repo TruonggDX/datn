@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/api/language")
 public class LanguageResource {
@@ -49,6 +51,15 @@ public class LanguageResource {
         BaseResponse<?> response = iLanguageService.deleteLanguage(id);
         if (response.getCode() == HttpStatus.OK.value()) {
             return ResponseEntity.ok(response);
+        }else {
+            return ResponseEntity.status(response.getCode()).body(response);
+        }
+    }
+    @GetMapping("/findByCondition/{condition}")
+    public ResponseEntity<BaseResponse<List<LanguageDTO>>> getByCondition(@PathVariable String condition) {
+        BaseResponse<List<LanguageDTO>> response = iLanguageService.findByCondition(condition);
+        if (response.getCode() == HttpStatus.OK.value()) {
+            return ResponseEntity.status(response.getCode()).body(response);
         }else {
             return ResponseEntity.status(response.getCode()).body(response);
         }

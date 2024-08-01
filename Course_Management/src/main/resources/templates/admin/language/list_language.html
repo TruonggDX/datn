@@ -131,9 +131,9 @@
             url: "http://localhost:8080/api/language/list?page=" + page + "&size=" + size,
             dataType: "json",
             success: function (response) {
-                let categories = response?.data?.content;
-                for (let i = 0; i < categories.length; i++) {
-                    let data = categories[i];
+                let languages = response?.data?.content;
+                for (let i = 0; i < languages.length; i++) {
+                    let data = languages[i];
                     let row = '<tr class="odd">' +
                         '<td style="max-width: 50px;" >' + (i + 1) + '</td>' +
                         '<td>' + data.name + '</td>' +
@@ -177,36 +177,36 @@
     function seachPro() {
         var searchCondition = $("#searchCondition").val();
         let html = "";
-        let url = "http://localhost:8080/api/category/admin/";
+        let url = "http://localhost:8080/api/language/";
 
         if (searchCondition == "") {
-            url += getCategories(0, 7);
+            url += getLanguage(0, 7);
         } else {
-            url += "findChileCategoies/" + searchCondition;
+            url += "findByCondition/" + searchCondition;
         }
 
         $.ajax({
             type: "GET",
             url: url,
             success: function (response) {
-                var categories = response.data;
-                if (categories && categories.length > 0) {
-                    for (let i = 0; i < categories.length; i++) {
-                        let data = categories[i];
+                var languages = response.data;
+                if (languages && languages.length > 0) {
+                    for (let i = 0; i < languages.length; i++) {
+                        let data = languages[i];
                         let row = '<tr class="odd">' +
                             '<td style="max-width: 50px;" >' + (i + 1) + '</td>' +
                             '<td>' + data.name + '</td>' +
-                            '<td>' + data.parentName + '</td>' +
+                            '<td>' + data.description + '</td>' +
                             '<td >' +
-                            '<a data-toggle="modal" data-target="#exampleModalLong" type="button" class="btn btn-default edit-category-btn" data-id="' + data.id + '" ><i style="color: black;font-size: 18px" class="fa-regular fa-pen-to-square"></i></a>' +
-                            '<a type="button" class="btn btn-default delete-category-btn" data-id="' + data.id + '" ><i style="color: black;font-size: 18px" class="fa-regular fa-trash-can"></i></a>' +
+                            '<a data-toggle="modal" data-target="#exampleModalLong" type="button" class="btn btn-default edit-language-btn" data-id="' + data.id + '" ><i style="color: black;font-size: 18px" class="fa-regular fa-pen-to-square"></i></a>' +
+                            '<a type="button" class="btn btn-default delete-language-btn" data-id="' + data.id + '" ><i style="color: black;font-size: 18px" class="fa-regular fa-trash-can"></i></a>' +
                             '</td>' +
                             '</tr>';
                         html += row;
                     }
                     document.getElementById("language_list").innerHTML = html;
                 } else {
-                    html = '<tr><td colspan="7" style="text-align: center;">Không tìm thấy danh mục </td></tr>';
+                    html = '<tr><td colspan="7" style="text-align: center;">Không tìm thấy ngôn ngữ lập trình </td></tr>';
                     document.getElementById("language_list").innerHTML = html;
                 }
                 updateAndDelete();
@@ -310,7 +310,7 @@
                                 swal("Đã xóa !!", "Ngôn ngữ lập trình đã được xóa thành công !!", "success");
                                 var deletedRow = $('.delete-language-btn[data-id="' + languageId + '"]').closest('tr');
                                 deletedRow.remove();
-                                getCategories(0, 7);
+                                getLanguage(0, 7);
                             },
                             error: function (error) {
                                 swal("Lỗi !!", "Đã xảy ra lỗi trong quá trình xóa ngôn ngữ lập trình !!", "error");

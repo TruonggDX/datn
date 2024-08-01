@@ -73,6 +73,8 @@ public class SecurityConfig {
 //                                .requestMatchers("/api/certificate/common/update/**").hasAnyRole(new String[]{"ADMIN", "EMPLOYEE"})
                                 .requestMatchers("/api/certificate/common/update/**").permitAll()
                                 .requestMatchers("/api/language/**").permitAll()
+                                .requestMatchers("/api/image_course/**").permitAll()
+                                .requestMatchers("/api/course/**").permitAll()
 
                                 //test permiall
                                 .requestMatchers("/api/certificate/admin/**").permitAll()

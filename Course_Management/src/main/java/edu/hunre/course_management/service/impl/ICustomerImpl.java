@@ -158,7 +158,6 @@ public class ICustomerImpl implements ICustomerService {
                     ImageEntity oldImageEntity = customer.getImageEntity();
                     imageService.updateImage(oldImageEntity.getId(), imageFile);
                 } else {
-                    // Chưa có ảnh, thêm mới
                     ImageDTO uploadedImage = imageService.uploadFile(imageFile);
                     ImageEntity imageEntity = modelMapper.map(uploadedImage, ImageEntity.class);
                     imageEntity.setCustomer(customer);

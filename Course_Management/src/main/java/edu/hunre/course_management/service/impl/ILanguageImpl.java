@@ -1,5 +1,6 @@
 package edu.hunre.course_management.service.impl;
 
+import edu.hunre.course_management.entity.CategoryEntity;
 import edu.hunre.course_management.entity.LanguageEntity;
 import edu.hunre.course_management.mapper.LanguageProficiencyMapper;
 import edu.hunre.course_management.model.dto.LanguageDTO;
@@ -19,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -127,4 +129,26 @@ public class ILanguageImpl implements ILanguageService {
 
         return response;
     }
+
+    @Override
+    public BaseResponse<List<LanguageDTO>> findByCondition(String condition) {
+        BaseResponse<List<LanguageDTO>> response = new BaseResponse<>();
+        List<LanguageEntity> languageEntities = languageRepository.findLanguageByCondition(condition);
+
+        if (languageEntities == null || languageEntities.isEmpty()) {
+            response.setMessage(Constant.HTTP_MESSAGE.FAILED);
+            response.setCode(HttpStatus.BAD_REQUEST.value());
+            response.setData(new ArrayList<>());
+        }
+        List<LanguageDTO> languageDTOS = new ArrayList<>();
+        for (LanguageEntity languageEntity : languageEntities) {
+            LanguageDTO languageDTO = languageProficiencyMapper.toDto(languageEntity);
+            languageDTOS.add(languageDTO);
+        }
+        response.setMessage(Constant.HTTP_MESSAGE.SUCCESS);
+        response.setCode(HttpStatus.OK.value());
+        response.setData(languageDTOS);
+        return response;
+    }
+
 }
