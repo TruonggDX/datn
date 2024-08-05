@@ -1,8 +1,8 @@
 package edu.hunre.course_management.config;
 
 import edu.hunre.course_management.security.CustomUserDetailsService;
-import edu.hunre.course_management.security.oauth2.CustomerOAuth2Service;
-import edu.hunre.course_management.security.oauth2.OAuth2LoginSuccessHandler;
+//import edu.hunre.course_management.security.oauth2.CustomerOAuth2Service;
+//import edu.hunre.course_management.security.oauth2.OAuth2LoginSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,10 +22,10 @@ public class SecurityConfig {
     private CustomUserDetailsService customUserDetailsService;
 
 
-    @Autowired
-    private CustomerOAuth2Service customerOAuth2;
-    @Autowired
-    private OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
+//    @Autowired
+//    private CustomerOAuth2Service customerOAuth2;
+//    @Autowired
+//    private OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
 
     @Bean
     public static PasswordEncoder passwordEncoder() {
@@ -103,15 +103,15 @@ public class SecurityConfig {
 
                 .logout(logout -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                        .logoutSuccessUrl("/login"))
-                .oauth2Login(oauth2 -> oauth2
-                        .loginPage("/login")
-                        .userInfoEndpoint()
-                        .userService(customerOAuth2)
-                        .and()
-                        .successHandler(oAuth2LoginSuccessHandler)
-                        .failureUrl("/login?error=true")
-                );
+                        .logoutSuccessUrl("/login"));
+//                .oauth2Login(oauth2 -> oauth2
+//                        .loginPage("/login")
+//                        .userInfoEndpoint()
+//                        .userService(customerOAuth2)
+//                        .and()
+//                        .successHandler(oAuth2LoginSuccessHandler)
+//                        .failureUrl("/login?error=true")
+//                );
 
 
         return http.build();
