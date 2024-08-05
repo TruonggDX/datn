@@ -17,6 +17,9 @@ public class CustomerEntity extends AbstractEntity {
     private String password;
     private String email;
 
+
+
+
     @ManyToOne
     @JoinColumn(name = "role_id")
     @EqualsAndHashCode.Exclude

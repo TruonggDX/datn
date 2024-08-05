@@ -3,6 +3,7 @@ package edu.hunre.course_management.service.impl;
 import edu.hunre.course_management.entity.CustomerEntity;
 import edu.hunre.course_management.entity.ImageEntity;
 import edu.hunre.course_management.entity.RoleEntity;
+import edu.hunre.course_management.mapper.CustomerMapper;
 import edu.hunre.course_management.model.dto.CustomerDTO;
 import edu.hunre.course_management.model.dto.ImageDTO;
 import edu.hunre.course_management.model.dto.RoleDTO;
@@ -51,6 +52,11 @@ public class ICustomerImpl implements ICustomerService {
     private IImageService imageService;
     @Autowired
     private ImageRepository imageRepository;
+    @Autowired
+    private CustomerMapper customerMapper;
+
+
+
     @Override
     public CustomerDTO findUserByUsername(String username) {
         CustomerEntity customerEntity = customerRepository.findByUsername(username);

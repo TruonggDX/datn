@@ -9,10 +9,7 @@ import edu.hunre.course_management.model.dto.ImageCourseDTO;
 import edu.hunre.course_management.model.dto.ImageDTO;
 import edu.hunre.course_management.model.request.CourseFilterRequest;
 import edu.hunre.course_management.model.response.BaseResponse;
-import edu.hunre.course_management.repository.CategoryRepository;
-import edu.hunre.course_management.repository.CourseRepository;
-import edu.hunre.course_management.repository.ImageCourseRepository;
-import edu.hunre.course_management.repository.LanguageRepository;
+import edu.hunre.course_management.repository.*;
 import edu.hunre.course_management.service.ICourseService;
 import edu.hunre.course_management.service.IImageCourseService;
 import edu.hunre.course_management.utils.Constant;
@@ -48,6 +45,8 @@ public class ICourseImpl implements ICourseService {
     private CategoryRepository categoryRepository;
     @Autowired
     private LanguageRepository languageRepository;
+    @Autowired
+    private AccountRepository accountRepository;
 
     @Override
     public BaseResponse<Page<CourseDTO>> getAll(CourseFilterRequest filterRequest, int page, int size) {
@@ -76,13 +75,21 @@ public class ICourseImpl implements ICourseService {
             response.setMessage(Constant.HTTP_MESSAGE.FAILED);
             return response;
         }
+        Optional<AccountEntity> account = accountRepository.findById(courseDTO.getAccountId());
+        if (account.isEmpty()) {
+            response.setCode(HttpStatus.BAD_REQUEST.value());
+            response.setMessage(Constant.HTTP_MESSAGE.FAILED);
+            return response;
+        }
+
         CourseEntity courseEntity = courseMapper.toEntity(courseDTO);
         courseEntity.setDeleted(false);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         courseEntity.setCreatedBy(authentication.getName());
-
+        courseEntity.setQuantity(1);
         courseEntity.setCategoryEntity(category.get());
         courseEntity.setLanguageEntity(language.get());
+        courseEntity.setAccountEntity(account.get());
         courseEntity = courseRepository.save(courseEntity);
 
         try {
@@ -152,6 +159,13 @@ public class ICourseImpl implements ICourseService {
         }
         courseEntity.setLanguageEntity(languageEntity.get());
 
+        Optional<AccountEntity> accountEntity = accountRepository.findById(courseDTO.getAccountId());
+        if (accountEntity.isEmpty()) {
+            response.setCode(HttpStatus.BAD_REQUEST.value());
+            response.setMessage("account not found");
+            return response;
+        }
+        courseEntity.setAccountEntity(accountEntity.get());
         courseRepository.save(courseEntity);
 
         try {
@@ -184,7 +198,7 @@ public class ICourseImpl implements ICourseService {
 
         response.setCode(HttpStatus.OK.value());
         response.setMessage("Course updated successfully");
-        response.setData(courseMapper.toDTO(courseEntity)); // Optionally, return updated course data
+        response.setData(courseMapper.toDTO(courseEntity));
         return response;
     }
 

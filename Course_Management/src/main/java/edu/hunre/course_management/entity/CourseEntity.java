@@ -20,6 +20,7 @@ public class CourseEntity extends AbstractEntity{
     private Integer duration;
     private Double discountPrice;
     private String requirements;
+    private Integer quantity;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
@@ -31,6 +32,11 @@ public class CourseEntity extends AbstractEntity{
     @JoinColumn(name = "language_id")
     @EqualsAndHashCode.Exclude
     private LanguageEntity languageEntity;
+
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    @EqualsAndHashCode.Exclude
+    private AccountEntity accountEntity;
 
     @OneToMany(mappedBy = "courseEntity", cascade = CascadeType.ALL)
     private List<ImageCourseEntity> imageEntityList;

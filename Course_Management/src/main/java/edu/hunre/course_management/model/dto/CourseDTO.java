@@ -14,10 +14,13 @@ public class CourseDTO {
         private Integer duration;
         private Double discountPrice;
         private String requirements;
+        private Integer quantity;
         private String categoryName;
         private Long categoryId;
         private String languageName;
         private Long languageId;
+        private Long accountId;
+        private String accountName;
         private List<String> imageFile;
         private List<Long> imageId;
 }

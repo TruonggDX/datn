@@ -11,5 +11,6 @@ public class CourseFilterRequest {
     private Double price;
     private Long categoryId;
     private Long languageId;
+    private Long accountId;
     private List<Long> imageId;
 }

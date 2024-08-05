@@ -1,6 +1,8 @@
 package edu.hunre.course_management.config;
 
 import edu.hunre.course_management.security.CustomUserDetailsService;
+import edu.hunre.course_management.security.oauth2.CustomerOAuth2Service;
+import edu.hunre.course_management.security.oauth2.OAuth2LoginSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,13 +14,18 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.thymeleaf.extras.springsecurity6.dialect.SpringSecurityDialect;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
+
+
+    @Autowired
+    private CustomerOAuth2Service customerOAuth2;
+    @Autowired
+    private OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
 
     @Bean
     public static PasswordEncoder passwordEncoder() {
@@ -40,14 +47,18 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
 
-                .authorizeHttpRequests((author) -> author.requestMatchers("/", "/login").permitAll()
+                .authorizeHttpRequests((author) -> author
+                                .requestMatchers("/", "/login", "/oauth2/**").permitAll()
                                 //admin
 //                                .requestMatchers("/api/account/admin/**").hasAnyRole("ADMIN")
                                 .requestMatchers("/api/account/admin/**").permitAll()
                                 .requestMatchers("/api/role/**").hasAnyRole("ADMIN")
-                                .requestMatchers("/api/customer/admin/**").hasAnyRole("ADMIN")
+//                                .requestMatchers("/api/customer/admin/**").hasAnyRole("ADMIN")
+                                .requestMatchers("/api/customer/admin/**").permitAll()
                                 .requestMatchers("/api/customer/register").permitAll()
                                 .requestMatchers("/api/category/admin/**").permitAll()
+                                .requestMatchers("/api/rating/**").permitAll()
+                                .requestMatchers("/api/comment/**").permitAll()
                                 .requestMatchers("/api/account/common/getUser").hasAnyRole(new String[]{"ADMIN", "EMPLOYEE"})
 
                                 //employy
@@ -65,13 +76,13 @@ public class SecurityConfig {
                                 .requestMatchers("/cart/**").permitAll()
 
 
-
                                 //common
                                 .requestMatchers("/api/customer/common/update/**").hasAnyRole(new String[]{"ADMIN", "USER"})
                                 .requestMatchers("/api/customer/updatePassWord/**").permitAll()
                                 .requestMatchers("/api/account/updatePassWord/**").hasAnyRole(new String[]{"ADMIN", "EMPLOYEE"})
 //                                .requestMatchers("/api/certificate/common/update/**").hasAnyRole(new String[]{"ADMIN", "EMPLOYEE"})
                                 .requestMatchers("/api/certificate/common/update/**").permitAll()
+
                                 .requestMatchers("/api/language/**").permitAll()
                                 .requestMatchers("/api/image_course/**").permitAll()
                                 .requestMatchers("/api/course/**").permitAll()
@@ -89,7 +100,20 @@ public class SecurityConfig {
                                 .defaultSuccessUrl("/process-after-login")
                                 .failureUrl("/login").permitAll()
                 )
-                .logout(logout -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login"));
+
+                .logout(logout -> logout
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                        .logoutSuccessUrl("/login"))
+                .oauth2Login(oauth2 -> oauth2
+                        .loginPage("/login")
+                        .userInfoEndpoint()
+                        .userService(customerOAuth2)
+                        .and()
+                        .successHandler(oAuth2LoginSuccessHandler)
+                        .failureUrl("/login?error=true")
+                );
+
+
         return http.build();
     }
 

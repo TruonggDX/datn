@@ -14,6 +14,8 @@ public interface CourseMapper {
     @Mapping(source = "categoryEntity.id", target = "categoryId")
     @Mapping(source = "languageEntity.name", target = "languageName")
     @Mapping(source = "languageEntity.id", target = "languageId")
+    @Mapping(source = "accountEntity.id", target = "accountId")
+    @Mapping(source = "accountEntity.fullname", target = "accountName")
 
     CourseDTO toDTO(CourseEntity courseEntity);
     CourseEntity toEntity(CourseDTO courseDTO);

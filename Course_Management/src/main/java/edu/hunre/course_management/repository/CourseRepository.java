@@ -14,11 +14,13 @@ public interface CourseRepository extends JpaRepository<CourseEntity,Long> {
     @Query(value = "SELECT distinct p FROM CourseEntity p " +
             "LEFT JOIN p.categoryEntity c " +
             "LEFT JOIN p.languageEntity m " +
+            "LEFT JOIN p.accountEntity a " +
             "LEFT JOIN p.imageEntityList i " +
             "WHERE (:#{#condition.name} is null or lower(p.name) = lower(:#{#condition.name})) " +
             "AND (:#{#condition.price} is null or p.price = :#{#condition.price}) " +
             "AND (:#{#condition.categoryId} is null or c.id = :#{#condition.categoryId}) " +
             "AND (:#{#condition.languageId} is null or m.id = :#{#condition.languageId}) " +
+            "AND (:#{#condition.accountId} is null or a.id = :#{#condition.accountId}) " +
             "AND (:#{#condition.imageId} is null or i.id = :#{#condition.imageId}) " +
             "AND p.deleted = false ORDER BY p.createdDate desc"
     )

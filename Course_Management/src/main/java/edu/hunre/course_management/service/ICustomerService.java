@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 public interface ICustomerService {
+
     CustomerDTO findUserByUsername(String username);
     BaseResponse<Page<CustomerDTO>> getAllCustomer(int page, int size);
     BaseResponse<?> addCustomer(CustomerDTO customerDTO);

@@ -21,24 +21,24 @@ public class RoleResource {
         return ResponseEntity.ok(iRoleService.getAll(page, size));
     }
     @PostMapping("/create")
-    public ResponseEntity<BaseResponse<?>> createUser(@Valid @RequestBody RoleDTO roleDTO) {
+    public ResponseEntity<BaseResponse<?>> createRole(@Valid @RequestBody RoleDTO roleDTO) {
         BaseResponse<?> response = iRoleService.createRole(roleDTO);
         return new ResponseEntity<>(response, HttpStatus.valueOf(response.getCode()));
     }
     @PutMapping("/update/{id}")
-    public ResponseEntity<BaseResponse<RoleDTO>> updateUser(@PathVariable Long id,  @RequestBody RoleDTO roleDTO) {
+    public ResponseEntity<BaseResponse<RoleDTO>> updateRole(@PathVariable Long id,  @RequestBody RoleDTO roleDTO) {
         BaseResponse<RoleDTO> response = iRoleService.updateRole(id, roleDTO);
         return ResponseEntity.status(response.getCode()).body(response);
     }
 
     @DeleteMapping("/delete/{id}")
-    public BaseResponse<?> deleteSize(@PathVariable Long id) {
+    public BaseResponse<?> deleteRoleById(@PathVariable Long id) {
         BaseResponse<?> response = iRoleService.deleteRole(id);
         return response;
     }
 
     @GetMapping("/search/{id}")
-    public ResponseEntity<BaseResponse<RoleDTO>> findAccountById(@PathVariable Long id) {
+    public ResponseEntity<BaseResponse<RoleDTO>> findRoleById(@PathVariable Long id) {
         BaseResponse<RoleDTO> response = iRoleService.findByIdRole(id);
         if (response.getCode() == HttpStatus.OK.value()) {
             return ResponseEntity.status(response.getCode()).body(response);

@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/common/head :: head"></head>
+<link th:href="@{/admin/plugins/toastr/css/toastr.min.css}" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+
+<body>
+
+<div id="preloader">
+    <div class="loader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"/>
+        </svg>
+    </div>
+</div>
+
+<div id="main-wrapper">
+    <header th:replace="admin/common/header :: header"></header>
+    <aside th:replace="admin/common/sidebar :: sidebar"></aside>
+    <div class="content-body">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Danh sách khóa học</h4>
+                            <div class="col-sm-12 col-md-12"
+                                 style="display: flex; justify-content: space-between; align-items: center;">
+                                <div class="col-sm-6 col-md-6">
+                                    <input style="width: 100px" id="addCustomer"
+                                           class="btn btn-rounded btn-primary mb-5"
+                                           data-toggle="modal" data-target="#exampleModalLong" type="button"
+                                           value="Thêm">
+                                </div>
+                                <div class="col-sm-6 col-md-6">
+                                    <div class="form-group"
+                                         style="display: flex; align-items: center;width: 330px;float: right">
+                                        <label style="margin-right: 10px; width: 80px;">Tìm kiếm</label>
+                                        <input type="search" onkeyup="seachPro()" name="condition" id="searchCondition"
+                                               class="form-control input-rounded"
+                                               placeholder="Nhập username hoặc fullname">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered zero-configuration">
+                                    <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Mã khóa học</th>
+                                        <th>Tên khóa học</th>
+                                        <th>Giá</th>
+                                        <th>Thời gian học</th>
+                                        <th>Ảnh</th>
+                                        <th>Thao tác</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="course_list">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="bootstrap-pagination">
+                                <nav>
+                                    <ul id="pageId" class="pagination justify-content-end">
+
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 mt-5">
+        <div class="card">
+            <div class="modal fade" id="exampleModalLong">
+                <div class="modal-dialog modal-lg" style="max-width: 2500px;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 id="title_modal" class="modal-title">Thông tin người dùng</h5>
+                            <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-3" id="imageAvata">
+                                    <div class="form-group">
+                                        <label style="text-align: center;">Ảnh đại diện</label>
+                                        <div id="images" class="image-preview mt-2">
+                                      
+                                        </div>
+                                    </div>
+                                </div>
+                                <input id="courseId" hidden="hidden" type="text">
+                                <div class="col-md-9">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="code">Mã khóa học</label>
+                                                <input type="text" class="form-control" id="code" placeholder="Nhập tên đăng nhập">
+                                                <span id="usernameError" style="color: red;"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="name">Tên khóa học</label>
+                                                <input type="text" class="form-control" id="name" placeholder="Nhập họ và tên">
+                                                <span id="fullnameError" style="color: red;"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="price">Giá khóa học</label>
+                                                <input type="text" class="form-control" id="price" placeholder="Nhập giá khóa học">
+                                                <span id="priceError" style="color: red;"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="duration">Thời lượng học</label>
+                                                <input type="text" class="form-control" id="duration" placeholder="Nhập thời lượng">
+                                                <span id="durationError" style="color: red;"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Ngôn ngữ</label>
+                                                <select class="form-control" id="language_list">
+
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Giảng viên dậy</label>
+                                                <select class="form-control" id="account_list">
+
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Danh mục</label>
+                                                <select class="form-control" id="category_list">
+
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="title">Tiêu đề</label>
+                                                <input type="text" class="form-control" id="title" placeholder="Nhập tiêu đề">
+                                                <span id="titleError" style="color: red;"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-4">
+                                        <div class="col-md-12">
+                                            <div class="input-group mb-3">
+                                                <div class="custom-file">
+                                                    <div class="form-group">
+                                                        <label for="avatarInput">Hình ảnh</label>
+                                                        <input type="file" class="custom-file-input" id="avatarInput" accept="image/*" multiple>
+                                                        <label class="custom-file-label" for="avatarInput">Chọn file</label>
+                                                    </div>
+                                                </div>
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">Upload</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="description">Mô tả</label>
+                                                <textarea class="form-control" id="description" placeholder="Nhập mô tả" rows="4"></textarea>
+                                                <span id="descriptionError" style="color: red;"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="requirements">Yêu cầu</label>
+                                                <textarea class="form-control" id="requirements" placeholder="Nhập yêu cầu" rows="4"></textarea>
+                                                <span id="requirementsError" style="color: red;"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                            <button type="button" id="update-course-btn" class="btn btn-primary">Lưu thay đổi</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <script>
+        document.getElementById('avatarInput').addEventListener('change', function(event) {
+            const imagePreviewContainer = document.getElementById('images');
+            imagePreviewContainer.innerHTML = '';
+
+            const files = event.target.files;
+
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.classList.add('img-thumbnail', 'mt-2');
+                    img.style.width = '100%';
+                    imagePreviewContainer.appendChild(img);
+                };
+
+                reader.readAsDataURL(file); // Đọc tệp như một URL
+            }
+        });
+
+        document.getElementById('avatarInput').addEventListener('change', function() {
+            const fileName = Array.from(this.files).map(file => file.name).join(', ');
+            const label = this.nextElementSibling;
+            label.innerHTML = fileName || 'Chọn file';
+        });
+    </script>
+
+<style>
+    .other-images {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        margin-top: 10px;
+    }
+
+    .other-images img {
+        max-width: 100px;
+        max-height: 100px;
+        margin-right: 10px;
+    }
+    #images img {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        max-width: 200px; /* Kích thước tối đa của ảnh */
+        max-height: 200px;
+        margin-top: 10px;
+        margin-bottom: 10px; /* Khoảng cách giữa các ảnh */
+    }
+
+</style>
+<div th:replace="admin/common/script :: script"></div>
+<script>
+    $(document).ready(function () {
+        initData();
+        var updateMessage = localStorage.getItem('updateMessage');
+        if (updateMessage) {
+            showToastr(updateMessage, "Thành công", "success");
+            localStorage.removeItem('updateMessage');
+        }
+    });
+
+    function initData() {
+        let page = 0;
+        let size = 7;
+        getCourse(page, size);
+        getCategory();
+        getLanguage();
+        getAccount();
+    }
+
+    function getCourse(page, size) {
+        let bodyTable = $('#course_list');
+        bodyTable.empty();
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/api/course/list?page=" + page + "&size=" + size,
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                let course = response?.data?.content;
+                console.log(' data ', course)
+                for (let i = 0; i < course.length; i++) {
+                    let data = course[i];
+                    let mainImageTag = '';
+                    let otherImageTags = '<div class="other-images">';
+
+                    if (data.imageFile && data.imageFile.length > 0) {
+                        mainImageTag = '<img src="data:image/png;base64,' + data.imageFile[0] + '" alt="Main Product Image" style="max-width: 100px; max-height: 100px;" class="thumbnail mt-2">';
+                        // for (let j = 1; j < data.imageFile.length; j++) {
+                        //     otherImageTags += '<img src="data:image/png;base64,' + data.imageFile[j] + '" alt="Product Image" style="max-width: 100px; max-height: 100px; margin-right: 10px;">';
+                        // }
+                    } else {
+                        mainImageTag = '<img src="placeholder.jpg" alt="Placeholder Image" style="max-width: 100px; max-height: 100px;">';
+                    }
+                    otherImageTags += '</div>';
+
+                    let row = '<tr class="odd">' +
+                        '<td style="max-width: 50px;">' + (i + 1) + '</td>' +
+                        '<td>' + data.code + '</td>' +
+                        '<td>' + data.name + '</td>' +
+                        '<td>' + data.price + '</td>' +
+                        '<td>' + data.duration + '</td>' +
+                        '<td style="width: 125px; text-align: center;">' + mainImageTag + otherImageTags + '</td>' +
+                        '<td style="width: 140px;">' +
+                        '<a data-toggle="modal" data-target="#exampleModalLong" type="button" class="btn btn-default edit-course-btn" data-id="' + data.id + '"><i style="color: black;font-size: 18px" class="fa-regular fa-pen-to-square"></i></a>' +
+                        '<a type="button" class="btn btn-default delete-course-btn" data-id="' + data.id + '"><i style="color: black;font-size: 18px" class="fa-regular fa-trash-can"></i></a>' +
+                        '</td>' +
+                        '</tr>';
+                    bodyTable.append(row);
+                }
+
+
+                let totalPage = response.data.totalPages;
+                let currentPage = response.data.pageable.pageNumber;
+                if (totalPage > 0) {
+                    $("#pageId").empty();
+                    let pages = '<li class="page-item"><a class="page-link" onclick="changePage(' + (currentPage - 1) + ',7,event)" href="#">Previous</a></li>';
+                    for (let i = 0; i < totalPage; i++) {
+                        if (currentPage === i) {
+                            pages += '<li class="page-item active"><a class="page-link" onclick="changePage(' + i + ',7,event)" href="#">' + (i + 1) + '</a></li>';
+                        } else {
+                            pages += '<li class="page-item"><a class="page-link" onclick="changePage(' + i + ',7,event)" href="#">' + (i + 1) + '</a></li>';
+                        }
+                    }
+                    pages += '<li class="page-item"><a class="page-link" onclick="changePage(' + (currentPage + 1) + ',7,event)" href="#">Next</a></li>';
+                    $("#pageId").append(pages);
+                }
+                updateAnDelete()
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+
+    }
+
+
+    function changePage(page, size, event) {
+        event.preventDefault();
+        getCourse(page, size);
+    }
+
+    function getInforCourse(course) {
+        $('#courseId').val(course.id);
+        // $('#accountId').val(course.accountId);
+        // $('#languageId').val(course.languageId);
+        $('#name').val(course.name);
+        $('#code').val(course.code);
+        $('#price').val(course.price);
+        $('#duration').val(course.duration);
+        $('#accountName').val(course.accountName);
+        $('#categoryName').val(course.categoryName);
+        $('#languageName').val(course.languageName);
+        $('#description').val(course.description);
+        $('#category_list').val(course.categoryId);
+        $('#language_list').val(course.languageId);
+        $('#account_list').val(course.accountId)
+        $('#title').val(course.title);
+        $('#discount_price').val(course.discountPrice);
+        $('#requirements').val(course.requirements);
+
+        if (course.imageFile && course.imageFile.length > 0) {
+            let imagesHtml = '';
+            course.imageFile.forEach((image, index) => {
+                imagesHtml += '<img src="data:image/png;base64,' + image + '" alt="Course Image ' + (index + 1) + '">';
+            });
+            $('#images').html(imagesHtml);
+        } else {
+            let placeholderTag = '<img src="placeholder.jpg" alt="Placeholder Image" style="max-width: 100%; height: auto;">';
+            $('#images').html(placeholderTag);
+        }
+
+        $('#imageAvata').show();
+        $('#inputContainer').removeClass('col-md-12').addClass('col-md-6');
+        $('.modal-lg').width(900);
+        $('#hiddenPass').hide();
+    }
+
+
+    function resetInfor() {
+        $('#title_modal').text('Thêm khách hàng');
+        $('#customerId').val('');
+        $('#username').val('');
+        $('#fullname').val('');
+        $('#address').val('');
+        $('#phone').val('');
+        $('#email').val('');
+    }
+
+    function changePage(page, size, event) {
+        event.preventDefault();
+        getCourse(page, size);
+    }
+
+
+
+    function updateAnDelete() {
+        $('.edit-course-btn').click(function (event) {
+            event.preventDefault();
+            var courseId = $(this).data('id');
+
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/api/course/findById/" + courseId,
+                success: function (response) {
+                    $('#title_modal').text('Cập nhập khóa học');
+                    var course = response.data;
+                    getInforCourse(course);
+                    console.log('infor course ',course)
+
+                    $('#update-course-btn').off('click').on('click', function () {
+
+                        var formData = new FormData();
+                        formData.append('id', $('#courseId').val());
+                        formData.append('accountId', $('#accountId').val());
+                        formData.append('categoryId', $('#categoryId').val());
+                        formData.append('languageId', $('#languageId').val());
+                        formData.append('name', $('#name').val());
+                        formData.append('code', $('#code').val());
+                        formData.append('price', $('#price').val());
+                        formData.append('duration', $('#duration').val());
+                        formData.append('description', $('#description').val());
+                        formData.append('title', $('#title').val());
+                        formData.append('requirements', $('#requirements').val());
+
+
+                        $.ajax({
+                            type: "PUT",
+                            url: "http://localhost:8080/api/course/update/" + $('#courseId').val(),
+                            data: formData,
+                            processData: false,
+                            contentType: false,
+                            success: function (updateResponse) {
+                                console.log(updateResponse);
+                                localStorage.setItem('updateMessage', 'Đã cập nhật tài khoản thành công');
+                                window.location.reload();
+                            },
+                            error: function (updateError) {
+                                console.log(updateError);
+                            }
+                        });
+                    });
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        });
+
+
+
+
+
+
+        $('.delete-course-btn').click(function (event) {
+            event.preventDefault();
+            var courseId = $(this).data('id');
+            swal({
+                    title: "Bạn có chắc chắn muốn xóa?",
+                    text: "Bạn sẽ không thể khôi phục lại khóa học này sau khi xóa !!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Có, xóa đi !!",
+                    cancelButtonText: "Hủy bỏ",
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+                },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        $.ajax({
+                            type: "DELETE",
+                            url: "http://localhost:8080/api/course/delete/" + courseId,
+                            success: function (response) {
+                                console.log(response)
+                                swal("Đã xóa !!", "Khóa học đã được xóa thành công !!", "success");
+                                var deletedRow = $('.delete-course-btn[data-id="' + courseId + '"]').closest('tr');
+                                deletedRow.remove();
+                                getCourse(0,7)
+                            },
+                            error: function (error) {
+                                swal("Lỗi !!", "Đã xảy ra lỗi trong quá trình xóa khóa học !!", "error");
+                                console.log(error);
+                            }
+                        });
+                    }
+                });
+        });
+    }
+
+    function showToastr(message, title = "Thông báo", type = "info") {
+        toastr.options = {
+            closeButton: true,
+            debug: false,
+            newestOnTop: true,
+            progressBar: true,
+            positionClass: "toast-top-right",
+            preventDuplicates: true,
+            onclick: null,
+            showDuration: "300",
+            hideDuration: "1000",
+            extendedTimeOut: "1000",
+            showEasing: "swing",
+            hideEasing: "linear",
+            showMethod: "fadeIn",
+            hideMethod: "fadeOut",
+            tapToDismiss: false
+        };
+        toastr[type](message, title);
+    }
+    function getCategory(){
+        let list = $('#category_list')
+        list.empty();
+        $.ajax({
+            type:"GET",
+            url:"http://localhost:8080/api/category/admin/list",
+            success: function (response){
+                let categories = response?.data?.content;
+
+                for (let i = 0; i < categories.length; i++) {
+                    let data = categories[i];
+                    let row = ' <option value="' + data.id+ '">'+data.name+'</option>';
+                    list.append(row);
+                }
+                console.log('category ',categories)
+            },
+            error: function (error){
+                console.log(error);
+            }
+        })
+    }
+    function getLanguage(){
+        let list = $('#language_list')
+        list.empty();
+        $.ajax({
+            type:"GET",
+            url:"http://localhost:8080/api/language/list",
+            success: function (response){
+                let languages = response?.data?.content;
+
+                for (let i = 0; i < languages.length; i++) {
+                    let data = languages[i];
+                    let row = ' <option value="' + data.id+ '">'+data.name+'</option>';
+                    list.append(row);
+                }
+                console.log('language ',languages)
+            },
+            error: function (error){
+                console.log(error);
+            }
+        })
+    }
+    function getAccount(){
+        let list = $('#account_list')
+        list.empty();
+        $.ajax({
+            type:"GET",
+            url:"http://localhost:8080/api/account/admin/list",
+            success: function (response){
+                let account = response?.data?.content;
+
+                for (let i = 0; i < account.length; i++) {
+                    let data = account[i];
+                    let row = ' <option value="' + data.id+ '">'+data.fullname+'</option>';
+                    list.append(row);
+                }
+                console.log('account ',account)
+            },
+            error: function (error){
+                console.log(error);
+            }
+        })
+    }
+</script>
+</body>
+</html>
