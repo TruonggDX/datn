@@ -20,12 +20,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfig {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
-
-
-//    @Autowired
-//    private CustomerOAuth2Service customerOAuth2;
-//    @Autowired
-//    private OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
+    
 
     @Bean
     public static PasswordEncoder passwordEncoder() {
@@ -107,16 +102,6 @@ public class SecurityConfig {
                 .logout(logout -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                         .logoutSuccessUrl("/login"));
-//                .oauth2Login(oauth2 -> oauth2
-//                        .loginPage("/login")
-//                        .userInfoEndpoint()
-//                        .userService(customerOAuth2)
-//                        .and()
-//                        .successHandler(oAuth2LoginSuccessHandler)
-//                        .failureUrl("/login?error=true")
-//                );
-
-
         return http.build();
     }
 
