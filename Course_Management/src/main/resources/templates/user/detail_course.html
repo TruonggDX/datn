@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="user/common/head :: head"></head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"/>
+<body>
+<header th:replace="user/common/header :: header"></header>
+<section style="margin-top: 100px;">
+    <div class="relative_black">
+
+    </div>
+
+    <div class="absolute_white">
+        <div>
+            <img class="image" th:src="@{/user/img/logo.png}">
+        </div>
+    </div>
+
+</section>
+
+<style>
+    .relative_black {
+        width: 100%;
+        height: 400px;
+        margin-top: 89px;
+        background-color: red;
+        position: relative;
+    }
+
+    .absolute_white {
+        width: 300px;
+        height: 500px;
+        background-color: yellow;
+        position: absolute;
+        top: 24%;
+        left: 64%;
+    }
+
+    .relative_black::before {
+        content: "";
+        left: 100px;
+        top: -500px;
+        position: absolute;
+    }
+.image{
+    width: 100%;
+}
+</style>
+
+<button id="back-to-top" title="Back to Top"><i class="fa-solid fa-angle-up"></i></button>
+<footer th:replace="user/common/footer :: footer"></footer>
+<div th:replace="user/common/script :: script"></div>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -59,6 +59,7 @@ public class SecurityConfig {
                                 .requestMatchers("/api/category/admin/**").permitAll()
                                 .requestMatchers("/api/rating/**").permitAll()
                                 .requestMatchers("/api/comment/**").permitAll()
+                                .requestMatchers("api/order/**").permitAll()
                                 .requestMatchers("/api/account/common/getUser").hasAnyRole(new String[]{"ADMIN", "EMPLOYEE"})
 
                                 //employy
@@ -73,6 +74,7 @@ public class SecurityConfig {
 //                        .requestMatchers("/api/customer/updatePassWord/**").hasAnyRole("USER")
 
                                 .requestMatchers("/dashbroad/**").permitAll()
+                                .requestMatchers("/api/cart/**").permitAll()
                                 .requestMatchers("/cart/**").permitAll()
 
 
@@ -82,6 +84,7 @@ public class SecurityConfig {
                                 .requestMatchers("/api/account/updatePassWord/**").hasAnyRole(new String[]{"ADMIN", "EMPLOYEE"})
 //                                .requestMatchers("/api/certificate/common/update/**").hasAnyRole(new String[]{"ADMIN", "EMPLOYEE"})
                                 .requestMatchers("/api/certificate/common/update/**").permitAll()
+                                .requestMatchers("/course/detail_course").permitAll()
 
                                 .requestMatchers("/api/language/**").permitAll()
                                 .requestMatchers("/api/image_course/**").permitAll()

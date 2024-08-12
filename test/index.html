@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khóa học Spring & Hibernate</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">Khóa Học Udemy</div>
+        <nav>
+            <ul>
+                <li><a href="#">Trang chủ</a></li>
+                <li><a href="#">Khóa học</a></li>
+                <li><a href="#">Liên hệ</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="course-container">
+        <div class="course-header">
+            <h1>Spring & Hibernate Tutorial</h1>
+            <div class="course-rating">
+                <span>4.7</span> ★★★★☆ (1,200 đánh giá)
+            </div>
+            <div class="course-price">
+                <span class="old-price">1,200,000 VNĐ</span>
+                <span class="new-price">399,000 VNĐ</span>
+            </div>
+            <button class="enroll-btn">Đăng ký ngay</button>
+        </div>
+
+        <div class="course-info">
+            <div class="instructor">
+                <h2>Giảng viên</h2>
+                <p>Nguyễn Văn A</p>
+                <img src="instructor.jpg" alt="Giảng viên" class="instructor-img">
+                <p>Giảng viên với hơn 10 năm kinh nghiệm trong lĩnh vực lập trình.</p>
+            </div>
+
+            <div class="course-details">
+                <h2>Thông tin khóa học</h2>
+                <p>Khóa học này cung cấp hướng dẫn chi tiết về Spring và Hibernate.</p>
+                <h3>Những gì bạn sẽ học</h3>
+                <ul>
+                    <li>Giới thiệu về Spring Framework</li>
+                    <li>Quản lý Dependency Injection</li>
+                    <li>Hibernate ORM</li>
+                    <li>Quản lý giao dịch</li>
+                </ul>
+                <h3>Yêu cầu</h3>
+                <p>Cần có kiến thức cơ bản về Java.</p>
+            </div>
+        </div>
+
+        <div class="course-syllabus">
+            <h2>Đề cương khóa học</h2>
+            <ul>
+                <li>Chương 1: Giới thiệu về Spring</li>
+                <li>Chương 2: Cấu hình Spring Boot</li>
+                <li>Chương 3: Hibernate Basics</li>
+                <li>Chương 4: Quản lý giao dịch với Spring</li>
+            </ul>
+        </div>
+
+        <div class="course-reviews">
+            <h2>Đánh giá của học viên</h2>
+            <div class="review">
+                <p><strong>Nguyễn Văn B:</strong> Khóa học rất hữu ích, giảng viên giảng dạy dễ hiểu.</p>
+            </div>
+            <div class="review">
+                <p><strong>Trần Thị C:</strong> Tôi đã học được rất nhiều điều mới từ khóa học này.</p>
+            </div>
+        </div>
+
+        <div class="faq">
+            <h2>Câu hỏi thường gặp</h2>
+            <div class="faq-item">
+                <h3>Làm thế nào để đăng ký khóa học?</h3>
+                <p>Bạn chỉ cần nhấn vào nút "Đăng ký ngay" và làm theo hướng dẫn.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Khóa học này có cung cấp chứng chỉ không?</h3>
+                <p>Có, bạn sẽ nhận được chứng chỉ sau khi hoàn thành khóa học.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Khóa Học Udemy. Tất cả quyền được bảo lưu.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    
+    header {
+        background-color: #f3f3f3;
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    header .logo {
+        font-size: 24px;
+        font-weight: bold;
+    }
+    
+    nav ul {
+        list-style: none;
+        display: flex;
+        gap: 20px;
+    }
+    
+    nav a {
+        text-decoration: none;
+        color: #333;
+    }
+    
+    .course-container {
+        padding: 20px;
+    }
+    
+    .course-header {
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 20px;
+    }
+    
+    .course-rating {
+        margin: 10px 0;
+    }
+    
+    .course-price {
+        font-size: 20px;
+        color: #d9534f;
+    }
+    
+    .old-price {
+        text-decoration: line-through;
+        color: #aaa;
+    }
+    
+    .new-price {
+        font-weight: bold;
+        color: #d9534f;
+    }
+    
+    .enroll-btn {
+        background-color: #28a745;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        font-size: 18px;
+        margin-top: 10px;
+    }
+    
+    .enroll-btn:hover {
+        background-color: #218838;
+    }
+    
+    .instructor {
+        margin-top: 20px;
+    }
+    
+    .instructor-img {
+        width: 100px;
+        border-radius: 50%;
+    }
+    
+    .course-syllabus, .course-reviews, .faq {
+        margin-top: 20px;
+    }
+    
+    .faq-item {
+        margin-top: 10px;
+    }
+    
+    footer {
+        text-align: center;
+        padding: 20px;
+        background-color: #f3f3f3;
+        position: relative;
+        bottom: 0;
+        width: 100%;
+    }
+    
+</style>
+
+<script>
+    document.querySelector('.enroll-btn').addEventListener('click', function() {
+        alert('Cảm ơn bạn đã đăng ký khóa học!');
+    });
+    
+</script>

@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface CourseRepository extends JpaRepository<CourseEntity,Long> {
     @Query(value = "SELECT distinct p FROM CourseEntity p " +
@@ -25,4 +27,12 @@ public interface CourseRepository extends JpaRepository<CourseEntity,Long> {
             "AND p.deleted = false ORDER BY p.createdDate desc"
     )
     Page<CourseEntity> findAllByFilter(@Param("condition") CourseFilterRequest filterRequest, Pageable pageable);
+
+    @Query("SELECT c FROM CourseEntity c WHERE c.name LIKE %:name% AND c.deleted=false ")
+    List<CourseEntity> findCourseByName(@Param("name") String name);
+
+
+    @Query("SELECT c FROM CourseEntity c WHERE c.categoryEntity.id =:categoryId AND c.deleted=false ")
+    List<CourseEntity> findCourseByCategoryId(@Param("categoryId") Long categoryId);
+
 }

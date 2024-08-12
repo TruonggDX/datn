@@ -86,7 +86,6 @@ public class ICourseImpl implements ICourseService {
         courseEntity.setDeleted(false);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         courseEntity.setCreatedBy(authentication.getName());
-        courseEntity.setQuantity(1);
         courseEntity.setCategoryEntity(category.get());
         courseEntity.setLanguageEntity(language.get());
         courseEntity.setAccountEntity(account.get());
@@ -247,6 +246,44 @@ public class ICourseImpl implements ICourseService {
         response.setCode(HttpStatus.OK.value());
         response.setMessage(Constant.HTTP_MESSAGE.SUCCESS);
         response.setData(courseDTO);
+        return response;
+    }
+
+    @Override
+    public BaseResponse<List<CourseDTO>> findCourseByName(String name) {
+        BaseResponse<List<CourseDTO>> response = new BaseResponse<>();
+        List<CourseEntity> courseEntity = courseRepository.findCourseByName(name);
+        if (courseEntity != null && !courseEntity.isEmpty()) {
+            List<CourseDTO> courseDTO = new ArrayList<>();
+            for (CourseEntity courseEntitys : courseEntity) {
+                courseDTO.add(courseMapper.toDTO(courseEntitys));
+            }
+            response.setCode(HttpStatus.OK.value());
+            response.setMessage(Constant.HTTP_MESSAGE.SUCCESS);
+            response.setData(courseDTO);
+        }else {
+            response.setCode(HttpStatus.NOT_FOUND.value());
+            response.setMessage(Constant.HTTP_MESSAGE.FAILED);
+        }
+        return response;
+    }
+
+    @Override
+    public BaseResponse<List<CourseDTO>> findCourseByCategoryId(Long categoryId) {
+        BaseResponse<List<CourseDTO>> response = new BaseResponse<>();
+        List<CourseEntity> courseEntity = courseRepository.findCourseByCategoryId(categoryId);
+        if (courseEntity == null && courseEntity.isEmpty()) {
+            response.setCode(HttpStatus.NOT_FOUND.value());
+            response.setMessage(Constant.HTTP_MESSAGE.FAILED);
+            return response;
+        }
+        List<CourseDTO> courseDTO = new ArrayList<>();
+        for (CourseEntity courseEntitys : courseEntity) {
+            courseDTO.add(courseMapper.toDTO(courseEntitys));
+        }
+        response.setMessage(Constant.HTTP_MESSAGE.SUCCESS);
+        response.setData(courseDTO);
+        response.setCode(HttpStatus.OK.value());
         return response;
     }
 }

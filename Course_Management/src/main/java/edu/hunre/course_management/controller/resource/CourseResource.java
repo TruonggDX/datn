@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/course")
@@ -72,6 +73,25 @@ public class CourseResource {
     @GetMapping("/findById/{id}")
     private ResponseEntity<BaseResponse<?>> findCourseById(@PathVariable Long id) {
         BaseResponse<?> response = icourseService.findById(id);
+        if (response.getCode() == HttpStatus.OK.value()) {
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
+        }
+    }
+    @GetMapping("/findCourseByName/{name}")
+    private ResponseEntity<BaseResponse<List<CourseDTO>>> findCourseByName(@PathVariable String name) {
+        BaseResponse<List<CourseDTO>> response = icourseService.findCourseByName(name);
+        if (response.getCode() == HttpStatus.OK.value()) {
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/findCourseByCategoryId/{categoryId}")
+    private ResponseEntity<BaseResponse<List<CourseDTO>>> findCourseByCategoryId(@PathVariable Long categoryId) {
+        BaseResponse<List<CourseDTO>> response = icourseService.findCourseByCategoryId(categoryId);
         if (response.getCode() == HttpStatus.OK.value()) {
             return new ResponseEntity<>(response, HttpStatus.OK);
         }else {

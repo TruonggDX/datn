@@ -20,7 +20,6 @@ public class CourseEntity extends AbstractEntity{
     private Integer duration;
     private Double discountPrice;
     private String requirements;
-    private Integer quantity;
 
     @ManyToOne
     @JoinColumn(name = "category_id")

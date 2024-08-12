@@ -14,7 +14,7 @@ import lombok.ToString;
 @Table(name = "order_detail")
 public class OrderDetailEntity extends AbstractEntity{
     private Long quantity;
-    private Double totalPrice;
+
     @ManyToOne
     @JoinColumn(name = "order_id")
     @ToString.Exclude

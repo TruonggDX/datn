@@ -88,95 +88,95 @@
                         </div>
                         <div class="modal-body">
                             <div class="row">
-                                <div class="col-md-3" id="imageAvata">
+                                <div class="col-md-4 text-center" id="imageAvata">
                                     <div class="form-group">
-                                        <label style="text-align: center;">Ảnh đại diện</label>
+                                        <label>Ảnh đại diện</label>
                                         <div id="images" class="image-preview mt-2">
-                                      
+                                            <img src="placeholder.jpg" alt="Avatar" class="img-fluid rounded">
                                         </div>
                                     </div>
                                 </div>
-                                <input id="courseId" hidden="hidden" type="text">
-                                <div class="col-md-9">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="code">Mã khóa học</label>
-                                                <input type="text" class="form-control" id="code" placeholder="Nhập tên đăng nhập">
-                                                <span id="usernameError" style="color: red;"></span>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="name">Tên khóa học</label>
-                                                <input type="text" class="form-control" id="name" placeholder="Nhập họ và tên">
-                                                <span id="fullnameError" style="color: red;"></span>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="price">Giá khóa học</label>
-                                                <input type="text" class="form-control" id="price" placeholder="Nhập giá khóa học">
-                                                <span id="priceError" style="color: red;"></span>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="duration">Thời lượng học</label>
-                                                <input type="text" class="form-control" id="duration" placeholder="Nhập thời lượng">
-                                                <span id="durationError" style="color: red;"></span>
-                                            </div>
+                                <div class="col-md-8">
+                                    <input id="courseId" hidden="hidden" type="text">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="code">Mã khóa học</label>
+                                            <input type="text" class="form-control" id="code" placeholder="Nhập mã khóa học">
+                                            <span id="usernameError" class="text-danger"></span>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Ngôn ngữ</label>
-                                                <select class="form-control" id="language_list">
-
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Giảng viên dậy</label>
-                                                <select class="form-control" id="account_list">
-
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Danh mục</label>
-                                                <select class="form-control" id="category_list">
-
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="title">Tiêu đề</label>
-                                                <input type="text" class="form-control" id="title" placeholder="Nhập tiêu đề">
-                                                <span id="titleError" style="color: red;"></span>
-                                            </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="name">Tên khóa học</label>
+                                            <input type="text" class="form-control" id="name" placeholder="Nhập tên khóa học">
+                                            <span id="fullnameError" class="text-danger"></span>
                                         </div>
                                     </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="price">Giá khóa học</label>
+                                            <input type="text" class="form-control" id="price" placeholder="Nhập giá khóa học">
+                                            <span id="priceError" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="duration">Thời lượng học</label>
+                                            <input type="text" class="form-control" id="duration" placeholder="Nhập thời lượng">
+                                            <span id="durationError" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label>Ngôn ngữ</label>
+                                            <select class="form-control" id="language_list"></select>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Giảng viên</label>
+                                            <select class="form-control" id="account_list"></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label>Danh mục cha</label>
+                                            <select class="form-control" id="parentId" onchange="getSubCategories()">
 
-                                    <div class="row mt-4">
-                                        <div class="col-md-12">
-                                            <div class="input-group mb-3">
-                                                <div class="custom-file">
-                                                    <div class="form-group">
-                                                        <label for="avatarInput">Hình ảnh</label>
-                                                        <input type="file" class="custom-file-input" id="avatarInput" accept="image/*" multiple>
-                                                        <label class="custom-file-label" for="avatarInput">Chọn file</label>
-                                                    </div>
-                                                </div>
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text">Upload</span>
-                                                </div>
-                                            </div>
+                                            </select>
                                         </div>
-                                        <div class="col-md-12">
+                                        <div class="form-group col-md-6">
+                                            <label>Danh mục con</label>
+                                            <select class="form-control" id="category_list">
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="title">Tiêu đề</label>
+                                        <input type="text" class="form-control" id="title" placeholder="Nhập tiêu đề">
+                                        <span id="titleError" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-4">
+                                <div class="col-md-8 offset-md-4">
+                                    <div class="input-group mb-3">
+                                        <div class="custom-file">
                                             <div class="form-group">
-                                                <label for="description">Mô tả</label>
-                                                <textarea class="form-control" id="description" placeholder="Nhập mô tả" rows="4"></textarea>
-                                                <span id="descriptionError" style="color: red;"></span>
+                                                <label for="avatarInput">Hình ảnh</label>
+                                                <input type="file" class="custom-file-input" id="avatarInput" accept="image/*" multiple>
+                                                <label class="custom-file-label" for="avatarInput">Chọn file</label>
                                             </div>
                                         </div>
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label for="requirements">Yêu cầu</label>
-                                                <textarea class="form-control" id="requirements" placeholder="Nhập yêu cầu" rows="4"></textarea>
-                                                <span id="requirementsError" style="color: red;"></span>
-                                            </div>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">Upload</span>
                                         </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="description">Mô tả</label>
+                                        <textarea class="form-control" id="description" placeholder="Nhập mô tả" rows="4"></textarea>
+                                        <span id="descriptionError" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="requirements">Yêu cầu</label>
+                                        <textarea class="form-control" id="requirements" placeholder="Nhập yêu cầu" rows="4"></textarea>
+                                        <span id="requirementsError" class="text-danger"></span>
                                     </div>
                                 </div>
                             </div>
@@ -191,36 +191,39 @@
             </div>
         </div>
     </div>
+
 </div>
-    <script>
-        document.getElementById('avatarInput').addEventListener('change', function(event) {
-            const imagePreviewContainer = document.getElementById('images');
-            imagePreviewContainer.innerHTML = '';
 
-            const files = event.target.files;
 
-            for (let i = 0; i < files.length; i++) {
-                const file = files[i];
-                const reader = new FileReader();
+<script>
+    document.getElementById('avatarInput').addEventListener('change', function (event) {
+        const imagePreviewContainer = document.getElementById('images');
+        imagePreviewContainer.innerHTML = '';
 
-                reader.onload = function(e) {
-                    const img = document.createElement('img');
-                    img.src = e.target.result;
-                    img.classList.add('img-thumbnail', 'mt-2');
-                    img.style.width = '100%';
-                    imagePreviewContainer.appendChild(img);
-                };
+        const files = event.target.files;
 
-                reader.readAsDataURL(file); // Đọc tệp như một URL
-            }
-        });
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const reader = new FileReader();
 
-        document.getElementById('avatarInput').addEventListener('change', function() {
-            const fileName = Array.from(this.files).map(file => file.name).join(', ');
-            const label = this.nextElementSibling;
-            label.innerHTML = fileName || 'Chọn file';
-        });
-    </script>
+            reader.onload = function (e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.classList.add('img-thumbnail', 'mt-2');
+                img.style.width = '100%';
+                imagePreviewContainer.appendChild(img);
+            };
+
+            reader.readAsDataURL(file); // Đọc tệp như một URL
+        }
+    });
+
+    document.getElementById('avatarInput').addEventListener('change', function () {
+        const fileName = Array.from(this.files).map(file => file.name).join(', ');
+        const label = this.nextElementSibling;
+        label.innerHTML = fileName || 'Chọn file';
+    });
+</script>
 
 <style>
     .other-images {
@@ -235,6 +238,7 @@
         max-height: 100px;
         margin-right: 10px;
     }
+
     #images img {
         display: flex;
         justify-content: center;
@@ -255,15 +259,16 @@
             showToastr(updateMessage, "Thành công", "success");
             localStorage.removeItem('updateMessage');
         }
+
     });
 
     function initData() {
         let page = 0;
         let size = 7;
         getCourse(page, size);
-        getCategory();
         getLanguage();
         getAccount();
+        getParent();
     }
 
     function getCourse(page, size) {
@@ -340,8 +345,6 @@
 
     function getInforCourse(course) {
         $('#courseId').val(course.id);
-        // $('#accountId').val(course.accountId);
-        // $('#languageId').val(course.languageId);
         $('#name').val(course.name);
         $('#code').val(course.code);
         $('#price').val(course.price);
@@ -350,9 +353,13 @@
         $('#categoryName').val(course.categoryName);
         $('#languageName').val(course.languageName);
         $('#description').val(course.description);
-        $('#category_list').val(course.categoryId);
+
+        $('#parentId').val(course.parentCategoryId);
+        getSubCategories();
+        $('#category_list').data('selected-id', course.categoryId);
+
         $('#language_list').val(course.languageId);
-        $('#account_list').val(course.accountId)
+        $('#account_list').val(course.accountId);
         $('#title').val(course.title);
         $('#discount_price').val(course.discountPrice);
         $('#requirements').val(course.requirements);
@@ -372,6 +379,8 @@
         $('#inputContainer').removeClass('col-md-12').addClass('col-md-6');
         $('.modal-lg').width(900);
         $('#hiddenPass').hide();
+        let ids = $('#parentId').val();
+        console.log('ID của danh mục cha:', ids);
     }
 
 
@@ -391,7 +400,6 @@
     }
 
 
-
     function updateAnDelete() {
         $('.edit-course-btn').click(function (event) {
             event.preventDefault();
@@ -404,7 +412,7 @@
                     $('#title_modal').text('Cập nhập khóa học');
                     var course = response.data;
                     getInforCourse(course);
-                    console.log('infor course ',course)
+                    console.log('infor course ', course)
 
                     $('#update-course-btn').off('click').on('click', function () {
 
@@ -446,10 +454,6 @@
         });
 
 
-
-
-
-
         $('.delete-course-btn').click(function (event) {
             event.preventDefault();
             var courseId = $(this).data('id');
@@ -474,7 +478,7 @@
                                 swal("Đã xóa !!", "Khóa học đã được xóa thành công !!", "success");
                                 var deletedRow = $('.delete-course-btn[data-id="' + courseId + '"]').closest('tr');
                                 deletedRow.remove();
-                                getCourse(0,7)
+                                getCourse(0, 7)
                             },
                             error: function (error) {
                                 swal("Lỗi !!", "Đã xảy ra lỗi trong quá trình xóa khóa học !!", "error");
@@ -506,69 +510,106 @@
         };
         toastr[type](message, title);
     }
-    function getCategory(){
-        let list = $('#category_list')
-        list.empty();
-        $.ajax({
-            type:"GET",
-            url:"http://localhost:8080/api/category/admin/list",
-            success: function (response){
-                let categories = response?.data?.content;
 
-                for (let i = 0; i < categories.length; i++) {
-                    let data = categories[i];
-                    let row = ' <option value="' + data.id+ '">'+data.name+'</option>';
-                    list.append(row);
-                }
-                console.log('category ',categories)
-            },
-            error: function (error){
-                console.log(error);
-            }
-        })
-    }
-    function getLanguage(){
+    function getLanguage() {
         let list = $('#language_list')
         list.empty();
         $.ajax({
-            type:"GET",
-            url:"http://localhost:8080/api/language/list",
-            success: function (response){
+            type: "GET",
+            url: "http://localhost:8080/api/language/list",
+            success: function (response) {
                 let languages = response?.data?.content;
 
                 for (let i = 0; i < languages.length; i++) {
                     let data = languages[i];
-                    let row = ' <option value="' + data.id+ '">'+data.name+'</option>';
+                    let row = ' <option value="' + data.id + '">' + data.name + '</option>';
                     list.append(row);
                 }
-                console.log('language ',languages)
+                console.log('language ', languages)
             },
-            error: function (error){
+            error: function (error) {
                 console.log(error);
             }
         })
     }
-    function getAccount(){
+
+    function getAccount() {
         let list = $('#account_list')
         list.empty();
         $.ajax({
-            type:"GET",
-            url:"http://localhost:8080/api/account/admin/list",
-            success: function (response){
+            type: "GET",
+            url: "http://localhost:8080/api/account/admin/list",
+            success: function (response) {
                 let account = response?.data?.content;
 
                 for (let i = 0; i < account.length; i++) {
                     let data = account[i];
-                    let row = ' <option value="' + data.id+ '">'+data.fullname+'</option>';
+                    let row = ' <option value="' + data.id + '">' + data.fullname + '</option>';
                     list.append(row);
                 }
-                console.log('account ',account)
+                console.log('account ', account)
             },
-            error: function (error){
+            error: function (error) {
                 console.log(error);
             }
         })
     }
+
+    function getParent() {
+        let list = $('#parentId');
+        list.empty();
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/api/category/admin/parents",
+            success: function (response) {
+                let parents = response.data;
+
+                for (let i = 0; i < parents.length; i++) {
+                    let data = parents[i];
+                    let row = '<option value="' + data.id + '">' + data.name + '</option>';
+                    list.append(row);
+                }
+                console.log('Danh mục cha:', parents);
+
+                if (parents.length > 0) {
+                    $('#parentId').val(parents[0].id);
+                    getSubCategories();
+                }
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+
+
+    function getSubCategories() {
+        let categoryList = $('#category_list');
+        categoryList.empty();
+        let parentId = $('#parentId').val();
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/api/category/admin/searchByParentId/" + parentId,
+            success: function (response) {
+                let categories = response.data;
+
+                for (let i = 0; i < categories.length; i++) {
+                    let data = categories[i];
+                    let row = '<option value="' + data.id + '">' + data.name + '</option>';
+                    categoryList.append(row);
+                }
+                console.log('Danh mục con:', categories);
+                let selectedCategoryId = $('#category_list').data('selected-id');
+                if (selectedCategoryId) {
+                    categoryList.val(selectedCategoryId);
+                }
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+
 </script>
 </body>
 </html>

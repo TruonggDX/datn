@@ -3,6 +3,8 @@ package edu.hunre.course_management.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Entity
 @Data
 @Table(name = "category")
@@ -11,4 +13,5 @@ public class CategoryEntity extends AbstractEntity{
     @ManyToOne
     @JoinColumn(name = "parent_id")
     private CategoryEntity parent;
+
 }

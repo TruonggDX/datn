@@ -10,5 +10,7 @@ public class OrderDTO {
     private Long id;
     private String code;
     private Long customerId;
-    private Set<OrderDetailDTO> orderDetails;
+    private String customerName;
+    private List<Long> orderDetailsId;
+    private String courseName;
 }

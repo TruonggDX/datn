@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 @Component
 public abstract class CourseMapperDecorator implements CourseMapper {
     @Autowired
-    @Qualifier("delegate")
     private CourseMapper delegate;
 
     @Autowired

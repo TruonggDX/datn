@@ -4,99 +4,144 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <body>
 <header th:replace="user/common/header :: header"></header>
-<section class="learning_part" style="padding: 120px 0px 0px 0px;">
+<!--<section class="learning_part" style="padding: 120px 0px 0px 0px;">-->
 
-    <div class="container">
+<!--    <div class="container">-->
+<!--        <h1>Giỏ hàng</h1>-->
+<!--        <div class="row align-items-sm-center align-items-lg-stretch">-->
+<!--            <div class="col-md-7 col-lg-9">-->
+<!--                <p class="courceSpan"><span>2</span> Khóa học trong giỏ hàng</p>-->
+<!--                <hr>-->
+<!--                <div class="row">-->
+
+<!--                    <div class="shopping-item-wrapper">-->
+<!--                        <div class="shopping-item-image">-->
+<!--                            <img src="https://img-b.udemycdn.com/course/240x135/950390_270f_3.jpg"-->
+<!--                                 alt="Product Image">-->
+<!--                        </div>-->
+<!--                        <div class="shopping-item-details">-->
+<!--                            <div class="shopping-item-title">Machine Learning A-Z: AI, Python & R + ChatGPT Prize</div>-->
+<!--                            <div class="shopping-item-instructors">By Kirill Eremenko and 3 others</div>-->
+<!--                            <div class="shopping-item-bestseller-rating">-->
+<!--                                <div class="shopping-item-bestseller">Bestseller</div>-->
+<!--                                <div class="shopping-item-rating">-->
+<!--                                    <span class="rating-text" id="star"> 4.5</span>-->
+<!--                                    <span class="rating-stars">-->
+<!--                                        <i class="fas fa-star"></i>-->
+<!--                                        <i class="fas fa-star"></i>-->
+<!--                                        <i class="fas fa-star"></i>-->
+<!--                                        <i class="fas fa-star"></i>-->
+<!--                                        <i class="fas fa-star-half-alt"></i>-->
+<!--                                    </span>-->
+<!--                                    <span class="rating-text">(187,705 ratings)</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="shopping-item-meta">43 total hours • 386 lectures • All Levels</div>-->
+<!--                        </div>-->
+
+<!--                        <div class="shopping-item-actions">-->
+<!--                            <button type="button" class="btn-custom">Remove</button>-->
+<!--                            <br>-->
+<!--                            <button type="button" class="btn-custom mt-2">Save for Later</button>-->
+<!--                            <br>-->
+<!--                            <button type="button" class="btn-custom mt-2">Move to Wishlist</button>-->
+<!--                        </div>-->
+<!--                        <div class="shopping-item-price">-->
+<!--                            <div class="ud-heading-md">₫1,899,000</div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash;                    sp 2&ndash;&gt;-->
+<!--                    <div class="shopping-item-wrapper">-->
+<!--                        <div class="shopping-item-image">-->
+<!--                            <img src="https://img-b.udemycdn.com/course/240x135/950390_270f_3.jpg"-->
+<!--                                 alt="Product Image">-->
+<!--                        </div>-->
+<!--                        <div class="shopping-item-details">-->
+<!--                            <div class="shopping-item-title">Machine Learning A-Z: AI, Python & R + ChatGPT Prize</div>-->
+<!--                            <div class="shopping-item-instructors">By Kirill Eremenko and 3 others</div>-->
+<!--                            <div class="shopping-item-bestseller-rating">-->
+<!--                                <div class="shopping-item-bestseller">Bestseller</div>-->
+<!--                                <div class="shopping-item-rating">-->
+<!--                                    <span class="rating-text" id="star"> 4.5</span>-->
+<!--                                    <span class="rating-stars">-->
+<!--                                        <i class="fas fa-star"></i>-->
+<!--                                        <i class="fas fa-star"></i>-->
+<!--                                        <i class="fas fa-star"></i>-->
+<!--                                        <i class="fas fa-star"></i>-->
+<!--                                        <i class="fas fa-star-half-alt"></i>-->
+<!--                                    </span>-->
+<!--                                    <span class="rating-text">(187,705 ratings)</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="shopping-item-meta">43 total hours • 386 lectures • All Levels</div>-->
+<!--                        </div>-->
+
+<!--                        <div class="shopping-item-actions">-->
+<!--                            <button type="button" class="btn-custom">Remove</button>-->
+<!--                            <br>-->
+<!--                            <button type="button" class="btn-custom mt-2">Save for Later</button>-->
+<!--                            <br>-->
+<!--                            <button type="button" class="btn-custom mt-2">Move to Wishlist</button>-->
+<!--                        </div>-->
+
+<!--                        <div class="shopping-item-price">-->
+<!--                            <div class="ud-heading-md">₫1,899,000</div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--            </div>-->
+<!--            <div class="col-md-5 col-lg-3">-->
+<!--                <div class="learning_member_text">-->
+<!--                    <div class="col-md-4">-->
+<!--                        <div>-->
+<!--                            <p id="totalAmount">Tổng tiền : </p>-->
+<!--                            <p id="total">₫1,899,000</p>-->
+<!--                            <button type="button" id="btn_pay" class="btn btn-primary">Checkout</button>-->
+<!--                            <hr id="line">-->
+<!--                            <div class="form-group">-->
+<!--                                <label class="Promotions">Khuyến mãi:</label>-->
+<!--                                <div class="promo-input-group">-->
+<!--                                    <input type="text" class="form-control promo-input" placeholder="Nhập mã giảm giá">-->
+<!--                                    <button type="button" class="btn btn-primary promo-button">Áp dụng</button>-->
+<!--                                </div>-->
+<!--                            </div>-->
+
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <nav aria-label="Page navigation example" style="margin-left: 54%;">-->
+<!--            <ul class="pagination">-->
+<!--                <li class="page-item"><a class="page-link" href="#">Previous</a></li>-->
+<!--                <li class="page-item"><a class="page-link" href="#">1</a></li>-->
+<!--                <li class="page-item"><a class="page-link" href="#">2</a></li>-->
+<!--                <li class="page-item"><a class="page-link" href="#">3</a></li>-->
+<!--                <li class="page-item"><a class="page-link" href="#">Next</a></li>-->
+<!--            </ul>-->
+<!--        </nav>-->
+<!--    </div>-->
+<!--</section>-->
+<!-- learning part end-->
+<section class="learning_part" style="padding: 120px 0px 0px 0px;">
+    <div class="container" style="max-width: 1300px">
         <h1>Giỏ hàng</h1>
         <div class="row align-items-sm-center align-items-lg-stretch">
             <div class="col-md-7 col-lg-9">
-                <p class="courceSpan"><span>2</span> Khóa học trong giỏ hàng</p>
+                <p class="courceSpan"><span id="courseCount">0</span> Khóa học trong giỏ hàng</p>
                 <hr>
-                <div class="row">
+                <input id="cartId" hidden="hidden">
+                <div class="row" id="cartItemsContainer">
 
-                    <div class="shopping-item-wrapper">
-                        <div class="shopping-item-image">
-                            <img src="https://img-b.udemycdn.com/course/240x135/950390_270f_3.jpg"
-                                 alt="Product Image">
-                        </div>
-                        <div class="shopping-item-details">
-                            <div class="shopping-item-title">Machine Learning A-Z: AI, Python & R + ChatGPT Prize</div>
-                            <div class="shopping-item-instructors">By Kirill Eremenko and 3 others</div>
-                            <div class="shopping-item-bestseller-rating">
-                                <div class="shopping-item-bestseller">Bestseller</div>
-                                <div class="shopping-item-rating">
-                                    <span class="rating-text" id="star"> 4.5</span>
-                                    <span class="rating-stars">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                    </span>
-                                    <span class="rating-text">(187,705 ratings)</span>
-                                </div>
-                            </div>
-                            <div class="shopping-item-meta">43 total hours • 386 lectures • All Levels</div>
-                        </div>
-
-                        <div class="shopping-item-actions">
-                            <button type="button" class="btn-custom">Remove</button>
-                            <br>
-                            <button type="button" class="btn-custom mt-2">Save for Later</button>
-                            <br>
-                            <button type="button" class="btn-custom mt-2">Move to Wishlist</button>
-                        </div>
-                        <div class="shopping-item-price">
-                            <div class="ud-heading-md">₫1,899,000</div>
-                        </div>
-                    </div>
-                    <!--                    sp 2-->
-                    <div class="shopping-item-wrapper">
-                        <div class="shopping-item-image">
-                            <img src="https://img-b.udemycdn.com/course/240x135/950390_270f_3.jpg"
-                                 alt="Product Image">
-                        </div>
-                        <div class="shopping-item-details">
-                            <div class="shopping-item-title">Machine Learning A-Z: AI, Python & R + ChatGPT Prize</div>
-                            <div class="shopping-item-instructors">By Kirill Eremenko and 3 others</div>
-                            <div class="shopping-item-bestseller-rating">
-                                <div class="shopping-item-bestseller">Bestseller</div>
-                                <div class="shopping-item-rating">
-                                    <span class="rating-text" id="star"> 4.5</span>
-                                    <span class="rating-stars">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                    </span>
-                                    <span class="rating-text">(187,705 ratings)</span>
-                                </div>
-                            </div>
-                            <div class="shopping-item-meta">43 total hours • 386 lectures • All Levels</div>
-                        </div>
-
-                        <div class="shopping-item-actions">
-                            <button type="button" class="btn-custom">Remove</button>
-                            <br>
-                            <button type="button" class="btn-custom mt-2">Save for Later</button>
-                            <br>
-                            <button type="button" class="btn-custom mt-2">Move to Wishlist</button>
-                        </div>
-
-                        <div class="shopping-item-price">
-                            <div class="ud-heading-md">₫1,899,000</div>
-                        </div>
-                    </div>
                 </div>
-
             </div>
             <div class="col-md-5 col-lg-3">
                 <div class="learning_member_text">
                     <div class="col-md-4">
                         <div>
-                            <p id="totalAmount">Tổng tiền : </p>
-                            <p id="total">₫1,899,000</p>
+                            <p id="totalAmount">Tổng tiền :</p>
+                            <p id="total">₫0</p>
                             <button type="button" id="btn_pay" class="btn btn-primary">Checkout</button>
                             <hr id="line">
                             <div class="form-group">
@@ -106,7 +151,6 @@
                                     <button type="button" class="btn btn-primary promo-button">Áp dụng</button>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -114,7 +158,6 @@
         </div>
     </div>
 </section>
-<!-- learning part end-->
 
 
 <!--::review_part start::-->
@@ -129,7 +172,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-6 col-lg-4">
+            <div class="col-sm-6 col-lg-4" id="course_list">
                 <div class="single_special_cource">
                     <img th:src="@{/user/img/special_cource_1.png}" class="special_img" alt="">
                     <div class="special_cource_text">
@@ -226,5 +269,104 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <div th:replace="user/common/script :: script"></div>
 </body>
+<script>
+    $(document).ready(function (){
+        initDatas();
+    });
 
+    function initDatas(){
+        getCourseByCustomer();
+    }
+
+    function getCourseByCustomer() {
+        let cartContainer = $('#cartItemsContainer');
+        cartContainer.empty();
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/api/cart/list",
+            dataType: "json",
+            success: function (response) {
+                let course = response.data.content;
+                $('#courseCount').text(course.length)
+                let totalAmount=0;
+                for (let i = 0; i < course.length; i++) {
+                    let item = course[i];
+                    totalAmount += item.price;
+
+                    let imageSrc = item.imageFile && item.imageFile.length > 0
+                        ? 'data:image/png;base64,' + item.imageFile[0]
+                        : 'placeholder.jpg';
+
+                    let cartItemHTML = '<div class="shopping-item-wrapper">' +
+                        '<div class="shopping-item-image">' +
+                        '<img src="' + imageSrc + '" alt="Product Image" />' +
+                        '</div>' +
+                        '<div class="shopping-item-details">' +
+                        '<div class="shopping-item-title">' + item.courseName + '</div>' +
+                        '<div class="shopping-item-instructors">By ' + item.customerName + '</div>' +
+                        '<div class="shopping-item-bestseller-rating">' +
+                        '<div class="shopping-item-bestseller">Bestseller</div>' +
+                        '<div class="shopping-item-rating">' +
+                        '<span class="rating-text" id="star">4.5</span>' +
+                        '<span class="rating-stars">' +
+                        '<i class="fas fa-star"></i>' +
+                        '<i class="fas fa-star"></i>' +
+                        '<i class="fas fa-star"></i>' +
+                        '<i class="fas fa-star"></i>' +
+                        '<i class="fas fa-star-half-alt"></i>' +
+                        '</span>' +
+                        '<span class="rating-text">(187,705 ratings)</span>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="shopping-item-meta">43 total hours • 386 lectures • All Levels</div>' +
+                        '</div>' +
+                        '<div class="shopping-item-actions">' +
+                        '<button type="button" class="btn-custom" id="deleteCourse" data-id="' + item.id + '">Remove</button>' +
+                        '<br>' +
+                        '<button type="button" class="btn-custom mt-2">Save for Later</button>' +
+                        '<br>' +
+                        '<button type="button" class="btn-custom mt-2">Move to Wishlist</button>' +
+                        '</div>' +
+                        '<div class="shopping-item-price">' +
+                        '<div class="ud-heading-md">' + formatCurrency(item.price) + '</div>' +
+                        '</div>' +
+                        '</div>';
+
+                    cartContainer.append(cartItemHTML);
+                }
+
+                $('#total').text(formatCurrency(totalAmount))
+                console.log('data infor',course);
+
+                feature();
+            },
+            error: function(error) {
+                console.error(error);
+            }
+        });
+    }
+    function feature() {
+        $('#deleteCourse').click(function (event) {
+            event.preventDefault();
+            var cartId = $(this).data('id');
+            $.ajax({
+                type: "DELETE",
+                url: "http://localhost:8080/api/cart/delete/" + cartId,
+                success: function (response) {
+                    console.log(response);
+                    getCourseByCustomer()
+                    // window.reload();
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        });
+    }
+
+    function formatCurrency(amount) {
+        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+    }
+
+</script>
 </html>

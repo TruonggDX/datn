@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -23,5 +24,5 @@ public class OrderEntity extends AbstractEntity{
     @OneToMany(mappedBy = "orderEntity", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private Set<OrderDetailEntity> orderDetailEntities;
+    private List<OrderDetailEntity> orderDetailEntities;
 }

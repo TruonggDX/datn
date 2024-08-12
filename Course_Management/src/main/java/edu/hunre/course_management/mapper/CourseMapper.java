@@ -12,11 +12,13 @@ import org.mapstruct.Mapping;
 public interface CourseMapper {
     @Mapping(source = "categoryEntity.name", target = "categoryName")
     @Mapping(source = "categoryEntity.id", target = "categoryId")
+    @Mapping(source = "categoryEntity.parent.id", target = "parentCategoryId")
     @Mapping(source = "languageEntity.name", target = "languageName")
     @Mapping(source = "languageEntity.id", target = "languageId")
     @Mapping(source = "accountEntity.id", target = "accountId")
     @Mapping(source = "accountEntity.fullname", target = "accountName")
-
+    @Mapping(source = "createdBy", target = "createdBy")
     CourseDTO toDTO(CourseEntity courseEntity);
+
     CourseEntity toEntity(CourseDTO courseDTO);
 }

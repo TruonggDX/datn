@@ -15,7 +15,7 @@ public class Constant {
 
         public static final String FAILEDPW="The old password is incorrect";
         public static final String CHECKPASSWORD="The new password must not be the same as the old password";
-
+        public static final String EXITS_ITEM="Item already exists";
 
     }
 
