@@ -25,4 +25,8 @@ public interface CommentRepository extends JpaRepository<CommentEntity,Long> {
     )
     Page<CommentEntity> findAllByFilter(@Param("condition") CommentDTO commentDTO, Pageable pageable);
 
+
+    @Query("SELECT COUNT(c) FROM CommentEntity c JOIN c.courseEntity c2 JOIN c2.accountEntity a WHERE a.id = :accountId AND c.deleted=false ")
+    Long countCommentsByAccountId(@Param("accountId") Long accountId);
+
 }

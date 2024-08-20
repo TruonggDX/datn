@@ -216,4 +216,22 @@ public class ICategoryImpl implements ICategoryService {
         response.setData(categoryDTOS);
         return response;
     }
+
+    @Override
+    public BaseResponse<List<CategoryDTO>> getSub() {
+        BaseResponse<List<CategoryDTO>> response = new BaseResponse<>();
+        List<CategoryEntity> categoryEntities = categoryRepository.findByParentIsNull();
+        if (categoryEntities == null || categoryEntities.isEmpty()) {
+            response.setMessage(Constant.HTTP_MESSAGE.FAILED);
+            response.setCode(HttpStatus.BAD_REQUEST.value());
+            response.setData(new ArrayList<>());
+        }
+        List<CategoryDTO> categoryDTOS = categoryEntities.stream()
+                .map(categoryMapper::toDTO)
+                .collect(Collectors.toList());
+        response.setMessage(Constant.HTTP_MESSAGE.SUCCESS);
+        response.setCode(HttpStatus.OK.value());
+        response.setData(categoryDTOS);
+        return response;
+    }
 }

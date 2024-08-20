@@ -4,10 +4,14 @@ import edu.hunre.course_management.model.dto.RatingDTO;
 import edu.hunre.course_management.model.response.BaseResponse;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 public interface IRatingService {
     BaseResponse<Page<RatingDTO>> getAll(RatingDTO ratingDTO, int page, int size);
     BaseResponse<?> addRating(RatingDTO ratingDTO);
     BaseResponse<?> updateRating(Long id,RatingDTO ratingDTO);
     BaseResponse<?> deleteRating(Long id);
     BaseResponse<?> findById(Long id);
+
+    BaseResponse<List<Long>> getRating();
 }

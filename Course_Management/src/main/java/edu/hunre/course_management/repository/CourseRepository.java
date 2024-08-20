@@ -33,6 +33,31 @@ public interface CourseRepository extends JpaRepository<CourseEntity,Long> {
 
 
     @Query("SELECT c FROM CourseEntity c WHERE c.categoryEntity.id =:categoryId AND c.deleted=false ")
-    List<CourseEntity> findCourseByCategoryId(@Param("categoryId") Long categoryId);
+    Page<CourseEntity> findCourseByCategoryId(@Param("categoryId") Long categoryId,Pageable pageable);
+
+    @Query("SELECT c FROM CourseEntity c WHERE " +
+            "(:categoryId IS NULL OR c.categoryEntity.id = :categoryId) AND " +
+            "(:levelId IS NULL OR c.levelEntity.id = :levelId) AND " +
+            "(:languageId IS NULL OR c.languageEntity.id = :languageId) AND "+
+            "c.deleted = false")
+    Page<CourseEntity> findCourseByCategoryIdAndLevelId(@Param("categoryId") Long categoryId,Pageable pageable, @Param("levelId") Long levelId, @Param("languageId") Long languageId);
+
+    @Query("SELECT c.levelEntity.id, COUNT(c) FROM CourseEntity c WHERE c.levelEntity.id IN :levelIds AND c.deleted = false GROUP BY c.levelEntity.id")
+    List<Object[]> countCoursesByLevel(@Param("levelIds") List<Long> levelIds);
+
+    @Query("SELECT c FROM CourseEntity c WHERE c.deleted=false AND c.wishlist=true")
+    Page<CourseEntity> findAllCourseByWishList(Pageable pageable);
+
+    @Query("SELECT c FROM CourseEntity c WHERE c.accountEntity.id=:accountId AND c.deleted=false")
+    Page<CourseEntity> findCourseByAccountId(@Param("accountId") Long accountId,Pageable pageable);
+
+
+    @Query("SELECT COUNT(*) FROM CourseEntity c WHERE c.deleted = false AND c.accountEntity.id=:accountId")
+    Long countCourseByAccountId(@Param("accountId") Long accountId);
+
+    @Query(value = "SELECT c FROM CourseEntity c WHERE c.deleted=false AND c.levelEntity.id=:levelId")
+    Page<CourseEntity> findCourseByLevelId(@Param("levelId") Long levelId,Pageable pageable);
+
+
 
 }

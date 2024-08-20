@@ -16,4 +16,5 @@ public interface ICategoryService {
     BaseResponse<List<CategoryDTO>>getAllParentCategories();
 
     BaseResponse<List<CategoryDTO>> getAllChildCategories(String condition);
+    BaseResponse<List<CategoryDTO>> getSub();
 }

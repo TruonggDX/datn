@@ -8,4 +8,8 @@ public class OrderFilterRequest {
     private String code;
     private Long customerId;
     private String customerName;
+    private String courseName;
+    private String courseId;
+    private String description;
+    private String languageName;
 }

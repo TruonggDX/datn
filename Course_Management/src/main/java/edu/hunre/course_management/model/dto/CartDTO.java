@@ -15,4 +15,8 @@ public class CartDTO {
     private Double price;
     private List<String> imageFile;
     private List<Long> imageId;
+    private Long levelId;
+    private String levelName;
+    private String languageId;
+    private String languageName;
 }

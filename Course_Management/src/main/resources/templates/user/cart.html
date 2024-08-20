@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="user/common/head :: head"></head>
+<body>
+<div id="wrapper" class="horizontal">
+
+    <div th:replace="user/common/header :: header"></div>
+    <div class="from-blue-500 via-blue-400 to-blue-500 bg-gradient-to-l breadcrumb-area py-6 text-white">
+        <div class="container mx-auto lg:pt-5">
+            <div class="breadcrumb text-white">
+                <ul class="m-0">
+                    <li>
+                        <a href="index.html"> <i class="icon-feather-home"></i> </a>
+                    </li>
+                    <li>
+                        <a href="index.html">Home</a>
+                    </li>
+                    <li class="active">
+                        <a href="#">Shopping Cart </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="md:text-2xl text-base font-semibold mt-6 md:mb-24"> Shopping Cart </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="max-w-6xl mx-auto lg:-mt-20 relative">
+            <div class="bg-white rounded-md shadow-md">
+                <h3 class="border-b font-semibold px-5 py-4 text-base text-gray-500">Giỏ hàng của bạn (<span id="courseCount">0</span> khóa học)</h3>
+                <div class="divide-y" id="cartItemsContainer">
+                    <!-- Các mục giỏ hàng sẽ được chèn vào đây -->
+                </div>
+
+                <div class="border-t mt-5 pt-6 space-y-6">
+                    <div class="flex justify-between px-6">
+                        <div class="flex-1 min-w-0">
+                            <h1 class="text-lg font-medium">Tổng tiền</h1>
+                        </div>
+                        <h5 class="font-semibold text-black text-xl" id="total">$0.00</h5>
+                    </div>
+
+                    <div class="px-6 pb-5">
+                        <a th:href="@{/payment/info}" class="bg-blue-600 block py-3 rounded-md text-white text-center text-base font-semibold hover:text-white hover:bg-blue-700">Thanh toán</a>
+                        <div class="flex items-center justify-center mt-4 space-x-1.5">
+                            <p class="font-medium">hoặc</p> <a href="#" class="text-blue-600 font-semibold text-center">Tiếp mục mua hàng</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div th:replace="user/common/footer :: footer"></div>
+
+</div>
+<div th:replace="user/common/script :: script"></div>
+<script>
+    $(document).ready(function (){
+        initDatas();
+    });
+
+    function initDatas(){
+        getCourseByCustomer();
+    }
+    function getCourseByCustomer() {
+        let cartContainer = $('#cartItemsContainer');
+        cartContainer.empty();
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/api/cart/list",
+            dataType: "json",
+            success: function (response) {
+                let course = response.data.content;
+                $('#courseCount').text(course.length);
+                let totalAmount = 0;
+
+                for (let i = 0; i < course.length; i++) {
+                    let item = course[i];
+                    totalAmount += item.price;
+
+                    let courseHTML =
+                        '<div class="flex items-start space-x-6 relative py-7 px-6">' +
+                        '<div class="h-28 overflow-hidden relative rounded-md w-44">' +
+                        '<img src="' + (item.imageFile.length > 0 ? 'data:image/png;base64,' + item.imageFile[0] : '../assets/images/courses/img-5.jpg') + '" alt="" class="absolute w-full h-full inset-0 object-cover">' +
+                        '</div>' +
+                        '<div class="flex-2 min-w-0">' +
+                        '<a href="/course/detail_course?id=' + item.id + '" class="md:text-lg font-semibold line-clamp-2 mb-2">' + item.courseName + '</a>' +
+                        '<a href="#" class="font-medium block text-sm">' + item.customerName + '</a>' +
+                        '<div class="flex items-center mt-1 space-x-2 text-sm font-medium">' +
+                        '<span class="text-yellow-500">★ ★ ★ ★ ☆</span>' +
+                        '<span>(120 reviews)</span>' +
+                        '</div>' +
+                        '<div class="flex items-center mt-7 space-x-2 text-sm font-medium">' +
+                        '<div>'+item.levelName+'</div>' +
+                        '<div class="md:block hidden">·</div>' +
+                        '<div class="flex items-center">13 Hours</div>' +
+                        '<div class="md:block hidden">·</div>' +
+                        '<div class="flex items-center ml-4">Lectures: 10</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div style="margin-left: 140px;" class="flex flex-col items-center space-y-2">' +
+                        '<button class="text-blue-500" id="deleteCourse" data-id="' + item.id + '">Remove</button>' +
+                        '<button class="text-blue-500">Save for Later</button>' +
+                        '<button class="text-blue-500">Move to Favorites</button>' +
+                        '</div>' +
+                        '<div class="absolute right-6 transform -translate-y-1/2">' +
+                        '<h5 class="font-semibold text-black text-xl">' + formatCurrency(item.price) + '</h5>' +
+                        '</div>' +
+                        '</div>';
+                    cartContainer.append(courseHTML);
+                }
+                $('#total').text(formatCurrency(totalAmount));
+                console.log('data info', course);
+                feature();
+
+            },
+            error: function (error) {
+                console.error(error);
+            }
+        });
+    }
+    function feature() {
+        $('#deleteCourse').click(function (event) {
+            event.preventDefault();
+            var cartId = $(this).data('id');
+            $.ajax({
+                type: "DELETE",
+                url: "http://localhost:8080/api/cart/delete/" + cartId,
+                success: function (response) {
+                    console.log(response);
+                    getCourseByCustomer()
+                    // window.reload();
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        });
+    }
+
+
+    function formatCurrency(amount) {
+        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+    }
+
+</script>
+</body>
+</html>

@@ -1,102 +1,442 @@
-<!--::header part start::-->
-<header th:fragment="header" class="main_menu home_menu">
+<div th:fragment="header">
+    <header style="background-color: #87CEFA" >
+        <div class="header_inner">
+            <div class="left-side">
+
+                <!-- Logo -->
+                <div id="logo">
+                    <a th:href="@{/dashbroad/home}">
+                        <img th:src="@{/user/assets/images/logo.png}" alt="">
+                        <img th:src="@{/user/assets/images/logo-light.png}" class="logo_inverse" alt="">
+                        <img th:src="@{/user/assets/images/logo-mobile.png}" class="logo_mobile" alt="">
+                    </a>
+                </div>
+
+                <!-- icon menu for mobile -->
+                <div class="triger" uk-toggle="target: .header_menu ; cls: is-visible">
+                </div>
+
+                <!-- menu bar for mobile -->
+                <style>
+                    .header_menu ul li a{
+                        color: black;
+                    }
+                    .is-icon{
+                        color: black;
+                    }
+                </style>
+                <nav class="header_menu">
+                    <ul>
+                        <li>
+                            <a href="#"> Courses</a>
+                            <div uk-drop="mode: click" class="category-dropdown">
+                                <ul>
+                                    <li><a href="courses.html">
+                                        <ion-icon name="newspaper-outline" class="is-icon"></ion-icon>
+                                        Web Development </a></li>
+                                    <li><a href="courses.html">
+                                        <ion-icon name="leaf-outline" class="is-icon"></ion-icon>
+                                        Mobile App </a></li>
+                                    <li><a href="courses.html">
+                                        <ion-icon name="briefcase-outline" class="is-icon"></ion-icon>
+                                        Business </a></li>
+                                    <li><a href="courses.html">
+                                        <ion-icon name="color-palette-outline" class="is-icon"></ion-icon>
+                                        Desings </a></li>
+                                    <li><a href="courses.html">
+                                        <ion-icon name="megaphone-outline" class="is-icon"></ion-icon>
+                                        Marketing </a></li>
+                                    <li><a href="courses.html">
+                                        <ion-icon name="camera-outline" class="is-icon"></ion-icon>
+                                        Photography </a></li>
+                                    <li><a href="courses.html">
+                                        <ion-icon name="accessibility-outline" class="is-icon"></ion-icon>
+                                        Life Style </a></li>
+                                </ul>
+                            </div>
+
+                        </li>
+                        <li><a th:href="@{/course/list}" class="active"> Khóa học </a></li>
+                        <li><a href="episodes.html"> Episode </a></li>
+                        <li><a href="books.html"> Book </a></li>
+                        <li><a href="blog.html"> Blog</a></li>
+                        <li><a href="#">Pages</a>
+                            <div uk-drop="mode: click" class="menu-dropdown">
+                                <ul>
+                                    <li><a href="pages-pricing.html"> Pricing</a></li>
+                                    <li><a href="pages-faq.html"> Faq </a></li>
+                                    <li><a href="pages-help.html"> Help </a></li>
+                                    <li><a href="pages-terms.html"> Terms </a></li>
+                                    <li><a href="pages-setting.html"> Setting </a></li>
+                                    <li><a href="#"> Development </a>
+                                        <div class="menu-dropdown"
+                                             uk-drop="mode: click;pos:right-top;animation: uk-animation-slide-right-small">
+                                            <ul>
+                                                <li><a href="development-elements.html"> Elements </a></li>
+                                                <li><a href="development-components.html"> Compounents </a></li>
+                                                <li><a href="development-plugins.html"> Plugins </a></li>
+                                                <li><a href="development-icons.html"> Icons </a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li><a href="course-intro.html"> Course intro 1 </a>
+                                        <div uk-drop="mode: click;pos:right-center" class="menu-dropdown">
+                                            <ul>
+                                                <li><a href="pages-pricing.html"> Pricing</a></li>
+                                                <li><a href="pages-faq.html"> Faq </a></li>
+                                                <li><a href="pages-help.html"> Help </a></li>
+                                                <li><a href="pages-terms.html"> Terms </a></li>
+                                                <li><a href="pages-setting.html"> Setting </a></li>
+                                                <li><a href="#"> Development </a>
+                                                    <div class="menu-dropdown"
+                                                         uk-drop="mode: click;pos:right-top;animation: uk-animation-slide-right-small">
+                                                        <ul>
+                                                            <li><a href="development-elements.html"> Elements </a></li>
+                                                            <li><a href="development-components.html"> Compounents </a>
+                                                            </li>
+                                                            <li><a href="development-plugins.html"> Plugins </a></li>
+                                                            <li><a href="development-icons.html"> Icons </a></li>
+                                                        </ul>
+                                                    </div>
+                                                </li>
+                                                <li><a href="course-intro.html"> Course intro 1 </a></li>
+                                                <li><a href="course-intro-2.html"> Course intro 2 </a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li><a href="course-intro-2.html"> Course intro 2 </a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+
+                <!-- overly for small devices -->
+                <div class="overly" uk-toggle="target: .header_menu ; cls: is-visible"></div>
+
+            </div>
+            <div class="right-side">
+
+                <!-- Search Icon -->
+                <div class="relative">
+                    <button id="searchButton" class="header_widgets">
+                        <ion-icon name="search-outline" class="is-icon"></ion-icon>
+                    </button>
+                </div>
+
+                <div id="searchInputContainer" style="margin: 0 auto;padding-bottom: 18px;"
+                     class="hidden absolute left-0 right-0 top-full bg-white shadow-lg rounded-md transition-transform duration-300 ease-in-out transform hover:scale-105">
+                    <div class="max-w-4xl mx-auto relative mt-3">
+
+                        <input type="text" name="condition" id="searchCondition" onkeyup="seachPro()"
+                               placeholder="Search..." class="shadow-none with-border">
+                        <div id="renSearch"></div>
+                    </div>
+                </div>
+
+
+                <!-- cart -->
+                <a th:href="@{/cart/list}" class="header_widgets">
+                    <ion-icon name="cart-outline" class="is-icon"></ion-icon>
+                    <span id="quantity" class="cart-count">2</span>
+                </a>
+                <div uk-drop="mode: hover;pos: bottom-right; delay-show: 0; delay-hide: 0;" class="dropdown_cart">
+                    <div class="cart-headline"> My Cart
+                        <a th:href="@{/payment/info}" class="checkout">Checkout</a>
+                    </div>
+                    <ul class="dropdown_cart_scrollbar" data-simplebar>
+                    </ul>
+
+                    <div class="cart_footer">
+
+                    </div>
+                </div>
+
+                <!-- notification -->
+                <a href="#" class="header_widgets">
+                    <ion-icon name="mail-outline" class="is-icon"></ion-icon>
+                </a>
+                <div uk-drop="mode: click" class="header_dropdown">
+                    <div class="drop_headline">
+                        <h4>Notifications </h4>
+                        <div class="btn_action">
+                            <div class="btn_action">
+                                <a href="#">
+                                    <ion-icon name="settings-outline"
+                                              uk-tooltip="title: Notifications settings ; pos: left"></ion-icon>
+                                </a>
+                                <a href="#">
+                                    <ion-icon name="checkbox-outline"
+                                              uk-tooltip="title: Mark as read all ; pos: left"></ion-icon>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <ul class="dropdown_scrollbar" data-simplebar>
+                        <li>
+                            <a href="#">
+                                <div class="drop_avatar"><img th:src="@{/user/assets/images/avatars/avatar-1.jpg}"
+                                                              alt="">
+                                </div>
+                                <div class="drop_content">
+                                    <p><strong>Adrian Mohani</strong> Like Your Comment On Course
+                                        <span class="text-link">Javascript Introduction </span>
+                                    </p>
+                                    <span class="time-ago"> 2 hours ago </span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="drop_avatar"><img th:src="@{/user/assets/images/avatars/avatar-2.jpg}"
+                                                              alt="">
+                                </div>
+                                <div class="drop_content">
+                                    <p>
+                                        <strong>Stella Johnson</strong> Replay Your Comments in
+                                        <span class="text-link">Programming for Games</span>
+                                    </p>
+                                    <span class="time-ago"> 9 hours ago </span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="drop_avatar"><img th:src="@{/user/assets/images/avatars/avatar-3.jpg}"
+                                                              alt="">
+                                </div>
+                                <div class="drop_content">
+                                    <p>
+                                        <strong>Alex Dolgove</strong> Added New Review In Course
+                                        <span class="text-link">Full Stack PHP Developer</span>
+                                    </p>
+                                    <span class="time-ago"> 12 hours ago </span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="drop_avatar"><img th:src="@{/user/assets/images/avatars/avatar-1.jpg}"
+                                                              alt="">
+                                </div>
+                                <div class="drop_content">
+                                    <p>
+                                        <strong>Jonathan Madano</strong> Shared Your Discussion On Course
+                                        <span class="text-link">Css Flex Box </span>
+                                    </p>
+                                    <span class="time-ago"> Yesterday </span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <a href="#" class="see-all">See all</a>
+                </div>
+
+                <!-- messages -->
+                <a href="#" class="header_widgets">
+                    <ion-icon name="notifications-outline" class="is-icon"></ion-icon>
+                    <span> 2 </span>
+                </a>
+                <div uk-drop="mode: click" class="header_dropdown">
+                    <div class="drop_headline">
+                        <h4>Messages </h4>
+                        <div class="btn_action">
+                            <a href="#">
+                                <ion-icon name="settings-outline"
+                                          uk-tooltip="title: Message settings ; pos: left"></ion-icon>
+                            </a>
+                            <a href="#">
+                                <ion-icon name="checkbox-outline"
+                                          uk-tooltip="title: Mark as read all ; pos: left"></ion-icon>
+                            </a>
+                        </div>
+                    </div>
+                    <ul class="dropdown_scrollbar" data-simplebar>
+                        <li>
+                            <a href="#">
+                                <div class="drop_avatar"><img th:src="@{/user/assets/images/avatars/avatar-1.jpg}"
+                                                              alt="">
+                                </div>
+                                <div class="drop_content">
+                                    <strong> John menathon </strong> <span class="time"> 6:43 PM</span>
+                                    <p> Lorem ipsum dolor sit amet, consectetur </p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="drop_avatar"><img th:src="@{/user/assets/images/avatars/avatar-2.jpg}"
+                                                              alt="">
+                                </div>
+                                <div class="drop_content">
+                                    <strong> Zara Ali </strong> <span class="time">12:43 PM</span>
+                                    <p> Lorem ipsum dolor sit amet, consectetur </p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="drop_avatar"><img th:src="@{/user/assets/images/avatars/avatar-3.jpg}"
+                                                              alt="">
+                                </div>
+                                <div class="drop_content">
+                                    <strong> Mohamed Ali </strong> <span class="time"> Wed</span>
+                                    <p> Lorem ipsum dolor sit amet, consectetur </p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="drop_avatar"><img th:src="@{/user/assets/images/avatars/avatar-1.jpg}"
+                                                              alt="">
+                                </div>
+                                <div class="drop_content">
+                                    <strong> John menathon </strong> <span class="time"> Sun </span>
+                                    <p> Lorem ipsum dolor sit amet, consectetur </p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="drop_avatar"><img th:src="@{/user/assets/images/avatars/avatar-2.jpg}"
+                                                              alt="">
+                                </div>
+                                <div class="drop_content">
+                                    <strong> Zara Ali </strong> <span class="time"> Fri </span>
+                                    <p> Lorem ipsum dolor sit amet, consectetur </p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="drop_avatar"><img th:src="@{/user/assets/images/avatars/avatar-3.jpg}"
+                                                              alt="">
+                                </div>
+                                <div class="drop_content">
+                                    <strong> Mohamed Ali </strong> <span class="time">1 Week ago</span>
+                                    <p> Lorem ipsum dolor sit amet, consectetur </p>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <a href="#" class="see-all">See all</a>
+                </div>
+
+                <a th:href="@{/login}" id="lgin"
+                   class="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition duration-300">Đăng
+                    nhập</a>
+
+                <!-- profile -->
+                <a id="personal">
+                    <img th:src="@{/user/assets/images/avatars/placeholder.png}" class="header_widgets_avatar" alt="">
+                </a>
+                <div uk-drop="mode: click;offset:5" class="header_dropdown profile_dropdown">
+                    <ul id="profile_personal">
+                        <li>
+                            <a class="user">
+                                <div class="user_avatar" >
+                                    <img style="width: 50px !important;height: 50px;border-radius: 50%" id="user-icon" th:src="@{/user/assets/images/avatars/avatar-2.jpg}" alt="">
+                                </div>
+                                <div class="user_name">
+                                    <div id="fullname"></div>
+                                    <span id="username"></span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <hr>
+                        </li>
+                        <li>
+                            <a href="#" class="is-link">
+                                <ion-icon name="rocket-outline" class="is-icon"></ion-icon>
+                                <span>  Upgrade Membership  </span>
+                            </a>
+                        </li>
+                        <li>
+                            <hr>
+                        </li>
+                        <li>
+                            <a th:href="@{/dashbroad/profile}">
+                                <ion-icon name="person-circle-outline" class="is-icon"></ion-icon>
+                                Tài khoản cá nhân
+                            </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/course/my-courses/wishlist}">
+                                <ion-icon name="card-outline" class="is-icon" ></ion-icon>
+                                Khóa học yêu thích
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <ion-icon name="color-wand-outline" class="is-icon"></ion-icon>
+                                My Billing
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <ion-icon name="settings-outline" class="is-icon"></ion-icon>
+                                Account Settings
+                            </a>
+                        </li>
+                        <li>
+                            <hr>
+                        </li>
+                        <li>
+                            <a href="#" id="night-mode" class="btn-night-mode"
+                               onclick="UIkit.notification({ message: 'Hmm...  <strong> Night mode </strong> feature is not available yet. ' , pos: 'bottom-right'  })">
+                                <ion-icon name="moon-outline" class="is-icon"></ion-icon>
+                                Night mode
+                                <span class="btn-night-mode-switch">
+                                        <span class="uk-switch-button"></span>
+                                    </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/logout}">
+                                <ion-icon name="log-out-outline" class="is-icon"></ion-icon>
+                                Đăng xuất
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+    </header>
+
+    <nav id="main-nav">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <ul id="menu-list">
+                <!-- Menu items sẽ được tạo động từ JavaScript -->
+            </ul>
+        </div>
+    </nav>
+    <style>
+        .dropdown_cart_scrollbar {
+            max-height: 300px; /* Điều chỉnh chiều cao tối đa của danh sách */
+            overflow-y: auto;  /* Thêm thanh cuộn dọc nếu nội dung vượt quá chiều cao */
+            overflow-x: hidden; /* Ẩn thanh cuộn ngang nếu không cần thiết */
+        }
+
+    </style>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-
-
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-12">
-                <nav class="navbar navbar-expand-lg navbar-light">
-                    <a class="navbar-brand" th:href="@{/dashbroad/home}"> <img th:src="@{/user/img/logo.png}"
-                                                                               alt="logo"> </a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse"
-                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-
-                    <div class="collapse navbar-collapse main-menu-item justify-content-end"
-                         id="navbarSupportedContent">
-                        <ul class="navbar-nav align-items-center">
-                            <li class="nav-item active">
-                                <a class="nav-link" th:href="@{/dashbroad/home}">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <div class="form-group">
-                                    <input name="condition" id="searchCondition" type="text" class="form-control" onkeyup="seachPro()" placeholder="Nhập sản phẩm cần tìm ">
-                                    <div id="renSearch"></div>
-                                </div>
-                            </li>
-                                          <li class="nav-item">
-                                            <a class="nav-link" th:href="@{/course/detail_course}">Chi tiết </a>
-                                          </li>
-                            <!--              <li class="nav-item">-->
-                            <!--                <a class="nav-link" href="cource.html">Courses</a>-->
-                            <!--              </li>-->
-                            <!--              <li class="nav-item">-->
-                            <!--                <a class="nav-link" href="blog.html">Blog</a>-->
-                            <!--              </li>-->
-                            <li class="nav-item dropdown">
-                                <a class="nav-link" th:href="@{/cart/list}">
-                                    <div class="cart-icon-container">
-                                        <img style="width: 30px" th:src="@{/user/img/shopping-cart.png}">
-                                        <span class="cart-badge" id="quantity">1</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="nav-item dropdown" id="personal">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <img id="user-icon" src="default-user.png" alt="User"
-                                         style="width: 32px; height: 32px; border-radius: 50%;">
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" th:href="@{/dashbroad/profile}">
-                                        <i class="fas fa-user-circle mr-2"></i> Profile
-                                    </a>
-                                    <a class="dropdown-item" th:href="@{/logout}">
-                                        <i class="fas fa-sign-out-alt mr-2"></i> Đăng xuất
-                                    </a>
-                                    <a class="dropdown-item" th:href="@{/dashbroad/cart}">
-                                        <i class="fas fa-sign-out-alt mr-2"></i> Danh sách khóa học
-                                    </a>
-                                </div>
-                            </li>
-
-
-                            <li class="d-none d-lg-block">
-                                <a th:href="@{/login}" id="lgin" class="btn_1" href="#">Đăng nhập</a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="searchModalLabel">Search Products</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <input type="text" id="searchCondition" class="form-control" placeholder="Enter product name" oninput="seachPro()">
-                    <div id="renSearch" class="mt-2"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
 
     <script>
         $(document).ready(function () {
+            intData();
+        });
+
+        function intData() {
+            getUser();
+            countCourse();
+            getCourse();
+        }
+
+        function getUser() {
             $.ajax({
                 url: 'http://localhost:8080/api/customer/common/getUser',
                 type: 'GET',
@@ -104,9 +444,11 @@
                     if (data && data.data) {
                         $('#lgin').hide();
                         $('#personal').show()
-                        let userImage = data.data.image ? 'data:image/png;base64,' + data.data.image : 'placeholder.jpg';
+                        $('#fullname').text(data.data.fullname)
+                        let username = data.data.username;
+                        $('#username').text(username ? `@${username}` : '@');
+                        let userImage = data.data.image ? 'data:image/png;base64,' + data.data.image : '../assets/images/avatars/avatar-2.jpg';
                         $('#user-icon').attr('src', userImage);
-
                     }
 
                 },
@@ -114,109 +456,22 @@
                     console.error(error);
                 }
             });
-        });
+        }
 
         $('#personal').hide()
-    </script>
-    <style>
-        #user-icon {
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            object-fit: cover;
-        }
-
-        #personal {
-            position: relative;
-        }
-
-        .dropdown-menu {
-            border-radius: 0.5rem;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            background-color: #fff;
-            border: 1px solid #ddd;
-            padding: 0;
-            position: absolute;
-            top: 100%;
-            right: 0;
-            margin-top: 0.5rem;
-            min-width: 200px;
-            left: auto;
-            transform: translateX(-100%);
-        }
-
-        .dropdown-menu .dropdown-item {
-            padding: 0.75rem 1.5rem;
-            font-size: 1rem;
-            color: #333;
-            transition: background-color 0.3s;
-        }
-
-        .dropdown-menu .dropdown-item:hover {
-            background-color: #f8f9fa;
-        }
-
-        .dropdown-menu .dropdown-item .fa {
-            margin-right: 0.5rem;
-        }
-
-        #navbarDropdown {
-            position: relative;
-        }
-
-        .dropdown-menu.profile-menu {
-            min-width: 200px;
-        }
-
-        .dropdown-menu.profile-menu .dropdown-item {
-            display: flex;
-            align-items: center;
-        }
-
-        .dropdown-menu.profile-menu .dropdown-item i {
-            font-size: 1.2rem;
-            margin-right: 0.5rem;
-        }
-
-        .dropdown-menu.profile-menu .dropdown-item:last-child {
-            border-top: 1px solid #ddd;
-        }
-
-        .dropdown-menu.profile-menu .dropdown-item:hover {
-            background-color: #f1f1f1;
-        }
-
-        .cart-icon-container {
-            position: relative;
-            display: inline-block;
-        }
-
-        .cart-badge {
-            position: absolute;
-            top: -15px;
-            right: -10px;
-            background-color: #a435f0;
-            color: white;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: bold;
-        }
-    </style>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
-    <script>
-
-        $(document).ready(function (){
-            initData();
-        });
-        function initData(){
-            countCourse();
+        function countCourse() {
+            $.ajax({
+                url: 'http://localhost:8080/api/cart/count',
+                type: 'GET',
+                success: function (data) {
+                    $('#quantity').text(data.data);
+                },
+                error: function () {
+                    console.log(error);
+                }
+            });
         }
 
         function seachPro() {
@@ -230,10 +485,14 @@
                     url: "http://localhost:8080/api/course/findCourseByName/" + searchCondition,
                     success: function (response) {
                         var courses = response.data;
-                        for (const product of courses) {
-                            html += `<a class="btn btn-light d-block" style="text-align: left;margin: 5px 0px 5px 0px" href="/user/product_dentails?id=${product.id}">${product.name}</a>`
+                        if (courses.length === 0) {
+                            html = `<p class="text-gray-500 text-center mt-4">Không tìm thấy khóa học nào phù hợp với '${searchCondition}'.</p>`;
+                        } else {
+                            for (const course of courses) {
+                                html += `<a class="btn btn-light d-block" style="text-align: left; margin: 10px 0px 10px 0px;background-color: whitesmoke;padding: 10px 0px  " href="/course/detail_course?id=${course.id}">${course.name}</a>`;
+                            }
                         }
-                        document.getElementById("renSearch").innerHTML = html
+                        document.getElementById("renSearch").innerHTML = html;
                     },
                     error: function (error) {
                         console.log(error);
@@ -241,17 +500,123 @@
                 });
             }
         }
-        function countCourse(){
+
+        function getCourse() {
+            let cartContainer = $('.dropdown_cart_scrollbar');
+            cartContainer.empty();
             $.ajax({
-                url: 'http://localhost:8080/api/cart/count',
-                type: 'GET',
-                success: function(data) {
-                    $('#quantity').text(data.data);
+                type: "GET",
+                url: "http://localhost:8080/api/cart/list",
+                dataType: "json",
+                success: function (response) {
+                    let courses = response.data.content;
+                    let totalAmount = 0;
+                    for (let i = 0; i < courses.length; i++) {
+                        let item = courses[i];
+                        totalAmount += item.price;
+
+                        let courseHTML =
+                            '<li>' +
+                            '<div class="cart_avatar">' +
+                            '<img src="' + (item.imageFile.length > 0 ? 'data:image/png;base64,' + item.imageFile[0] : '../assets/images/courses/img-5.jpg') + '" alt="">' +
+                            '</div>' +
+                            '<div class="cart_text">' +
+                            '<a href="/course/detail_course?id=' + item.id + '" class="uk-link-reset">' +
+                            '<h4>' + item.courseName + '</h4>' +
+                            '</a>'+
+                            '</div>' +
+                            '<div class="cart_price">' +
+                            '<span>' + formatCurrency(item.price) + '</span>' +
+                            '<button class="text-blue-500 deleteCourse" data-id="' + item.id + '">Remove</button>' +
+                            '</div>' +
+                            '</li>';
+                        cartContainer.append(courseHTML);
+                    }
+
+                    $('.cart_footer').html(
+                        '<p>Subtotal: ' + formatCurrency(totalAmount) + '</p>' +
+                        '<h1>Total: <strong>' + formatCurrency(totalAmount) + '</strong></h1>'
+                    );
                 },
-                error: function() {
-                    console.log(error);
+                error: function (error) {
+                    console.error(error);
                 }
             });
         }
+
+        $(document).on('click', '.deleteCourse', function (event) {
+            event.preventDefault();
+            var cartId = $(this).data('id');
+            $.ajax({
+                type: "DELETE",
+                url: "http://localhost:8080/api/cart/delete/" + cartId,
+                success: function (response) {
+                    console.log(response);
+                    getCourse();
+                    countCourse();
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        });
+
+        // getCourse();
+
+
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+        }
+
     </script>
-</header>
+<script>
+    $(document).ready(function() {
+        $('#menu-list').empty();
+        $.ajax({
+            url: 'http://localhost:8080/api/category/admin/parents',
+            method: 'GET',
+            success: function(response) {
+                let listParent = response.data;
+                for (let i = 0; i < listParent.length; i++) {
+                    let parentCategory = listParent[i];
+                    let htmlParent =
+                        '<li class="menu-item" id="menu' + parentCategory.id + '">' +
+                        '<a href="#">' + parentCategory.name + '</a>' +
+                        '<ul class="submenu" id="submenu' + parentCategory.id + '"></ul>' +
+                        '</li>';
+                    $('#menu-list').append(htmlParent);
+                }
+
+
+
+                $('.menu-item').hover(function() {
+                    var menuId = $(this).attr('id').replace('menu', '');
+                    var submenu = $(this).find('.submenu');
+
+                    if (submenu.children().length === 0) {
+                        $.ajax({
+                            url: 'http://localhost:8080/api/category/admin/searchByParentId/' + menuId,
+                            method: 'GET',
+                            success: function(response) {
+                                let subCategories = response.data;
+                                for (let j = 0; j < subCategories.length; j++) {
+                                    let subCategory = subCategories[j];
+                                    submenu.append('<li><a href="#">' + subCategory.name + '</a></li>');
+                                }
+                            },
+                            error: function() {
+                                console.log('Lỗi khi lấy submenu');
+                            }
+                        });
+                    }
+                });
+            },
+            error: function() {
+                console.log('Lỗi khi lấy menu cha');
+            }
+        });
+    });
+
+</script>
+</div>
+

@@ -79,4 +79,13 @@ public class CategoryResource {
             return ResponseEntity.status(response.getCode()).body(response);
         }
     }
+    @GetMapping("/getSub")
+    public ResponseEntity<BaseResponse<List<CategoryDTO>>> getAllSubcategories() {
+        BaseResponse<List<CategoryDTO>> response = iCategoryService.getSub();
+        if (response.getCode() == HttpStatus.OK.value()) {
+            return ResponseEntity.status(response.getCode()).body(response);
+        }else {
+            return ResponseEntity.status(response.getCode()).body(response);
+        }
+    }
 }

@@ -20,7 +20,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfig {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
-    
+
 
     @Bean
     public static PasswordEncoder passwordEncoder() {
@@ -51,10 +51,10 @@ public class SecurityConfig {
 //                                .requestMatchers("/api/customer/admin/**").hasAnyRole("ADMIN")
                                 .requestMatchers("/api/customer/admin/**").permitAll()
                                 .requestMatchers("/api/customer/register").permitAll()
-                                .requestMatchers("/api/category/admin/**").permitAll()
+                                .requestMatchers("/api/category/**").permitAll()
                                 .requestMatchers("/api/rating/**").permitAll()
                                 .requestMatchers("/api/comment/**").permitAll()
-                                .requestMatchers("api/order/**").permitAll()
+                                .requestMatchers("/api/order/**").permitAll()
                                 .requestMatchers("/api/account/common/getUser").hasAnyRole(new String[]{"ADMIN", "EMPLOYEE"})
 
                                 //employy
@@ -71,6 +71,7 @@ public class SecurityConfig {
                                 .requestMatchers("/dashbroad/**").permitAll()
                                 .requestMatchers("/api/cart/**").permitAll()
                                 .requestMatchers("/cart/**").permitAll()
+                                .requestMatchers("/user/information").permitAll()
 
 
                                 //common
@@ -79,11 +80,18 @@ public class SecurityConfig {
                                 .requestMatchers("/api/account/updatePassWord/**").hasAnyRole(new String[]{"ADMIN", "EMPLOYEE"})
 //                                .requestMatchers("/api/certificate/common/update/**").hasAnyRole(new String[]{"ADMIN", "EMPLOYEE"})
                                 .requestMatchers("/api/certificate/common/update/**").permitAll()
-                                .requestMatchers("/course/detail_course").permitAll()
+                                .requestMatchers("/course/detail_course/**").permitAll()
+                                .requestMatchers("/course/**").permitAll()
+                                .requestMatchers("/api/level/**").permitAll()
 
                                 .requestMatchers("/api/language/**").permitAll()
                                 .requestMatchers("/api/image_course/**").permitAll()
                                 .requestMatchers("/api/course/**").permitAll()
+                                .requestMatchers("/payment/info").permitAll()
+                                .requestMatchers("/api/content_course/**").permitAll()
+                                .requestMatchers("/api/payment/**").permitAll()
+                                .requestMatchers("/payment/result/**").permitAll()
+                                .requestMatchers("https://sandbox.vnpayment.vn/paymentv2/**").permitAll()
 
                                 //test permiall
                                 .requestMatchers("/api/certificate/admin/**").permitAll()

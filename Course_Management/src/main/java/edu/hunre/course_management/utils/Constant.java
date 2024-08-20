@@ -19,4 +19,9 @@ public class Constant {
 
     }
 
+    public static String VNP_TMN_CODE = "B0L2A3BX";
+    public static String VNP_HASH_SECRET = "AHXYEVPIZJZDUWCKCTQVRPIMZTDMGMFT";
+    public static String VNP_PAY_URL = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
+    public static String VNP_PAY_VERSION = "2.1.0";
+
 }

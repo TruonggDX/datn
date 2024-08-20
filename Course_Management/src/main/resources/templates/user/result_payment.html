@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="user/common/head :: head"></head>
+<body>
+<div id="wrapper" class="horizontal">
+    <div th:replace="user/common/header :: header"></div>
+    <div class="container">
+
+        <div class="text-2xl font-semibold pt-6"> Khóa học đã mua </div>
+        <div class="lg:flex lg:space-x-6 mt-6">
+
+            <div class="lg:w-12/12">
+                <div class="divide-y tube-card px-6 md:m-0 -mx-5" id="list_order">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:replace="user/common/footer :: footer"></div>
+</div>
+<div th:replace="user/common/script :: script"></div>
+<script>
+    $(document).ready(function (){
+        initData()
+    })
+    function initData(){
+        let page=0;
+        let size = 5;
+        showAllOrder(page,size)
+    }
+    function showAllOrder(page,size){
+        let list = $('#list_order')
+        list.empty()
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/api/order/list?page=" + page + "&size=" + size,
+            dataType: "json",
+            success: function (response) {
+                let course = response?.data?.content;
+                console.log('order',course)
+                for (let i = 0; i < course.length; i++) {
+                    let data = course[i];
+                    let html=' <div class="md:flex md:space-x-6 py-5">' +
+                        '<a href="blog-read.html">' +
+                        '<div class="md:w-64 w-full h-40 overflow-hidden rounded-lg relative shadow-sm"> ' +
+                        '<img src="../assets/images/blog/img-4.jpg" alt="" class="w-full h-full absolute inset-0 object-cover">' +
+                        '<div class="absolute bg-blue-100 font-semibold px-2.5 py-1 rounded-full text-blue-500 text-xs top-2.5 left-2.5"> JavaScript' +
+                        '</div>' +
+                        '</div>' +
+                        '</a>' +
+                        '<div class="flex-1 md:pt-0 pt-4"> ' +
+                        '<a href="blog-read.html" class="text-lg font-semibold line-clamp-2 leading-8">  '+data.courseName+'</a>' +
+                        '<p class="line-clamp-2"> Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat </p>' +
+                        '<div class="flex items-center pt-2 text-sm">' +
+                        '<div class="flex items-center">  <ion-icon name="thumbs-up-outline" class="text-xl mr-2"></ion-icon>  12 </div>' +
+                        '<div class="flex items-center mx-4"> ' +
+                        '<ion-icon name="chatbubble-ellipses-outline" class="text-lg mr-2"></ion-icon>  12 ' +
+                        '</div>' +
+                        '<div class="flex items-center"> <ion-icon name="bookmark-outline" class="text-xl mr-2"></ion-icon>  </div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>'
+                    list.append(html);
+                }
+            }
+        })
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="user/common/head :: head"></head>
+<body>
+<div id="wrapper" class="horizontal">
+    <div th:replace="user/common/header :: header"></div>
+    <div class="from-blue-500 via-blue-400 to-blue-500 bg-gradient-to-l breadcrumb-area py-6 text-white">
+        <div class="container mx-auto lg:pt-5">
+            <div class="breadcrumb text-white">
+                <ul class="m-0">
+                    <li>
+                        <a href="index.html"> <i class="icon-feather-home"></i> </a>
+                    </li>
+                    <li>
+                        <a href="index.html">Home</a>
+                    </li>
+                    <li class="active">
+                        <a href="#">Payment method </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="md:text-2xl text-base font-semibold mt-6 md:mb-6"> Phương thức thanh toán</div>
+        </div>
+    </div>
+
+    <div class="lg:py-10 py-5">
+        <div class="container">
+            <div class="lg:flex">
+                <div class="w-full lg:pr-24">
+                    <h2 class="text-xl font-semibold md:mb-6 mb-3"> Chọn phương thức thanh toán </h2>
+
+                    <div class="bg-white rounded-md shadow-md p-6">
+                        <form>
+                            <h2 class="text-lg font-bold mb-4">Chọn phương thức thanh toán</h2>
+                            <div class="space-y-4">
+                                <div class="flex items-center p-2 border rounded-md hover:bg-gray-100 transition">
+                                    <label for="credit-card" class="flex items-center w-full cursor-pointer">
+                                        <input  type="radio" id="credit-card" name="payment-method"
+                                               class="mr-3 text-blue-600" value="credit-card" checked>
+                                        <ion-icon name="card-outline" class="mr-2"></ion-icon>
+                                        Pay with Credit Card
+                                    </label>
+                                </div>
+                                <div class="flex items-center p-2 border rounded-md hover:bg-gray-100 transition">
+                                    <label for="paypal" class="flex items-center w-full cursor-pointer">
+                                        <input type="radio" id="paypal"  class="mr-3 text-blue-600"
+                                               value="paypal">
+                                        <ion-icon name="logo-paypal" class="mr-2"></ion-icon>
+                                        Pay with PayPal
+                                    </label>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <style>
+                        .bg-white {
+                            background-color: #ffffff;
+                        }
+
+                        .rounded-md {
+                            border-radius: 0.375rem;
+                        }
+
+                        .shadow-md {
+                            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                        }
+
+                        .p-6 {
+                            padding: 1.5rem;
+                        }
+
+                        .text-lg {
+                            font-size: 1.125rem;
+                        }
+
+                        .font-bold {
+                            font-weight: 700;
+                        }
+
+                        .space-y-4 > * + * {
+                            margin-top: 1rem;
+                        }
+
+                        .border {
+                            border: 1px solid #e2e8f0;
+                        }
+
+                        .hover\:bg-gray-100:hover {
+                            background-color: #f7fafc;
+                        }
+
+                        .transition {
+                            transition: background-color 0.2s;
+                        }
+                    </style>
+
+                    <div class="grid grid-cols-2 md:gap-6 gap-3 md:mt-10 mt-5">
+                        <a class="bg-gray-200 flex font-medium items-center justify-center py-3 rounded-md"
+                           th:href="@{/dashbroad/home}">
+                            <i class="icon-feather-chevron-left mr-1"></i>
+                            <span class="md:block hidden"> Quay lại giỏ hàng</span><span
+                                class="md:hidden block">Back</span>
+                        </a>
+                        <button class="bg-blue-600 text-white flex font-medium items-center justify-center py-3 rounded-md hover:text-white"
+                           id="payment" onclick="payment()">
+                            <span class="md:block hidden"> Xác nhận thanh toán </span><span class="md:hidden block">Review</span>
+                            <i class="icon-feather-chevron-right ml-1"></i>
+                        </button>
+                    </div>
+
+
+                </div>
+
+                <!-- Sidebar -->
+                <div class="lg:w-5/12 lg:-ml-12 lg:mt-0 mt-8">
+                    <div class="bg-white rounded-md shadow-lg lg:p-6 p-3"
+                         uk-sticky="offset:; offset:90 ; media: 1024 ; bottom: true" >
+
+                        <div class="font-semibold px-5 pb-3 text-lg text-center"> Thông tin khóa học </div>
+
+                        <div id="formPayment">
+
+                        </div>
+
+                        <ul class="border-b border-t my-3 py-3 text-sm" >
+                            <li class="flex justify-between align-center"><span class="mr-2">Tổng tiền:</span><span id="totalAmounts" ></span></li>
+                            <li class="flex justify-between align-center"><span class="mr-2">Giảm giá:</span><span><span class="text-right">—</span></span></li>
+                        </ul>
+
+                        <h3 class="font-semibold text-center my-6 text-2xl" id="totalAmount" ></h3>
+                        <form method="post" class="space-y-3">
+                            <input class="form-control with-border" type="text" placeholder="Promo code" required="">
+                            <div class="col-span-2 border rounded-md border-blue-500">
+                                <button class="w-full py-2.5 font-semibold rounded text-blue-600 text-base block" type="submit">Apply promo code</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div th:replace="user/common/footer :: footer"></div>
+</div>
+<div th:replace="user/common/script :: script"></div>
+<script>
+    $(document).ready(function () {
+        init();
+    })
+
+    function init() {
+        showAllCourse();
+    }
+
+    function showAllCourse() {
+        let form = $('#formPayment')
+        form.empty()
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/api/cart/list",
+            dataType: "json",
+            success: function (response) {
+                let course = response?.data?.content;
+                let totalAmount = 0;
+                for (let i = 0; i < course.length; i++) {
+                    let data = course[i];
+                    totalAmount+=data.price;
+                    let showSource = '<div>' +
+                        '    <div class="flex py-3 space-x-2.5 delimiter-bottom">' +
+                        '        <a class="block md:mr-2" href="/course/detail_course?id=' + data.id + '"><img class="w-16 h-11 object-cover rounded" src="' + (data.imageFile.length > 0 ? 'data:image/png;base64,' + data.imageFile[0] : '../assets/images/courses/img-5.jpg') + '" alt="Product"></a>' +
+                        '        <div class="flex-1">' +
+                        '            <h6 class="font-medium"><a href="#" class="line-clamp-2"> '+data.courseName+'</a></h6>' +
+                        '            <div class="flex justify-between mt-1"><span class="font-medium text-sm text-blue-500">'+data.languageName+'</span><span class="font-bold mt-0.5">'+formatCurrency(data.price)+'</span></div>' +
+                        '        </div>' +
+                        '    </div>' +
+                        '</div>'
+                    form.append(showSource)
+                    $('#totalAmounts').text(formatCurrency(totalAmount))
+                    $('#totalAmount').text(formatCurrency(totalAmount))
+
+                }
+                console.log('all sourse', course)
+            }
+        })
+    }
+    function getCode() {
+        let url = window.location.href;
+        return url.split('/').pop();
+    }
+    function payment(){
+        let objectData = {
+            code : getCode()
+        }
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/api/payment/create_vnpay",
+            contentType: "application/json",
+            data: JSON.stringify(objectData),
+            dataType: "json",
+            success: function (response) {
+                window.location.href = response.data;
+                createOrder()
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        })
+    }
+    function createOrder() {
+        let orderData = {
+            code : getCode()
+        };
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/api/order/create",
+            contentType: "application/json",
+            data: JSON.stringify(orderData),
+            dataType: "json",
+            success: function (response) {
+                console.log("Order created successfully:", response);
+                // You can add further actions here, such as redirecting the user or displaying a success message
+            },
+            error: function (error) {
+                console.log("Error creating order:", error);
+            }
+        });
+    }
+
+
+
+    function formatCurrency(amount) {
+        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+    }
+</script>
+</body>
+</html>

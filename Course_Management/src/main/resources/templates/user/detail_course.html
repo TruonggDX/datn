@@ -1,62 +1,710 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head th:replace="user/common/head :: head"></head>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-      crossorigin="anonymous" referrerpolicy="no-referrer"/>
 <body>
-<header th:replace="user/common/header :: header"></header>
-<section style="margin-top: 100px;">
-    <div class="relative_black">
+<div id="wrapper" class="horizontal">
+    <div th:replace="user/common/header :: header"></div>
+    <div class="container p-0">
+
+        <div class="bg-blue-600 md:rounded-b-lg px-8 lg:-mt-5 pt-12 pb-8 relative overflow-hidden" style="background: #1877f2;">
+
+            <div class="lg:w-9/12 relative z-10" id="course">
+
+            </div>
+
+            <div class="image-container">
+                <img id="imageCourse" th:src="@{/user/assets/images/courses/course-intro.png}" alt="" class="absolute bottom-0 right-0 hidden lg:block" style="width: 367px; height: 190px; object-fit: cover;">
+
+            </div>
+
+
+        </div>
+
+        <div class="lg:flex lg:space-x-4 mt-4">
+            <div class="lg:w-8/12 space-y-4">
+
+                <div class="tube-card z-20 mb-4 overflow-hidden uk-sticky" uk-sticky="cls-active:rounded-none ; media: 992 ; offset:70 ">
+                    <nav class="cd-secondary-nav extanded ppercase nav-small">
+                        <ul class="space-x-3" uk-scrollspy-nav="closest: li; scroll: true">
+                            <li><a href="#Overview" uk-scroll>Overview</a></li>
+                            <li><a href="#curriculum" uk-scroll>Curriculum</a></li>
+                            <li><a href="#faq" uk-scroll>FAQ</a></li>
+                            <li><a href="#announcement">Announcement</a></li>
+                            <li><a href="#reviews">Reviews</a></li>
+                        </ul>
+                    </nav>
+                </div>
+
+
+                <!-- course description -->
+                <div class="tube-card p-5 lg:p-8" id="Overview">
+
+                </div>
+
+                <!-- course Curriculum -->
+                <div id="curriculum">
+                    <h3 class="mb-4 text-xl font-semibold lg:mb-5"> Course Curriculum </h3>
+                    <ul uk-accordion="multiple: true" class="tube-card p-4 divide-y space-y-3">
+
+                        <li class="uk-open">
+                            <a class="uk-accordion-title text-md mx-2 font-semibold" href="#">  <div class="mb-1 text-sm font-medium"> Section 1 </div> Html Introduction </a>
+                            <div class="uk-accordion-content mt-3 text-base">
+
+                                <ul class="course-curriculum-list font-medium">
+                                    <li class=" hover:bg-gray-100 p-2 flex rounded-md">
+                                        <ion-icon name="play-circle" class="text-2xl mr-2"></ion-icon> Introduction <span class="text-sm ml-auto"> 4 min </span>
+                                    </li>
+                                    <li class=" hover:bg-gray-100 p-2 flex rounded-md">
+                                        <ion-icon name="play-circle" class="text-2xl mr-2"></ion-icon> What is HTML <span class="text-sm ml-auto"> 5 min </span>
+                                    </li>
+                                    <li class=" hover:bg-gray-100 p-2 flex rounded-md">
+                                        <ion-icon name="play-circle" class="text-2xl mr-2"></ion-icon>
+                                        What is a Web page? <span class="text-sm ml-auto"> 8 min </span>
+                                    </li>
+                                    <li class=" hover:bg-gray-100 p-2 flex rounded-md">
+                                        <ion-icon name="play-circle" class="text-2xl mr-2"></ion-icon>
+                                        Your First Web Page
+                                        <a href="#trailer-modal" class="bg-gray-200 ml-4 px-2 py-1 rounded-full text-xs" uk-toggle=""> Preview </a>
+                                        <span class="text-sm ml-auto"> 4 min </span>
+                                    </li>
+                                    <li class=" hover:bg-gray-100 p-2 flex rounded-md">
+                                        <ion-icon name="play-circle" class="text-2xl mr-2"></ion-icon>
+                                        Brain Streak <span class="text-sm ml-auto"> 5 min </span>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </li>
+                        <li class="pt-2">
+                            <a class="uk-accordion-title text-md mx-2 font-semibold" href="#"> <div class="mb-1 text-sm font-medium"> Section 2 </div> Your First webpage  </a>
+                            <div class="uk-accordion-content mt-3 text-base">
+
+                                <ul class="course-curriculum-list font-medium">
+                                    <li class=" hover:bg-gray-100 p-2 flex rounded-md">
+                                        <ion-icon name="play-circle" class="text-2xl mr-2"></ion-icon> Headings
+                                        <span class="text-sm ml-auto"> 4 min </span>
+                                    </li>
+                                    <li class=" hover:bg-gray-100 p-2 flex rounded-md">
+                                        <ion-icon name="play-circle" class="text-2xl mr-2"></ion-icon> Paragraphs
+                                        <span class="text-sm ml-auto"> 5 min </span>
+                                    </li>
+                                    <li class=" hover:bg-gray-100 p-2 flex rounded-md">
+                                        <ion-icon name="play-circle" class="text-2xl mr-2"></ion-icon>
+                                        Emphasis and Strong Tag
+                                        <span class="text-sm ml-auto"> 8 min </span>
+                                    </li>
+                                    <li class=" hover:bg-gray-100 p-2 flex rounded-md">
+                                        <ion-icon name="play-circle" class="text-2xl mr-2"></ion-icon>
+                                        Brain Streak
+                                        <a href="#trailer-modal" class="bg-gray-200 ml-4 px-2 py-1 rounded-full text-xs" uk-toggle=""> Preview </a>
+                                        <span class="text-sm ml-auto"> 4 min </span>
+                                    </li>
+                                    <li class=" hover:bg-gray-100 p-2 flex rounded-md">
+                                        <ion-icon name="play-circle" class="text-2xl mr-2"></ion-icon>
+                                        Live Preview Feature
+                                        <span class="text-sm ml-auto"> 5 min </span>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </li>
+                        <li class="pt-2">
+                            <a class="uk-accordion-title text-md mx-2 font-semibold" href="#"> <div class="mb-1 text-sm font-medium"> Section 3 </div> Build Complete Webste  </a>
+                            <div class="uk-accordion-content mt-3 text-base">
+
+                                <ul class="course-curriculum-list font-medium">
+                                    <li class=" hover:bg-gray-100 p-2 flex rounded-md">
+                                        <ion-icon name="play-circle" class="text-2xl mr-2"></ion-icon> The paragraph tag
+                                        <span class="text-sm ml-auto"> 4 min </span>
+                                    </li>
+                                    <li class=" hover:bg-gray-100 p-2 flex rounded-md">
+                                        <ion-icon name="play-circle" class="text-2xl mr-2"></ion-icon> The break tag
+                                        <span class="text-sm ml-auto"> 5 min </span>
+                                    </li>
+                                    <li class=" hover:bg-gray-100 p-2 flex rounded-md">
+                                        <ion-icon name="play-circle" class="text-2xl mr-2"></ion-icon>
+                                        Headings in HTML
+                                        <span class="text-sm ml-auto"> 8 min </span>
+                                    </li>
+                                    <li class=" hover:bg-gray-100 p-2 flex rounded-md">
+                                        <ion-icon name="play-circle" class="text-2xl mr-2"></ion-icon>
+                                        Bold, Italics Underline
+                                        <a href="#trailer-modal" class="bg-gray-200 ml-4 px-2 py-1 rounded-full text-xs" uk-toggle=""> Preview </a>
+                                        <span class="text-sm ml-auto"> 4 min </span>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- course Faq -->
+                <div class="tube-card p-5 lg:p-8" id="faq">
+                    <h3 class="text-lg font-semibold mb-3 lg:mb-5"> Course Faq </h3>
+                    <ul uk-accordion="multiple: true" class="divide-y space-y-3">
+                        <li class="bg-gray-100 px-4 py-3 rounded-md uk-open">
+                            <a class="uk-accordion-title font-semibold text-base" href="#"> Html Introduction </a>
+                            <div class="uk-accordion-content mt-3">
+                                <p> The primary goal of this quick start guide is to introduce you to
+                                    Unreal
+                                    Engine 4`s (UE4) development environment. By the end of this guide,
+                                    you`ll
+                                    know how to set up and develop C++ Projects in UE4. This guide shows
+                                    you
+                                    how
+                                    to create a new Unreal Engine project, add a new C++ class to it,
+                                    compile
+                                    the project, and add an instance of a new class to your level. By
+                                    the
+                                    time
+                                    you reach the end of this guide, you`ll be able to see your
+                                    programmed
+                                    Actor
+                                    floating above a table in the level. </p>
+                            </div>
+                        </li>
+                        <li class="bg-gray-100 px-4 py-3 rounded-md">
+                            <a class="uk-accordion-title font-semibold text-base" href="#"> Your First webpage</a>
+                            <div class="uk-accordion-content mt-3">
+                                <p> The primary goal of this quick start guide is to introduce you to
+                                    Unreal
+                                    Engine 4`s (UE4) development environment. By the end of this guide,
+                                    you`ll
+                                    know how to set up and develop C++ Projects in UE4. This guide shows
+                                    you
+                                    how
+                                    to create a new Unreal Engine project, add a new C++ class to it,
+                                    compile
+                                    the project, and add an instance of a new class to your level. By
+                                    the
+                                    time
+                                    you reach the end of this guide, you`ll be able to see your
+                                    programmed
+                                    Actor
+                                    floating above a table in the level. </p>
+                            </div>
+                        </li>
+                        <li class="bg-gray-100 px-4 py-3 rounded-md">
+                            <a class="uk-accordion-title font-semibold text-base" href="#"> Some Special Tags </a>
+                            <div class="uk-accordion-content mt-3">
+                                <p> The primary goal of this quick start guide is to introduce you to
+                                    Unreal
+                                    Engine 4`s (UE4) development environment. By the end of this guide,
+                                    you`ll
+                                    know how to set up and develop C++ Projects in UE4. This guide shows
+                                    you
+                                    how
+                                    to create a new Unreal Engine project, add a new C++ class to it,
+                                    compile
+                                    the project, and add an instance of a new class to your level. By
+                                    the
+                                    time
+                                    you reach the end of this guide, you`ll be able to see your
+                                    programmed
+                                    Actor
+                                    floating above a table in the level. </p>
+                            </div>
+                        </li>
+                        <li class="bg-gray-100 px-4 py-3 rounded-md">
+                            <a class="uk-accordion-title font-semibold text-base" href="#"> Html Introduction </a>
+                            <div class="uk-accordion-content mt-3">
+                                <p> The primary goal of this quick start guide is to introduce you to
+                                    Unreal
+                                    Engine 4`s (UE4) development environment. By the end of this guide,
+                                    you`ll
+                                    know how to set up and develop C++ Projects in UE4. This guide shows
+                                    you
+                                    how
+                                    to create a new Unreal Engine project, add a new C++ class to it,
+                                    compile
+                                    the project, and add an instance of a new class to your level. By
+                                    the
+                                    time
+                                    you reach the end of this guide, you`ll be able to see your
+                                    programmed
+                                    Actor
+                                    floating above a table in the level. </p>
+                            </div>
+                        </li>
+                    </ul>
+
+                </div>
+
+                <!-- course Announcement -->
+                <div id="announcement" class="tube-card p-5 lg:p-8">
+
+
+                </div>
+
+                <!-- course Reviews -->
+                <div id="reviews" class="tube-card p-5 lg:p-8">
+                    <h3 class="text-xl font-semibold lg:mb-5"> Reviews (4610) </h3>
+                    <div class="flex space-x-5 mb-8">
+                        <div class="lg:w-1/4 w-full">
+                            <div class="bg-blue-100 p-6 rounded-md border border-blue-200 text-center shadow-xs">
+                                <h1 class="leading-none text-6xl"> 4.8</h1>
+                                <div class="flex justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-gray-400">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                </div>
+                                <h5 class="text-lg mb-0 mt-2 text-blue-800"> Course Rating</h5>
+                            </div>
+                        </div>
+                        <div class="w-2/4 hidden lg:flex flex-col justify-center">
+
+                            <div class="space-y-5">
+                                <div class="w-full h-3 rounded-lg bg-gray-300 shadow-xs relative">
+                                    <div class="w-11/12 h-3 rounded-lg bg-gray-800"> </div>
+                                </div>
+                                <div class="w-full h-3 rounded-lg bg-gray-300 shadow-xs relative">
+                                    <div class="w-4/5 h-3 rounded-lg bg-gray-800"> </div>
+                                </div>
+                                <div class="w-full h-3 rounded-lg bg-gray-300 shadow-xs relative">
+                                    <div class="w-3/5 h-3 rounded-lg bg-gray-800"> </div>
+                                </div>
+                                <div class="w-full h-3 rounded-lg bg-gray-300 shadow-xs relative">
+                                    <div class="w-3/6 h-3 rounded-lg bg-gray-800"> </div>
+                                </div>
+                                <div class="w-full h-3 rounded-lg bg-gray-300 shadow-xs relative">
+                                    <div class="w-1/3 h-3 rounded-lg bg-gray-800"> </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="w-1/4 hidden lg:flex flex-col justify-center">
+                            <div class="space-y-1">
+                                <div class="flex justify-center items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-orange-400">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-orange-400">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-orange-400">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-orange-400">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-orange-400">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <span class="ml-2"> 95 %</span>
+                                </div>
+                                <div class="flex justify-center items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-orange-400">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-orange-400">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-orange-400">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-orange-400">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-gray-400">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <span class="ml-2"> 85 %</span>
+                                </div>
+                                <div class="flex justify-center items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-orange-400">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-orange-400">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-orange-400">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-orange-400">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-gray-400">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <span class="ml-2"> 60 %</span>
+                                </div>
+                                <div class="flex justify-center items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-orange-400">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-orange-400">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-orange-400">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-orange-400">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-gray-400">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <span class="ml-2"> 50 %</span>
+                                </div>
+                                <div class="flex justify-center items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-orange-400">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-orange-400">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-orange-400">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-orange-400">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-gray-400">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <span class="ml-2"> 35 %</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4 my-5">
+
+                        <div class="bg-gray-50 border flex gap-x-4 p-4 relative rounded-md">
+                            <img src="../assets/images/avatars/avatar-4.jpg" alt="" class="rounded-full shadow w-12 h-12">
+                            <div class="flex justify-center items-center absolute right-5 top-6 space-x-1 text-yellow-500">
+                                <ion-icon name="star"></ion-icon>
+                                <ion-icon name="star"></ion-icon>
+                                <ion-icon name="star"></ion-icon>
+                                <ion-icon name="star"></ion-icon>
+                                <ion-icon name="star"></ion-icon>
+                            </div>
+                            <div>
+                                <h4 class="text-base m-0 font-semibold"> Stella Johnson</h4>
+                                <span class="text-gray-700 text-sm"> 14th, April 2021 </span>
+                                <p class="mt-3 md:ml-0 -ml-16">
+                                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam ut laoreet dolore
+                                    magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-50 border flex gap-x-4 p-4 relative rounded-md">
+                            <div class="flex justify-center items-center absolute right-5 top-6 space-x-1 text-yellow-500">
+                                <ion-icon name="star"></ion-icon>
+                                <ion-icon name="star"></ion-icon>
+                                <ion-icon name="star"></ion-icon>
+                                <ion-icon name="star"></ion-icon>
+                                <ion-icon name="star" class="text-gray-300"></ion-icon>
+                            </div>
+                            <img src="../assets/images/avatars/avatar-2.jpg" alt="" class="rounded-full shadow w-12 h-12">
+                            <div>
+                                <h4 class="text-base m-0 font-semibold"> Alex Dolgove</h4>
+                                <span class="text-gray-700 text-sm"> 16th, May 2021 </span>
+                                <p class="mt-3 md:ml-0 -ml-16">
+                                    elit, sed diam ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim ipsum dolor sit
+                                    amet, consectetuer adipiscing elit
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-50 border flex gap-x-4 p-4 relative rounded-md lg:ml-16">
+                            <div class="flex justify-center items-center absolute right-5 top-6 space-x-1 text-yellow-500">
+                                <ion-icon name="star"></ion-icon>
+                                <ion-icon name="star"></ion-icon>
+                                <ion-icon name="star"></ion-icon>
+                                <ion-icon name="star"></ion-icon>
+                                <ion-icon name="star" class="text-gray-300"></ion-icon>
+                            </div>
+                            <img src="../assets/images/avatars/avatar-3.jpg" alt="" class="rounded-full shadow w-12 h-12">
+                            <div>
+                                <h4 class="text-base m-0 font-semibold"> Trap Nation</h4>
+                                <span class="text-gray-700 text-sm"> 16th, May 2021 </span>
+                                <p class="mt-3 md:ml-0 -ml-16">
+                                    elit, sed diam ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim ipsum dolor sit
+                                    amet, consectetuer adipiscing elit
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="flex justify-center mt-9">
+                        <a href="#" class="bg-gray-50 border hover:bg-gray-100 px-4 py-1.5 rounded-full text-sm">More Comments ..</a>
+                    </div>
+
+                </div>
+
+
+            </div>
+            <div class="lg:w-4/12 space-y-4">
+
+                <div uk-sticky="top:600;offset:; offset:90 ; media: 1024">
+                    <div class="tube-card p-5">
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="flex flex-col space-y-2">
+                                <div class="text-3xl font-semibold" id="duration"> 3.2 </div>
+                                <div> Hours </div>
+                                <ion-icon name="time" class="text-lg" hidden></ion-icon>
+                            </div>
+                            <div class="flex flex-col space-y-2">
+                                <div class="text-3xl font-semibold"> 12,140</div>
+                                <div> Students </div>
+                                <ion-icon name="people-circle" class="text-lg" hidden></ion-icon>
+                            </div>
+                        </div>
+                        <hr class="-mx-5 border-gray-200 my-4">
+                        <h4 hidden> COURSE INCLUDES</h4>
+
+                        <div class="-m-5 divide-y divide-gray-200 text-sm">
+                            <div class="flex items-center px-5 py-3">  <ion-icon name="play-outline" class="text-2xl mr-2"></ion-icon> 13 hours on-demand video </div>
+                            <div class="flex items-center px-5 py-3">  <ion-icon name="key-outline" class="text-2xl mr-2"></ion-icon> Full lifetime access </div>
+                            <div class="flex items-center px-5 py-3">  <ion-icon name="download-outline" class="text-2xl mr-2"></ion-icon> 42 downloadable resources </div>
+                            <div class="flex items-center px-5 py-3">  <ion-icon name="help-circle-outline" class="text-2xl mr-2"></ion-icon>Assignments </div>
+                            <div class="flex items-center px-5 py-3">  <ion-icon name="medal-outline" class="text-2xl mr-2"></ion-icon>Certificate of Completion </div>
+                        </div>
+
+                    </div>
+                    <div class="mt-4">
+                        <a href="#" class="flex items-center justify-center h-9 px-6 rounded-md bg-blue-600 text-white"> Enroll Now </a>
+                    </div>
+                </div>
+
+
+
+                <div class="tube-card p-5">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <h4 class="text-lg -mb-0.5 font-semibold"> Related  Courses </h4>
+                        </div>
+                        <a href="#" class="text-blue-600"> <ion-icon name="refresh" class="-mt-0.5 -mr-2 hover:bg-gray-100 p-1.5 rounded-full text-lg"></ion-icon> </a>
+                    </div>
+                    <div class="p-1">
+                        <a href="#" class="-mx-3 block hover:bg-gray-100 p-2 rounded-md">
+                            <div class="flex items-center space-x-3">
+                                <img src="../assets/images/courses/img-2.jpg" alt="" class="h-12 object-cover rounded-md w-12">
+                                <div class="line-clamp-2 text-sm font-medium">
+                                    The Complete JavaScript From beginning to Experts for advance
+                                </div>
+                            </div>
+                        </a>
+                        <a href="#" class="-mx-3 block hover:bg-gray-100 p-2 rounded-md">
+                            <div class="flex items-center space-x-3">
+                                <img src="../assets/images/courses/img-4.jpg" alt="" class="h-12 object-cover rounded-md w-12">
+                                <div class="line-clamp-2 text-sm font-medium">
+                                    The Complete JavaScript From beginning to Experts for advance
+                                </div>
+                            </div>
+                        </a>
+                        <a href="#" class="-mx-3 block hover:bg-gray-100 p-2 rounded-md">
+                            <div class="flex items-center space-x-3">
+                                <img src="../assets/images/courses/img-3.jpg" alt="" class="h-12 object-cover rounded-md w-12">
+                                <div class="line-clamp-2 text-sm font-medium">
+                                    The Complete JavaScript From beginning to Experts for advance
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <a href="#" class="hover:bg-gray-100 -mb-1.5 mt-0.5 h-8 flex items-center justify-center rounded-md text-blue-400 text-sm">
+                        See all
+                    </a>
+                </div>
+
+            </div>
+        </div>
 
     </div>
+    <div id="trailer-modal" uk-modal>
+        <div class="uk-modal-dialog shadow-lg rounded-md">
+            <button class="uk-modal-close-default m-2.5" type="button" uk-close></button>
+            <div class="uk-modal-header  rounded-t-md">
+                <h4 class="text-lg font-semibold mb-2"> Trailer video </h4>
+            </div>
 
-    <div class="absolute_white">
-        <div>
-            <img class="image" th:src="@{/user/img/logo.png}">
+            <div class="embed-video">
+                <iframe src="https://www.youtube.com/embed/nOCXXHGMezU" class="w-full"
+                        uk-video="automute: true" frameborder="0" allowfullscreen uk-responsive></iframe>
+            </div>
+
+
+            <div class="uk-modal-body">
+                <h3 class="text-lg font-semibold mb-2">Build Responsive Websites </h3>
+                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+                    dolore
+                    eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                    proident,
+                    sunt
+                    in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </div>
         </div>
     </div>
-
-</section>
-
-<style>
-    .relative_black {
-        width: 100%;
-        height: 400px;
-        margin-top: 89px;
-        background-color: red;
-        position: relative;
-    }
-
-    .absolute_white {
-        width: 300px;
-        height: 500px;
-        background-color: yellow;
-        position: absolute;
-        top: 24%;
-        left: 64%;
-    }
-
-    .relative_black::before {
-        content: "";
-        left: 100px;
-        top: -500px;
-        position: absolute;
-    }
-.image{
-    width: 100%;
-}
-</style>
-
-<button id="back-to-top" title="Back to Top"><i class="fa-solid fa-angle-up"></i></button>
-<footer th:replace="user/common/footer :: footer"></footer>
+    <div th:replace="user/common/footer :: footer"></div>
+</div>
 <div th:replace="user/common/script :: script"></div>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function (){
+        initData();
+    })
+    function  initData(){
+        infoCourse();
+        getInstructor();
+    }
+    function infoCourse(){
+        var courseId = new URLSearchParams(window.location.search).get('id');
+        console.log('id cousrse',courseId);
+        let detailCourse = $('#course');
+        detailCourse.empty();
+        if (courseId) {
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/api/course/findById/" + courseId,
+                success: function (response) {
+                    let resp = response.data;
+                    let html='<div class="uppercase text-gray-200 mb-2 font-semibold">'+ resp.parentCategoryName +'</div>' +
+                        '                <h1 class="lg:leading-10 lg:text-3xl text-white text-2xl leading-8 font-semibold" > '+resp.name+' </h1>' +
+                        '                <p class="lg:w-3/4 mt-4 text-gray-200"> '+resp.shortDescription+'</p>' +
+                        '                <ul class="flex text-gray-200 gap-4 mt-4 mb-1">' +
+                        '                    <li class="flex items-center">' +
+                        '                        <span class="avg bg-yellow-500 mr-2 px-2 rounded text-white font-semiold"> 4.9 </span>' +
+                        '                        <div class="star-rating text-yellow-500">' +
+                        '                            <ion-icon name="star"></ion-icon> <ion-icon name="star"></ion-icon>' +
+                        '                            <ion-icon name="star"></ion-icon> <ion-icon name="star"></ion-icon>' +
+                        '                            <ion-icon name="star-half"></ion-icon>' +
+                        '                        </div>' +
+                        '                    </li>' +
+                        '                    <li> <ion-icon name="people-circle-outline"></ion-icon> 1200 Enerolled </li>' +
+                        '                </ul>' +
+                        '                <ul class="lg:flex items-center text-gray-200">' +
+                        '                    <li> Created by <a id="createdBy" class="text-white fond-bold hover:underline hover:text-white"> '+resp.createdBy+' </a> </li>' +
+                        '                    <li> <span class="lg:block hidden mx-3 text-2xl">·</span> </li>' +
+                        '                    <li> Last updated 10/2019</li>' +
+                        '                </ul>'
+                    detailCourse.append(html)
+
+                    $('#imageCourse').attr('src', resp.imageFile.length > 0 ? 'data:image/png;base64,' + resp.imageFile[0] : '../assets/images/courses/default-image.jpg');
+
+                    $('#Overview').html(
+                        '<div class="space-y-6">' +
+                        '<div>' +
+                        '<h3 class="text-lg font-semibold mb-3">Mô tả</h3>' +
+                        '<p>' + resp.description + '</p>' +
+                        '</div>' +
+                        '<div>' +
+                        '<h3 class="text-lg font-semibold mb-1">Những gì bạn đã học được</h3>' +
+                        '<ul class="grid md:grid-cols-2" id="benefit_list"></ul>' +
+                        '</div>' +
+                        '<div id="course-details">' +
+                        '<h3 class="text-lg font-semibold mb-1">Yêu cầu</h3>' +
+                        '<ul class="list-disc ml-5 space-y-1" id="requirements-list"></ul>' +
+                        '</div>' +
+                        '</div>'
+                    );
+
+
+                    renderRequirements(resp.requirements);
+                    renderBenefit(resp.benefit);
+
+                    console.log('data',resp)
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
+    }
+
+    function renderRequirements(requirements) {
+        const listElement = document.getElementById('requirements-list');
+        if (requirements) {
+            const requirementsArray = requirements.split('\n');
+            requirementsArray.forEach(requirement => {
+                const listItem = document.createElement('li');
+                listItem.textContent = requirement;
+                listElement.appendChild(listItem);
+            });
+        } else {
+            console.error("Requirements are not available");
+        }
+    }
+
+    function renderBenefit(benefit) {
+        const listElement = document.getElementById('benefit_list');
+        if (benefit) {
+            const benefitArray = benefit.split('\n');
+            benefitArray.forEach(item => {
+                const listItem = document.createElement('li');
+                const icon = document.createElement('i');
+                icon.className = "uil-check text-xl font-bold mr-2";
+
+                listItem.appendChild(icon);
+                listItem.appendChild(document.createTextNode(item));
+                listElement.appendChild(listItem);
+            });
+        } else {
+            console.error("Benefits are not available");
+        }
+    }
+
+    function getInstructor() {
+        let instructor = $('#announcement');
+        instructor.empty();
+        let courseId = new URLSearchParams(window.location.search).get('id');
+        console.log('id courseId ne : ', courseId);
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/api/account/admin/course/" + courseId,
+            dataType: "json",
+            success: function (response) {
+                let data = response;
+
+                let html = '<h3 class="text-xl font-semibold lg:mb-5"> Người hướng dẫn </h3>' +
+                    '<div class="flex items-center gap-x-4 mb-5">' +
+                    '<img src="' + (data.image.length > 0 ? 'data:image/png;base64,' + data.image : '../assets/images/courses/img-5.jpg') + '" alt="" class="rounded-full shadow w-12 h-12">' +
+                    '<div>' +
+                    '<a href="/user/information?idAccount=' + data.idAccount + '""><h4 class="-mb-1 text-base"> ' + data.fullname + '</h4></a>' +
+                    '<span class="text-sm">  <span class="text-gray-500"> ' + data.title + ' </span> </span>' +
+                    '</div>' +
+                    '</div>' +
+                    '<h4 class="font-medium mb-2 text-lg"></h4>' +
+                    '<ul id="descrip_list" class="list-disc ml-5"></ul>';
+                instructor.append(html);
+                renderDescription(data.description);
+                console.log(data);
+            }
+        });
+    }
+
+    function renderDescription(description) {
+        const listElement = document.getElementById('descrip_list');
+        listElement.innerHTML = '';
+
+        if (description) {
+            const lines = description.split('\n');
+            lines.forEach(line => {
+                const listItem = document.createElement('li');
+                listItem.textContent = line.trim();
+                listElement.appendChild(listItem);
+            });
+        } else {
+            console.error("error");
+        }
+    }
+
+
+</script>
 </body>
 </html>

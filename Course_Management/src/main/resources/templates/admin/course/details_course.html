@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/common/head :: head"></head>
+<link th:href="@{/admin/plugins/toastr/css/toastr.min.css}" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+<body>
+<div id="preloader">
+    <div class="loader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"/>
+        </svg>
+    </div>
+</div>
+
+<div id="main-wrapper">
+    <header th:replace="admin/common/header :: header"></header>
+    <aside th:replace="admin/common/sidebar :: sidebar"></aside>
+    <div class="content-body">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Course Information Form -->
+                <div class="col-md-6">
+                    <h4 class="text-center mb-3">Nội dung khóa học</h4>
+                    <div class="card p-3">
+                        <div class="row">
+                            <div class="col-md-4 text-center" id="imageAvata">
+                                <div class="form-group">
+                                    <label>Ảnh đại diện</label>
+                                    <div id="images" class="image-preview mt-2">
+                                        <img src="placeholder.jpg" alt="Avatar" class="img-fluid rounded">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <input id="courseId" hidden="hidden" type="text">
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="code">Mã khóa học</label>
+                                        <input type="text" class="form-control" id="code" placeholder="Nhập mã khóa học">
+                                        <span id="usernameError" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="name">Tên khóa học</label>
+                                        <input type="text" class="form-control" id="name" placeholder="Nhập tên khóa học">
+                                        <span id="fullnameError" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="price">Giá khóa học</label>
+                                        <input type="text" class="form-control" id="price" placeholder="Nhập giá khóa học">
+                                        <span id="priceError" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="duration">Thời lượng học</label>
+                                        <input type="text" class="form-control" id="duration" placeholder="Nhập thời lượng">
+                                        <span id="durationError" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label>Ngôn ngữ</label>
+                                        <select class="form-control" id="language_list"></select>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Giảng viên</label>
+                                        <select class="form-control" id="account_list"></select>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label>Danh mục cha</label>
+                                        <select class="form-control" id="parentId" onchange="getSubCategories()"></select>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Danh mục con</label>
+                                        <select class="form-control" id="category_list"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="title">Tiêu đề</label>
+                                    <input type="text" class="form-control" id="title" placeholder="Nhập tiêu đề">
+                                    <span id="titleError" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="avatarInput">Hình ảnh</label>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="avatarInput" accept="image/*" multiple>
+                                            <label class="custom-file-label" for="avatarInput">Chọn file</label>
+                                        </div>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">Upload</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="description">Mô tả</label>
+                                    <textarea class="form-control" id="description" placeholder="Nhập mô tả" rows="4"></textarea>
+                                    <span id="descriptionError" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="requirements">Yêu cầu</label>
+                                    <textarea class="form-control" id="requirements" placeholder="Nhập yêu cầu" rows="4"></textarea>
+                                    <span id="requirementsError" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="text-center">Nội dung khóa học</h4>
+                        <button class="btn btn-success mt-1" id="addLessonBtn">
+                            <i class="fas fa-plus"></i> Thêm buổi học
+                        </button>
+                    </div>
+                    <div id="courseContent" class="accordion">
+                        <!-- Nội dung khóa học sẽ được thêm vào đây -->
+                    </div>
+                </div>
+
+                <script>
+                    let lessonCount = 0; // Đếm số buổi học đã thêm
+
+                    document.getElementById('addLessonBtn').addEventListener('click', function() {
+                        lessonCount++; // Tăng số buổi học
+                        const courseContent = document.getElementById('courseContent');
+
+                        // Tạo nội dung mới cho buổi học
+                        const newCard = document.createElement('div');
+                        newCard.classList.add('card', 'mb-2');
+
+                        // Tạo tiêu đề cho buổi học
+                        const newHeader = document.createElement('div');
+                        newHeader.classList.add('card-header');
+                        newHeader.id = `heading${lessonCount}`;
+
+                        const newButton = document.createElement('button');
+                        newButton.classList.add('btn', 'btn-link');
+                        newButton.setAttribute('data-toggle', 'collapse');
+                        newButton.setAttribute('data-target', `#collapse${lessonCount}`);
+                        newButton.setAttribute('aria-expanded', 'false');
+                        newButton.setAttribute('aria-controls', `collapse${lessonCount}`);
+                        newButton.innerText = `Buổi ${lessonCount}: Nội dung mới`;
+
+                        newHeader.appendChild(newButton);
+                        newCard.appendChild(newHeader);
+
+                        // Tạo nội dung cho buổi học
+                        const newBody = document.createElement('div');
+                        newBody.id = `collapse${lessonCount}`;
+                        newBody.classList.add('collapse');
+                        newBody.setAttribute('aria-labelledby', `heading${lessonCount}`);
+                        newBody.setAttribute('data-parent', '#courseContent');
+
+                        const cardBody = document.createElement('div');
+                        cardBody.classList.add('card-body');
+                        cardBody.innerHTML = `
+                                <form>
+                                    <div class="form-group">
+                                        <label for="lessonName${lessonCount}">Tên buổi học</label>
+                                        <input type="text" class="form-control" id="lessonName${lessonCount}" placeholder="Nhập tên buổi học">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="lessonContent${lessonCount}">Nội dung</label>
+                                        <textarea class="form-control" id="lessonContent${lessonCount}" rows="3" placeholder="Nhập nội dung"></textarea>
+                                    </div>
+                                </form>
+                            `;
+
+                        newBody.appendChild(cardBody);
+                        newCard.appendChild(newBody);
+
+                        // Thêm nội dung mới vào accordion
+                        courseContent.appendChild(newCard);
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="admin/common/script :: script"></div>
+</body>
+</html>

@@ -11,6 +11,10 @@ public class CourseController {
     public String list(){
         return "admin/course/list_course";
     }
+    @GetMapping("/detailsCourse")
+    public String detailsCourse(){
+        return "admin/course/details_course";
+    }
 
 
 }

@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface RatingRepository extends JpaRepository<RatingEntity,Long> {
     @Query(value = "SELECT r FROM RatingEntity r " +
@@ -20,4 +22,7 @@ public interface RatingRepository extends JpaRepository<RatingEntity,Long> {
             "AND r.deleted = false ORDER BY r.createdDate desc"
     )
     Page<RatingEntity> findAllByFilter(@Param("condition") RatingDTO ratingDTO, Pageable pageable);
+
+    @Query(value = "SELECT DISTINCT r.star FROM RatingEntity r WHERE r.deleted=false ")
+    List<Long> findAllRating();
 }

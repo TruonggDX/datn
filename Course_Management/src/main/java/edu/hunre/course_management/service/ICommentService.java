@@ -12,4 +12,6 @@ public interface ICommentService {
     BaseResponse<?> updateComment(Long id,CommentDTO commentDTO);
     BaseResponse<?> deleteComment(Long id);
     BaseResponse<?> findCommentById(Long id);
+
+    BaseResponse<Long> countComment(Long accountId);
 }

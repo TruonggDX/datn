@@ -1,17 +1,11 @@
 package edu.hunre.course_management.service.impl;
 
-import edu.hunre.course_management.entity.CommentEntity;
-import edu.hunre.course_management.entity.CourseEntity;
-import edu.hunre.course_management.entity.CustomerEntity;
-import edu.hunre.course_management.entity.RatingEntity;
+import edu.hunre.course_management.entity.*;
 import edu.hunre.course_management.mapper.CommentMapper;
 import edu.hunre.course_management.model.dto.CommentDTO;
 import edu.hunre.course_management.model.dto.RatingDTO;
 import edu.hunre.course_management.model.response.BaseResponse;
-import edu.hunre.course_management.repository.CommentRepository;
-import edu.hunre.course_management.repository.CourseRepository;
-import edu.hunre.course_management.repository.CustomerRepository;
-import edu.hunre.course_management.repository.RatingRepository;
+import edu.hunre.course_management.repository.*;
 import edu.hunre.course_management.service.ICommentService;
 import edu.hunre.course_management.utils.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +34,8 @@ public class ICommentImpl implements ICommentService {
     private RatingRepository ratingRepository;
     @Autowired
     private CustomerRepository customerRepository;
+    @Autowired
+    private AccountRepository accountRepository;
 
     @Override
     public BaseResponse<Page<CommentDTO>> getAll(CommentDTO commentDTO, int page, int size) {
@@ -157,6 +153,22 @@ public class ICommentImpl implements ICommentService {
         response.setCode(HttpStatus.OK.value());
         response.setMessage(Constant.HTTP_MESSAGE.SUCCESS);
         response.setData(commentMapper.toDto(commentEntity));
+        return response;
+    }
+
+    @Override
+    public BaseResponse<Long> countComment(Long accountId) {
+        BaseResponse<Long> response = new BaseResponse<>();
+        Optional<AccountEntity> accountEntity = accountRepository.findById(accountId);
+        if (accountEntity.isEmpty()){
+            response.setMessage(Constant.HTTP_MESSAGE.FAILED);
+            response.setCode(HttpStatus.BAD_REQUEST.value());
+            response.setData(null);
+        }
+        Long count = commentRepository.countCommentsByAccountId(accountId);
+        response.setCode(HttpStatus.OK.value());
+        response.setMessage(Constant.HTTP_MESSAGE.SUCCESS);
+        response.setData(count);
         return response;
     }
 }

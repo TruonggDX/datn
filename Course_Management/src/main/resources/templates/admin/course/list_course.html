@@ -296,6 +296,7 @@
                         mainImageTag = '<img src="placeholder.jpg" alt="Placeholder Image" style="max-width: 100px; max-height: 100px;">';
                     }
                     otherImageTags += '</div>';
+                    console.log('dataa course',data.id)
 
                     let row = '<tr class="odd">' +
                         '<td style="max-width: 50px;">' + (i + 1) + '</td>' +
@@ -305,13 +306,28 @@
                         '<td>' + data.duration + '</td>' +
                         '<td style="width: 125px; text-align: center;">' + mainImageTag + otherImageTags + '</td>' +
                         '<td style="width: 140px;">' +
-                        '<a data-toggle="modal" data-target="#exampleModalLong" type="button" class="btn btn-default edit-course-btn" data-id="' + data.id + '"><i style="color: black;font-size: 18px" class="fa-regular fa-pen-to-square"></i></a>' +
+                        '<a href="/admin/course/detailsCourse?id=' + data.id + '" type="button" class="btn btn-default edit-course-btn"><i style="color: black;font-size: 18px" class="fa-regular fa-pen-to-square"></i></a>' +
                         '<a type="button" class="btn btn-default delete-course-btn" data-id="' + data.id + '"><i style="color: black;font-size: 18px" class="fa-regular fa-trash-can"></i></a>' +
                         '</td>' +
                         '</tr>';
                     bodyTable.append(row);
                 }
-
+                // $('.edit-course-btn').click(function(event) {
+                //     event.preventDefault();
+                //     var courseId = $(this).data('id');
+                //
+                //     $.ajax({
+                //         type: "GET",
+                //         url: "http://localhost:8080/api/course/findById/" + courseId,
+                //         success: function(response) {
+                //             var course = response.data;
+                //             window.location.href ='/admin/course/detailsCourse?id=' + course.id;
+                //         },
+                //         error: function(error) {
+                //             console.log(error);
+                //         }
+                //     });
+                // });
 
                 let totalPage = response.data.totalPages;
                 let currentPage = response.data.pageable.pageNumber;
@@ -400,95 +416,95 @@
     }
 
 
-    function updateAnDelete() {
-        $('.edit-course-btn').click(function (event) {
-            event.preventDefault();
-            var courseId = $(this).data('id');
-
-            $.ajax({
-                type: "GET",
-                url: "http://localhost:8080/api/course/findById/" + courseId,
-                success: function (response) {
-                    $('#title_modal').text('Cập nhập khóa học');
-                    var course = response.data;
-                    getInforCourse(course);
-                    console.log('infor course ', course)
-
-                    $('#update-course-btn').off('click').on('click', function () {
-
-                        var formData = new FormData();
-                        formData.append('id', $('#courseId').val());
-                        formData.append('accountId', $('#accountId').val());
-                        formData.append('categoryId', $('#categoryId').val());
-                        formData.append('languageId', $('#languageId').val());
-                        formData.append('name', $('#name').val());
-                        formData.append('code', $('#code').val());
-                        formData.append('price', $('#price').val());
-                        formData.append('duration', $('#duration').val());
-                        formData.append('description', $('#description').val());
-                        formData.append('title', $('#title').val());
-                        formData.append('requirements', $('#requirements').val());
-
-
-                        $.ajax({
-                            type: "PUT",
-                            url: "http://localhost:8080/api/course/update/" + $('#courseId').val(),
-                            data: formData,
-                            processData: false,
-                            contentType: false,
-                            success: function (updateResponse) {
-                                console.log(updateResponse);
-                                localStorage.setItem('updateMessage', 'Đã cập nhật tài khoản thành công');
-                                window.location.reload();
-                            },
-                            error: function (updateError) {
-                                console.log(updateError);
-                            }
-                        });
-                    });
-                },
-                error: function (error) {
-                    console.log(error);
-                }
-            });
-        });
-
-
-        $('.delete-course-btn').click(function (event) {
-            event.preventDefault();
-            var courseId = $(this).data('id');
-            swal({
-                    title: "Bạn có chắc chắn muốn xóa?",
-                    text: "Bạn sẽ không thể khôi phục lại khóa học này sau khi xóa !!",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "Có, xóa đi !!",
-                    cancelButtonText: "Hủy bỏ",
-                    closeOnConfirm: false,
-                    closeOnCancel: true
-                },
-                function (isConfirm) {
-                    if (isConfirm) {
-                        $.ajax({
-                            type: "DELETE",
-                            url: "http://localhost:8080/api/course/delete/" + courseId,
-                            success: function (response) {
-                                console.log(response)
-                                swal("Đã xóa !!", "Khóa học đã được xóa thành công !!", "success");
-                                var deletedRow = $('.delete-course-btn[data-id="' + courseId + '"]').closest('tr');
-                                deletedRow.remove();
-                                getCourse(0, 7)
-                            },
-                            error: function (error) {
-                                swal("Lỗi !!", "Đã xảy ra lỗi trong quá trình xóa khóa học !!", "error");
-                                console.log(error);
-                            }
-                        });
-                    }
-                });
-        });
-    }
+    // function updateAnDelete() {
+    //     $('.edit-course-btn').click(function (event) {
+    //         event.preventDefault();
+    //         var courseId = $(this).data('id');
+    //
+    //         $.ajax({
+    //             type: "GET",
+    //             url: "http://localhost:8080/api/course/findById/" + courseId,
+    //             success: function (response) {
+    //                 $('#title_modal').text('Cập nhập khóa học');
+    //                 var course = response.data;
+    //                 getInforCourse(course);
+    //                 console.log('infor course ', course)
+    //
+    //                 $('#update-course-btn').off('click').on('click', function () {
+    //
+    //                     var formData = new FormData();
+    //                     formData.append('id', $('#courseId').val());
+    //                     formData.append('accountId', $('#accountId').val());
+    //                     formData.append('categoryId', $('#categoryId').val());
+    //                     formData.append('languageId', $('#languageId').val());
+    //                     formData.append('name', $('#name').val());
+    //                     formData.append('code', $('#code').val());
+    //                     formData.append('price', $('#price').val());
+    //                     formData.append('duration', $('#duration').val());
+    //                     formData.append('description', $('#description').val());
+    //                     formData.append('title', $('#title').val());
+    //                     formData.append('requirements', $('#requirements').val());
+    //
+    //
+    //                     $.ajax({
+    //                         type: "PUT",
+    //                         url: "http://localhost:8080/api/course/update/" + $('#courseId').val(),
+    //                         data: formData,
+    //                         processData: false,
+    //                         contentType: false,
+    //                         success: function (updateResponse) {
+    //                             console.log(updateResponse);
+    //                             localStorage.setItem('updateMessage', 'Đã cập nhật tài khoản thành công');
+    //                             window.location.reload();
+    //                         },
+    //                         error: function (updateError) {
+    //                             console.log(updateError);
+    //                         }
+    //                     });
+    //                 });
+    //             },
+    //             error: function (error) {
+    //                 console.log(error);
+    //             }
+    //         });
+    //     });
+    //
+    //
+    //     $('.delete-course-btn').click(function (event) {
+    //         event.preventDefault();
+    //         var courseId = $(this).data('id');
+    //         swal({
+    //                 title: "Bạn có chắc chắn muốn xóa?",
+    //                 text: "Bạn sẽ không thể khôi phục lại khóa học này sau khi xóa !!",
+    //                 type: "warning",
+    //                 showCancelButton: true,
+    //                 confirmButtonColor: "#DD6B55",
+    //                 confirmButtonText: "Có, xóa đi !!",
+    //                 cancelButtonText: "Hủy bỏ",
+    //                 closeOnConfirm: false,
+    //                 closeOnCancel: true
+    //             },
+    //             function (isConfirm) {
+    //                 if (isConfirm) {
+    //                     $.ajax({
+    //                         type: "DELETE",
+    //                         url: "http://localhost:8080/api/course/delete/" + courseId,
+    //                         success: function (response) {
+    //                             console.log(response)
+    //                             swal("Đã xóa !!", "Khóa học đã được xóa thành công !!", "success");
+    //                             var deletedRow = $('.delete-course-btn[data-id="' + courseId + '"]').closest('tr');
+    //                             deletedRow.remove();
+    //                             getCourse(0, 7)
+    //                         },
+    //                         error: function (error) {
+    //                             swal("Lỗi !!", "Đã xảy ra lỗi trong quá trình xóa khóa học !!", "error");
+    //                             console.log(error);
+    //                         }
+    //                     });
+    //                 }
+    //             });
+    //     });
+    // }
 
     function showToastr(message, title = "Thông báo", type = "info") {
         toastr.options = {

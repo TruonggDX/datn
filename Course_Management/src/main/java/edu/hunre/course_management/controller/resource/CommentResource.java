@@ -60,4 +60,13 @@ public class CommentResource {
         }
         return ResponseEntity.status(response.getCode()).body(response);
     }
+    @GetMapping("/countComment/{accountId}")
+    public ResponseEntity<BaseResponse<?>> getAllSourse(@PathVariable Long accountId) {
+        BaseResponse<Long> response = icommentService.countComment(accountId);
+        if (response.getCode() == HttpStatus.OK.value()) {
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
+        }
+    }
 }

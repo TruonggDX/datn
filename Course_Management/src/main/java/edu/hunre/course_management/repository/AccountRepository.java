@@ -1,6 +1,7 @@
 package edu.hunre.course_management.repository;
 
 import edu.hunre.course_management.entity.AccountEntity;
+import edu.hunre.course_management.entity.CourseEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,5 +20,11 @@ public interface AccountRepository extends JpaRepository<AccountEntity,Long> {
 
     @Query(value = "SELECT u FROM AccountEntity u WHERE (u.username LIKE %:condition% OR u.fullname LIKE %:condition%) AND u.deleted = false ")
     List<AccountEntity> findUserByUsernameAndFullname(@Param("condition") String condition);
+
+    @Query("SELECT a FROM AccountEntity a JOIN a.courseEntities c WHERE c.id = :courseId")
+    AccountEntity findInstructorByCourseId(@Param("courseId") Long courseId);
+
+
+
 
 }

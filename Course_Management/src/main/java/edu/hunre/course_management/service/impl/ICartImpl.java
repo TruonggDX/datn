@@ -109,49 +109,57 @@ public class ICartImpl implements ICartService {
     @Override
     public BaseResponse<?> addCourseInCart(CartDTO cartDTO) {
         BaseResponse<CartDTO> response = new BaseResponse<>();
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        if (authentication != null && authentication.isAuthenticated()) {
-//            String currentUsername = authentication.getName();
-//            CustomerEntity currentUser = customerRepository.findByUsername(currentUsername);
-//            if (currentUser != null) {
-                Optional<CustomerEntity> customerEntity = customerRepository.findById(cartDTO.getCustomerId());
-                Optional<CourseEntity> courseEntity = courseRepository.findById(cartDTO.getCourseId());
-                if (customerEntity.isEmpty() || courseEntity.isEmpty()) {
-                    response.setMessage(Constant.HTTP_MESSAGE.FAILED);
-                    response.setCode(HttpStatus.NOT_FOUND.value());
-                    return response;
-                }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            response.setCode(HttpStatus.UNAUTHORIZED.value());
+            response.setMessage(Constant.HTTP_MESSAGE.FAILED);
+            return response;
+        }
 
-                Optional<CartEntity> existingCartItem = cartRepository.findByCustomerEntityAndCourseEntity(customerEntity.get(), courseEntity.get());
-                if (existingCartItem.isPresent()) {
-                    response.setMessage(Constant.HTTP_MESSAGE.EXITS_ITEM);
-                    response.setCode(HttpStatus.CONFLICT.value());
-                    return response;
-                }
+        String currentUsername = authentication.getName();
+        CustomerEntity currentUser = customerRepository.findByUsername(currentUsername);
 
-                CartEntity cartEntity = new CartEntity();
-                cartEntity.setQuantity(1L);
-                cartEntity.setCustomerEntity(customerEntity.get());
-                cartEntity.setCourseEntity(courseEntity.get());
-                cartEntity.setCreatedDate(LocalDateTime.now());
-//                cartEntity.setCreatedBy(currentUsername);
+        if (currentUser == null) {
+            response.setCode(HttpStatus.UNAUTHORIZED.value());
+            response.setMessage(Constant.HTTP_MESSAGE.FAILED);
+            return response;
+        }
 
-                cartEntity.setPrice(courseEntity.get().getPrice());
-                cartEntity.setDeleted(false);
-                cartRepository.save(cartEntity);
-                response.setData(cartMapper.toDto(cartEntity));
-                response.setMessage(Constant.HTTP_MESSAGE.SUCCESS);
-                response.setCode(HttpStatus.OK.value());
-//            } else {
-//                response.setCode(HttpStatus.UNAUTHORIZED.value());
-//                response.setMessage(Constant.HTTP_MESSAGE.FAILED);
-//                return response;
-//            }
-//        }
-        response.setCode(HttpStatus.OK.value());
+        Optional<CourseEntity> courseEntity = courseRepository.findById(cartDTO.getCourseId());
+
+        if (courseEntity.isEmpty()) {
+            response.setMessage(Constant.HTTP_MESSAGE.FAILED);
+            response.setCode(HttpStatus.NOT_FOUND.value());
+            return response;
+        }
+
+        Optional<CartEntity> existingCartItem = cartRepository.findByCustomerEntityAndCourseEntity(currentUser,courseEntity.get());
+
+        if (existingCartItem.isPresent()) {
+            response.setMessage(Constant.HTTP_MESSAGE.FAILED);
+            response.setCode(HttpStatus.CONFLICT.value());
+            return response;
+        }
+
+        CartEntity cartEntity = new CartEntity();
+        cartEntity.setId(cartDTO.getId());
+        cartEntity.setQuantity(1L);
+        cartEntity.setCustomerEntity(currentUser);
+        cartEntity.setCourseEntity(courseEntity.get());
+        cartEntity.setCreatedDate(LocalDateTime.now());
+        cartEntity.setCreatedBy(currentUsername);
+        cartEntity.setPrice(courseEntity.get().getPrice());
+        cartEntity.setDeleted(false);
+
+        cartRepository.save(cartEntity);
+
+        response.setData(cartMapper.toDto(cartEntity));
         response.setMessage(Constant.HTTP_MESSAGE.SUCCESS);
+        response.setCode(HttpStatus.OK.value());
+
         return response;
     }
+
 
     @Override
     public BaseResponse<?> findCourseById(Long id) {

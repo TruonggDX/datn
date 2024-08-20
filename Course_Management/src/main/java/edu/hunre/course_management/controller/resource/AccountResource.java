@@ -1,7 +1,9 @@
 package edu.hunre.course_management.controller.resource;
 
+import edu.hunre.course_management.entity.AccountEntity;
 import edu.hunre.course_management.exception.ResourceNotFoundException;
 import edu.hunre.course_management.model.dto.AccountDTO;
+import edu.hunre.course_management.model.request.AccountRequest;
 import edu.hunre.course_management.model.request.ChagePasswordRequest;
 import edu.hunre.course_management.model.response.BaseResponse;
 import edu.hunre.course_management.service.IAccountService;
@@ -108,6 +110,11 @@ public class AccountResource {
         } else {
             return ResponseEntity.status(response.getCode()).body(response);
         }
+    }
+    @GetMapping("/admin/course/{courseId}")
+    public ResponseEntity<AccountRequest> getAccountsByCourseId(@PathVariable Long courseId) {
+        AccountRequest accountRequest = iAccountService.findAccountsByCourseId(courseId);
+        return ResponseEntity.ok(accountRequest);
     }
 
 }

@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/rating")
 public class RatingResource {
@@ -47,6 +49,16 @@ public class RatingResource {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<BaseResponse<?>> delete(@PathVariable Long id) {
         BaseResponse<?> response = iratingService.deleteRating(id);
+        if (response.getCode() == HttpStatus.OK.value()) {
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/list_star")
+    public ResponseEntity<BaseResponse<List<Long>>> getAllStar(){
+        BaseResponse<List<Long>> response = iratingService.getRating();
         if (response.getCode() == HttpStatus.OK.value()) {
             return new ResponseEntity<>(response, HttpStatus.OK);
         }else {

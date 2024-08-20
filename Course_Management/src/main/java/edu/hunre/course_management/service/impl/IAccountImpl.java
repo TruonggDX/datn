@@ -2,7 +2,9 @@ package edu.hunre.course_management.service.impl;
 
 import edu.hunre.course_management.entity.*;
 import edu.hunre.course_management.exception.ResourceNotFoundException;
+import edu.hunre.course_management.mapper.AccountMapper;
 import edu.hunre.course_management.model.dto.*;
+import edu.hunre.course_management.model.request.AccountRequest;
 import edu.hunre.course_management.model.request.ChagePasswordRequest;
 import edu.hunre.course_management.model.response.BaseResponse;
 import edu.hunre.course_management.repository.ImageRepository;
@@ -42,6 +44,8 @@ public class IAccountImpl implements IAccountService {
     private IImageService imageService;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private AccountMapper accountMapper;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -403,7 +407,11 @@ public class IAccountImpl implements IAccountService {
         return response;
     }
 
-
+    @Override
+    public AccountRequest findAccountsByCourseId(Long courseId) {
+        AccountEntity accountEntity = accountRepository.findInstructorByCourseId(courseId);
+        return accountMapper.toRequset(accountEntity);
+    }
 
     @Override
     public BaseResponse<AccountDTO> getUser() {

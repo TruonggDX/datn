@@ -3,10 +3,7 @@ package edu.hunre.course_management.service.impl;
 import edu.hunre.course_management.entity.*;
 import edu.hunre.course_management.mapper.CourseMapper;
 import edu.hunre.course_management.mapper.ImageSourseMapper;
-import edu.hunre.course_management.model.dto.CourseDTO;
-import edu.hunre.course_management.model.dto.CustomerDTO;
-import edu.hunre.course_management.model.dto.ImageCourseDTO;
-import edu.hunre.course_management.model.dto.ImageDTO;
+import edu.hunre.course_management.model.dto.*;
 import edu.hunre.course_management.model.request.CourseFilterRequest;
 import edu.hunre.course_management.model.response.BaseResponse;
 import edu.hunre.course_management.repository.*;
@@ -47,6 +44,8 @@ public class ICourseImpl implements ICourseService {
     private LanguageRepository languageRepository;
     @Autowired
     private AccountRepository accountRepository;
+    @Autowired
+    private LevelRepository levelRepository;
 
     @Override
     public BaseResponse<Page<CourseDTO>> getAll(CourseFilterRequest filterRequest, int page, int size) {
@@ -114,7 +113,7 @@ public class ICourseImpl implements ICourseService {
             return response;
         }
         
-        courseDTO = courseMapper.toDTO(courseEntity);
+        courseDTO = courseMapper.toDtoCustom(courseEntity);
         response.setCode(HttpStatus.OK.value());
         response.setMessage(Constant.HTTP_MESSAGE.SUCCESS);
         response.setData(courseDTO);
@@ -253,37 +252,153 @@ public class ICourseImpl implements ICourseService {
     public BaseResponse<List<CourseDTO>> findCourseByName(String name) {
         BaseResponse<List<CourseDTO>> response = new BaseResponse<>();
         List<CourseEntity> courseEntity = courseRepository.findCourseByName(name);
-        if (courseEntity != null && !courseEntity.isEmpty()) {
-            List<CourseDTO> courseDTO = new ArrayList<>();
-            for (CourseEntity courseEntitys : courseEntity) {
-                courseDTO.add(courseMapper.toDTO(courseEntitys));
-            }
-            response.setCode(HttpStatus.OK.value());
-            response.setMessage(Constant.HTTP_MESSAGE.SUCCESS);
-            response.setData(courseDTO);
-        }else {
+        if (courseEntity == null && courseEntity.isEmpty()){
             response.setCode(HttpStatus.NOT_FOUND.value());
             response.setMessage(Constant.HTTP_MESSAGE.FAILED);
+            response.setData(new ArrayList<>());
+        }
+
+        List<CourseDTO> courseDTO = new ArrayList<>();
+        for (CourseEntity courseEntitys : courseEntity) {
+            courseDTO.add(courseMapper.toDTO(courseEntitys));
+        }
+        response.setCode(HttpStatus.OK.value());
+        response.setMessage(Constant.HTTP_MESSAGE.SUCCESS);
+        response.setData(courseDTO);
+
+        return response;
+    }
+
+    @Override
+    public BaseResponse<Page<CourseDTO>> findCourseByCategoryId(Map<String, String> params,int page,int size) {
+       String categoryIdStr = params.get("categoryId");
+       String levelIdStr = params.get("levelId");
+       String languageIdStr = params.get("languageId");
+        Long categoryId = null;
+        Long levelId = null;
+        Long languageId=null;
+//        Optional<CategoryEntity> optionalCategoryEntity = categoryRepository.findById(categoryId);
+//        if (optionalCategoryEntity.isEmpty()) {
+//            return new BaseResponse<>(HttpStatus.BAD_REQUEST.value(), Constant.HTTP_MESSAGE.FAILED,null);
+//        }
+        Page<CourseEntity> courseEntityPage = null;
+        Pageable pageable = PageRequest.of(page, size);
+        if(!categoryIdStr.isEmpty()){
+             categoryId = Long.valueOf(categoryIdStr);
+        }
+        if (!levelIdStr.isEmpty()) {
+             levelId = Long.valueOf(levelIdStr);
+        }
+        if (!languageIdStr.isEmpty()) {
+            languageId = Long.valueOf(languageIdStr);
+        }
+        courseEntityPage = courseRepository.findCourseByCategoryIdAndLevelId(categoryId, pageable, levelId,languageId);
+
+
+        List<CourseDTO> courseDTO = new ArrayList<>();
+        for (CourseEntity courseEntity : courseEntityPage) {
+            courseDTO.add(courseMapper.toDTO(courseEntity));
+        }
+        BaseResponse<Page<CourseDTO>> response = new BaseResponse<>();
+        response.setCode(HttpStatus.OK.value());
+        response.setMessage(Constant.HTTP_MESSAGE.SUCCESS);
+        response.setData(new PageImpl<>(courseDTO, pageable, courseEntityPage.getTotalElements()));
+        return response;
+    }
+
+    @Override
+    public BaseResponse<List<LevelCourseCountDTO>> countCoursesByLevel(List<Long> levelIds) {
+        BaseResponse<List<LevelCourseCountDTO>> response = new BaseResponse<>();
+        try {
+            List<Object[]> courseCounts = courseRepository.countCoursesByLevel(levelIds);
+            List<LevelCourseCountDTO> levelCourseCounts = new ArrayList<>();
+
+            for (Object[] obj : courseCounts) {
+                Long levelId = (Long) obj[0];
+                Long count = (Long) obj[1];
+                levelCourseCounts.add(new LevelCourseCountDTO(levelId, count));
+            }
+
+            response.setData(levelCourseCounts);
+            response.setMessage(Constant.HTTP_MESSAGE.SUCCESS);
+            response.setCode(HttpStatus.OK.value());
+        } catch (Exception e) {
+            response.setMessage(e.getMessage());
+            response.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
         }
         return response;
     }
 
     @Override
-    public BaseResponse<List<CourseDTO>> findCourseByCategoryId(Long categoryId) {
-        BaseResponse<List<CourseDTO>> response = new BaseResponse<>();
-        List<CourseEntity> courseEntity = courseRepository.findCourseByCategoryId(categoryId);
-        if (courseEntity == null && courseEntity.isEmpty()) {
+    public BaseResponse<Page<CourseDTO>> getAllCourseWithList(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<CourseEntity> courseEntityPage = courseRepository.findAllCourseByWishList(pageable);
+        List<CourseDTO> courseDTO = new ArrayList<>();
+        for (CourseEntity courseEntity : courseEntityPage) {
+            courseDTO.add(courseMapper.toDTO(courseEntity));
+        }
+        BaseResponse<Page<CourseDTO>> response = new BaseResponse<>();
+        response.setCode(HttpStatus.OK.value());
+        response.setMessage(Constant.HTTP_MESSAGE.SUCCESS);
+        response.setData(new PageImpl<>(courseDTO, pageable, courseEntityPage.getTotalElements()));
+        return response;
+    }
+
+    @Override
+    public BaseResponse<Page<CourseDTO>> getAllCourseByAccountId(Long accountId, int page, int size) {
+        Optional<AccountEntity> optionalAccountEntity = accountRepository.findById(accountId);
+        if (optionalAccountEntity.isEmpty()) {
+            return new BaseResponse<>(HttpStatus.BAD_REQUEST.value(),Constant.HTTP_MESSAGE.FAILED,null);
+        }
+        Pageable pageable = PageRequest.of(page, size);
+        Page<CourseEntity> courseEntityPage = courseRepository.findCourseByAccountId(accountId, pageable);
+        List<CourseDTO> courseDTO = new ArrayList<>();
+        for (CourseEntity courseEntity : courseEntityPage) {
+            courseDTO.add(courseMapper.toDTO(courseEntity));
+        }
+        BaseResponse<Page<CourseDTO>> response = new BaseResponse<>();
+        response.setCode(HttpStatus.OK.value());
+        response.setMessage(Constant.HTTP_MESSAGE.SUCCESS);
+        response.setData(new PageImpl<>(courseDTO, pageable, courseEntityPage.getTotalElements()));
+        return response;
+    }
+
+    @Override
+    public BaseResponse<Long> countCourseByAccountId(Long accountId) {
+        BaseResponse<Long> response = new BaseResponse<>();
+        Optional<AccountEntity> optionalAccountEntity = accountRepository.findById(accountId);
+        if (optionalAccountEntity.isEmpty()) {
             response.setCode(HttpStatus.NOT_FOUND.value());
             response.setMessage(Constant.HTTP_MESSAGE.FAILED);
             return response;
         }
-        List<CourseDTO> courseDTO = new ArrayList<>();
-        for (CourseEntity courseEntitys : courseEntity) {
-            courseDTO.add(courseMapper.toDTO(courseEntitys));
-        }
-        response.setMessage(Constant.HTTP_MESSAGE.SUCCESS);
-        response.setData(courseDTO);
+        Long count = courseRepository.countCourseByAccountId(accountId);
         response.setCode(HttpStatus.OK.value());
+        response.setMessage(Constant.HTTP_MESSAGE.SUCCESS);
+        response.setData(count);
         return response;
     }
+
+    @Override
+    public BaseResponse<Page<CourseDTO>> getCourseByLevelId(Long levelId, int page, int size) {
+        Optional<LevelEntity> levelEntity = levelRepository.findById(levelId);
+        if (levelEntity.isEmpty()) {
+            return new BaseResponse<>(HttpStatus.BAD_REQUEST.value(),Constant.HTTP_MESSAGE.FAILED,null);
+        }
+        Pageable pageable = PageRequest.of(page, size);
+        Page<CourseEntity> courseEntityPage = courseRepository.findCourseByLevelId(levelId, pageable);
+        List<CourseDTO> courseDTO = new ArrayList<>();
+        for (CourseEntity courseEntity : courseEntityPage) {
+            courseDTO.add(courseMapper.toDTO(courseEntity));
+        }
+        BaseResponse<Page<CourseDTO>> response = new BaseResponse<>();
+        response.setCode(HttpStatus.OK.value());
+        response.setMessage(Constant.HTTP_MESSAGE.SUCCESS);
+        response.setData(new PageImpl<>(courseDTO, pageable, courseEntityPage.getTotalElements()));
+        return response;
+    }
+
+
+
+
 }

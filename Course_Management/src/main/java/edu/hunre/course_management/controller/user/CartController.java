@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class CartController {
     @GetMapping(value = "/list")
     public String list(){
-        return "user/cart/cart";
+        return "user/cart";
     }
 }

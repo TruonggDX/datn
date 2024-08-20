@@ -19,6 +19,9 @@ public interface CategoryRepository extends JpaRepository<CategoryEntity,Long> {
     @Query("SELECT c FROM CategoryEntity c JOIN c.parent p WHERE c.deleted = false AND (p.name LIKE %:condition% OR c.name LIKE %:condition%)")
     List<CategoryEntity> findByParentName(@Param("condition") String condition);
 
+    @Query("SELECT c FROM CategoryEntity c WHERE c.deleted=false AND c.parent IS NOT NULL ")
+    List<CategoryEntity> findByParentIsNull();
+
 
 
 }

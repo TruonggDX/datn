@@ -17,6 +17,10 @@ public interface CartMapper {
     @Mapping(source = "courseEntity.id", target = "courseId")
     @Mapping(source = "courseEntity.price", target = "price")
     @Mapping(source = "courseEntity.createdBy", target = "createdBy")
+    @Mapping(source = "courseEntity.levelEntity.name", target = "levelName")
+    @Mapping(source = "courseEntity.levelEntity.id", target = "levelId")
+    @Mapping(source = "courseEntity.languageEntity.name", target = "languageName")
+    @Mapping(source = "courseEntity.languageEntity.id", target = "languageId")
     CartDTO toDto(CartEntity cartEntity);
     CartEntity toEntity(CartDTO cartDTO);
 

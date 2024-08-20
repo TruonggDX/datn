@@ -3,6 +3,7 @@ package edu.hunre.course_management.controller.resource;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import edu.hunre.course_management.model.dto.CourseDTO;
+import edu.hunre.course_management.model.dto.LevelCourseCountDTO;
 import edu.hunre.course_management.model.request.CourseFilterRequest;
 import edu.hunre.course_management.model.response.BaseResponse;
 import edu.hunre.course_management.service.ICourseService;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/course")
@@ -89,13 +91,47 @@ public class CourseResource {
         }
     }
 
-    @GetMapping("/findCourseByCategoryId/{categoryId}")
-    private ResponseEntity<BaseResponse<List<CourseDTO>>> findCourseByCategoryId(@PathVariable Long categoryId) {
-        BaseResponse<List<CourseDTO>> response = icourseService.findCourseByCategoryId(categoryId);
+    @GetMapping("/findCourseByCategoryId")
+    private ResponseEntity<BaseResponse<Page<CourseDTO>>> findCourseByCategoryId(
+            @RequestParam() Map<String, String> params,
+            @RequestParam(name = "page", required = false, defaultValue = "0") int page,
+            @RequestParam(name = "size", required = false, defaultValue = "10") int size) {
+        return ResponseEntity.ok(icourseService.findCourseByCategoryId(params, page, size));
+    }
+
+    @PostMapping("/count-by-level")
+    public BaseResponse<List<LevelCourseCountDTO>> countCoursesByLevel(@RequestBody List<Long> levelIds) {
+        return icourseService.countCoursesByLevel(levelIds);
+    }
+    @GetMapping("/list/wishlist")
+    public ResponseEntity<BaseResponse<Page<CourseDTO>>> getAllCourseWithList(
+            @RequestParam(name = "page", required = false, defaultValue = "0") int page,
+            @RequestParam(name = "size", required = false, defaultValue = "10") int size) {
+        return ResponseEntity.ok(icourseService.getAllCourseWithList(page, size));
+    }
+
+
+    @GetMapping("/findByAccountId/{accountId}")
+    public ResponseEntity<BaseResponse<Page<CourseDTO>>> getAllCourseByAccountId(
+            @PathVariable Long accountId,
+            @RequestParam(name = "page", required = false, defaultValue = "0") int page,
+            @RequestParam(name = "size", required = false, defaultValue = "10") int size) {
+        return ResponseEntity.ok(icourseService.getAllCourseByAccountId(accountId, page, size));
+    }
+    @GetMapping("/countSourse/{accountId}")
+    public ResponseEntity<BaseResponse<?>> getAllSourse(@PathVariable Long accountId) {
+        BaseResponse<Long> response = icourseService.countCourseByAccountId(accountId);
         if (response.getCode() == HttpStatus.OK.value()) {
             return new ResponseEntity<>(response, HttpStatus.OK);
         }else {
             return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
         }
+    }
+    @GetMapping("/findByLevelId/{levelId}")
+    public ResponseEntity<BaseResponse<Page<CourseDTO>>> getAllCourseByLevelId(
+            @PathVariable Long levelId,
+            @RequestParam(name = "page", required = false, defaultValue = "0") int page,
+            @RequestParam(name = "size", required = false, defaultValue = "10") int size) {
+        return ResponseEntity.ok(icourseService.getCourseByLevelId(levelId, page, size));
     }
 }

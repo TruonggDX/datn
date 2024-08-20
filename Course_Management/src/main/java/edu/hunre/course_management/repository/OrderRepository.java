@@ -11,6 +11,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface OrderRepository extends JpaRepository<OrderEntity,Long> {
     @Query(value = "SELECT o FROM OrderEntity o " +
@@ -21,4 +23,17 @@ public interface OrderRepository extends JpaRepository<OrderEntity,Long> {
             "AND o.deleted = false ORDER BY o.createdDate desc"
     )
     Page<OrderEntity> findAllByFilter(@Param("condition") OrderFilterRequest filterRequest, Pageable pageable);
+
+
+    @Query(value = "SELECT o FROM OrderEntity o " +
+            "LEFT JOIN o.customerEntity u " +
+            " WHERE " +
+            "(:#{#customerId} is null or u.id = :#{#customerId} )" +
+            "AND (:#{#code} is null or lower(o.code) = :#{#code} )" +
+            "AND o.deleted=false ORDER BY o.createdDate desc LIMIT 1"
+    )
+    Optional<OrderEntity> getByCode(Long customerId, String code);
+
+    @Query("SELECT SUM(c.price * c.quantity) FROM CartEntity c WHERE c.customerEntity.id = :customerId AND c.deleted = false")
+    Double calculateTotalAmountByCustomerId(@Param("customerId") Long customerId);
 }

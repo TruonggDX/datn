@@ -154,4 +154,14 @@ public class IRatingImpl implements IRatingService {
         response.setData(ratingDTO);
         return response;
     }
+
+    @Override
+    public BaseResponse<List<Long>> getRating() {
+        BaseResponse<List<Long>> response = new BaseResponse<>();
+        List<Long> rate = ratingRepository.findAllRating();
+        response.setCode(HttpStatus.OK.value());
+        response.setMessage(Constant.HTTP_MESSAGE.SUCCESS);
+        response.setData(rate);
+        return response;
+    }
 }

@@ -21,5 +21,6 @@ public interface CartRepository extends JpaRepository<CartEntity,Long> {
     Long countCourseByCustomerId(@Param("customerId") Long customerId);
 
     @Query("SELECT c FROM CartEntity c WHERE c.customerEntity = :customer AND c.courseEntity = :course")
-    Optional<CartEntity> findByCustomerEntityAndCourseEntity(@Param("customer") CustomerEntity customerEntity, @Param("course") CourseEntity courseEntity);
+    Optional<CartEntity> findByCustomerEntityAndCourseEntity(@Param("customer") CustomerEntity customer, @Param("course") CourseEntity courseEntity);
+
 }
